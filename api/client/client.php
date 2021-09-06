@@ -263,41 +263,6 @@ switch ($option) {
         }
 
         break;
-
-    // case 'update user data':
-    //     $idClient = $data->idClient;
-    //     $name = $data->name;
-    //     $email = $data->email;
-    //     $rg = $data->rg;
-    //     $cpf = $data->cpf;
-    //     $cnh = $data->cnh;
-
-    //     try {
-    //         $updateUserData=$pdo->prepare("UPDATE client SET name=:name, email=:email, rg=:rg, cpf=:cpf, cnh=:cnh 
-    //                                         WHERE idClient=:idClient");
-    //         $updateUserData->bindValue(":idClient", $idClient);
-    //         $updateUserData->bindValue(":name", $name);
-    //         $updateUserData->bindValue(":email", $email);
-    //         $updateUserData->bindValue(":rg", $rg);
-    //         $updateUserData->bindValue(":cpf", $cpf);
-    //         $updateUserData->bindValue(":cnh", $cnh);
-    //         $updateUserData->execute();
-
-    //         $status = 1;
-    //         $msg = 'Dados atualizados com sucesso';
-
-    //         $return = array(
-    //             'status' => $status,
-    //             'msg' => $msg
-    //         );
-
-    //         echo json_encode($return);
-            
-    //     } catch (Exception $e) {
-    //         echo 'Caught exception: ',  $e->getMessage(), "\n";
-    //     }
-
-    //     break;
     
     default:
         # code...

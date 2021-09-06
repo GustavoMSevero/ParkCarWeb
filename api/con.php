@@ -6,15 +6,15 @@ error_reporting(E_ALL);
 	
 		try {
 
-			// $first = "mysql:host=localhost;dbname=";
-			// $dbname = "parkcar";
-			// $user = "root";
-			// $password = "root";
-
-			$first = "mysql:host=mysql.parkcar.app.br;dbname=";
+			$first = "mysql:host=localhost;dbname=";
 			$dbname = "parkcar";
-			$user = "parkcar";
-			$password = "ParkCar2021";
+			$user = "root";
+			$password = "root";
+
+			// $first = "mysql:host=mysql.parkcar.app.br;dbname=";
+			// $dbname = "parkcar";
+			// $user = "parkcar";
+			// $password = "ParkCar2021";
 
 			$opcoes = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 			// $pdo = new PDO("mysql:host=localhost;dbname=smarttraffic", "root", "root", $opcoes);
