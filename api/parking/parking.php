@@ -294,6 +294,58 @@ switch ($option) {
 
         break;
 
+    case 'get paid vehicles':
+
+        $idParking = $_GET['idParking'];
+
+        try {
+            $getPaidVehicles=$pdo->prepare("SELECT * FROM parkedVehicles WHERE idParking=:idParking 
+                                            AND vehicleParkStatus=0");
+            $getPaidVehicles->bindvalue(":idParking", $idParking);
+            $getPaidVehicles->execute();
+                
+            while ($line=$getPaidVehicles->fetch(PDO::FETCH_ASSOC)) {
+
+                $id = $line['id'];
+                $licensePlate = $line['licensePlate'];
+
+                $parkDate = $line['parkDate'];
+                $entrance = $line['entrance'];
+                $departureTime = $line['departureTime'];
+                $lenghtOfStay = $line['lenghtOfStay'];
+                $valuePaid = $line['valuePaid'];
+
+                $entranceP = explode(' ', $entrance);
+                $entranceDate = $entranceP[0];
+                // $entranceDateP = explode('-', $entranceDate);
+                // $entranceDate = $entranceDateP[2].'/'.$entranceDateP[1];
+                $entranceTime = $entranceP[1];
+
+                $departureTimeP = explode(' ', $departureTime);
+                // $departureDate = $departureTimeP[0];
+                $departureTime = $departureTimeP[1];
+
+                $return[] = array(
+                    'id' => $id,
+                    'licensePlate' => $licensePlate,
+                    // 'entranceDate' => $entranceDate,
+                    'entranceTime' => $entranceTime,
+                    'departureTime' => $departureTime,
+                    'lenghtOfStay' => $lenghtOfStay,
+                    'valuePaid' => $valuePaid
+                );
+    
+            }
+
+            echo json_encode($return);
+
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
     default:
         # code...
         break;
