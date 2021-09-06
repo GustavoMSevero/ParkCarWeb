@@ -258,9 +258,12 @@ switch ($option) {
         $licensePlate = $data->licensePlate;
         $idParking = $data->idParking;
         $vehicleParkStatus = 1;
+        $lenghtOfStay = null;
+        $valuePaid = null;
 
         date_default_timezone_set('America/Sao_Paulo');
         $entrance = date("Y-m-d H:i:s");
+        $parkDate = date("Y-m-d");
 
         try {
             //GET IDCLIENT BY LICENSEPLATE
@@ -289,14 +292,17 @@ switch ($option) {
             $updateVehicleParkStatus->execute();
 
             //REGISTER PARKED VEHICLE
-            $saveParkedVehicle=$pdo->prepare("INSERT INTO parkedVehicles (id, idParking, idClient, licenseplate, vehicleParkStatus, entrance, departureTime) VALUES(?,?,?,?,?,?,?)");
+            $saveParkedVehicle=$pdo->prepare("INSERT INTO parkedVehicles (id, idParking, idClient, licenseplate, vehicleParkStatus, parkDate, entrance, departureTime, lenghtOfStay, valuePaid) VALUES(?,?,?,?,?,?,?,?,?,?)");
             $saveParkedVehicle->bindValue(1, NULL);
             $saveParkedVehicle->bindValue(2, $idParking);
             $saveParkedVehicle->bindValue(3, $idClient);
             $saveParkedVehicle->bindValue(4, $licensePlate);
             $saveParkedVehicle->bindValue(5, $vehicleParkStatus);
-            $saveParkedVehicle->bindValue(6, $entrance);
+            $saveParkedVehicle->bindValue(6, $parkDate);
             $saveParkedVehicle->bindValue(7, $entrance);
+            $saveParkedVehicle->bindValue(8, $entrance);
+            $saveParkedVehicle->bindValue(9, $lenghtOfStay);
+            $saveParkedVehicle->bindValue(10, $valuePaid);
             $saveParkedVehicle->execute();
 
             // GET NUMBER VACCANTS AND NAME
