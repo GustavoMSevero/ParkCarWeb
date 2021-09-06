@@ -98,7 +98,14 @@ function stayCount($idClient, $licensePlate, $idParking) {
         } elseif ($permanenceInMinutes > 180 && $permanenceInMinutes <= 210) {
             // echo 'Pagar 3:30 horas '.'<br>'; 37,00
             $valueToPay = $daily;
-        } 
+        }
+
+        $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
+                                            WHERE id=:id");
+        $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
+        $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
+        // $updateLenghtAndValue->bindValue(":licensePlate", $licensePlate);
+        $updateLenghtAndValue->execute();
 
         $return = array(
             'entraceInMinutes' => $dayAndTimeEntryInMinutes,
