@@ -1,0 +1,53 @@
+
+<div class="hk-wrapper">
+    <div class="hk-pg-wrapper hk-auth-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-5 pa-0">
+                    <div id="owl_demo_1" class="owl-carousel dots-on-item owl-theme">
+                        <!-- <img src="imgs/logos/bg2.png"> -->
+                        <img src="images/logos/bg_park_car.jpg" width="545" height="775">
+                    </div>
+                </div>
+                <div class="col-xl-7 pa-0">
+                    <div class="auth-form-wrap py-xl-0 py-50">
+                        <div class="auth-form w-xxl-55 w-xl-75 w-sm-90 w-xs-100">
+                            <form name="formLogin" ng-controller="loginCtrl">
+                                <div class="form-group">
+                                    <select class="form-control" name="typeUser" ng-model="admin.typeUser" id="" required>
+                                        <option value="">Selecione um tipo de usuário</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="parking">Estacionamento</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" ng-model="admin.email" placeholder="Login ou e-mail" type="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="form-control" ng-model="admin.password" placeholder="Senha" type="password" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><span class="feather-icon"><i data-feather="eye-off"></i></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="custom-control custom-checkbox mb-25">
+                                    <input class="custom-control-input" id="same-address" type="checkbox">
+                                    <label class="custom-control-label font-14" for="same-address">Lembrar dados</label>
+                                </div> -->
+                               
+                                <button class="btn btn-primary btn-block" ng-disabled="typeUser" ng-click="login(admin)">Acessar</button>
+                                
+                                <div id="msgErro">
+                                    {{msgErro}}
+                                </div>
+                                
+                                <p class="text-center mt-15">Estacionamento? <a href="#/register">Cadastre-se</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

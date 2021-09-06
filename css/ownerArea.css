@@ -1,0 +1,15 @@
+.formUpdateEmail {
+    margin-top: 50px;
+}
+
+p {
+    font-size: 12px;
+}
+
+#newPassword {
+    width: 25%;
+}
+
+#changeButton {
+    margin-top: 20px;
+}

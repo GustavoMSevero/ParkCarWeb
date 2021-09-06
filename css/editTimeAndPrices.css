@@ -1,0 +1,21 @@
+
+
+#periodOfStay {
+    width: 45%;
+}
+
+#stayValue {
+    width: 20%;
+}
+
+#tolerancePeriod {
+    width: 20%;
+}
+
+#daily {
+    width: 20%;
+}
+
+#btnRegisterTimeAndPrices {
+    margin-top: 20px;
+}

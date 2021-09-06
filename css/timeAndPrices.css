@@ -1,0 +1,90 @@
+
+#periodOfStay {
+    width: 45%;
+}
+
+#stayValue {
+    width: 20%;
+}
+
+
+#periodOfStay,
+#stayValue {
+    display: inline-block;
+}
+
+#btnRegisterTimeAndPrices {
+    margin-top: 20px;
+}
+
+#parkingTime_01 {
+    width: 10%;
+}
+
+#parkingPrice_01 {
+    width: 10%;
+}
+
+#parkingTime_01,
+#parkingPrice_01 {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+
+
+#parkingTime_02 {
+    width: 10%;
+}
+
+#parkingPrice_02 {
+    width: 10%;
+}
+
+#parkingTime_02,
+#parkingPrice_02 {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+#editTimeAndPrices {
+    margin-top: 20px;
+}
+
+/*  */
+
+#adicionalTime_1 {
+    width: 10%;
+}
+
+#adicionalPrice_1 {
+    width: 10%;
+}
+
+#adicionalTime_1,
+#adicionalPrice_1 {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+#adicionalTime_2 {
+    width: 10%;
+}
+
+#adicionalPrice_2 {
+    width: 10%;
+}
+
+#adicionalTime_2,
+#adicionalPrice_2 {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+#dailyValue {
+    width: 20%;
+}
+
+#editTimeAndPrices{
+    color: blue !important;
+}

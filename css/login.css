@@ -1,0 +1,10 @@
+#logo-domanda{
+    margin-top: 75px;
+    margin-bottom: 25px;
+}
+
+#msgErro{
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+}
