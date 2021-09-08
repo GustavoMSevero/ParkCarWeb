@@ -96,11 +96,11 @@ switch ($option) {
 
         try {
 
-            $getAllVehicles=$pdo->prepare("SELECT p.`licensePlate`, p.entrance, p.`vehicleParkStatus` ,c.name, v.model, v.`brand`
-                                            FROM  parkedVehicles p, `client` c, clientVehicle v
-                                            WHERE p.`vehicleParkStatus`=:vehicleParkStatus
+            $getAllVehicles=$pdo->prepare("SELECT p.id, p.licensePlate, p.entrance, p.vehicleParkStatus ,c.name, v.model, v.brand
+                                            FROM  parkedVehicles p, client c, clientVehicle v
+                                            WHERE p.vehicleParkStatus=:vehicleParkStatus
                                             AND c.idClient = p.idClient
-                                            AND v.`idClient` = c.`idClient`;");
+                                            AND v.idClient = c.idClient;");
             $getAllVehicles->bindValue(':vehicleParkStatus', $vehicleParkStatus);
             $getAllVehicles->execute();
 
@@ -109,6 +109,7 @@ switch ($option) {
             if ($exists != 0) {
                 while ($line=$getAllVehicles->fetch(PDO::FETCH_ASSOC)) {
 
+                    $id = $line['id'];
                     $licensePlate = $line['licensePlate'];
                     $brand = $line['brand'];
                     $model = $line['model'];
@@ -116,6 +117,7 @@ switch ($option) {
                     $entrance = $line['entrance'];
     
                     $return[] = array(
+                        'id' => $id,
                         'licensePlate' => $licensePlate,
                         'brand' => $brand,
                         'model' => $model,
@@ -336,15 +338,18 @@ switch ($option) {
         break;
 
     case 'stop counting time':
-    
+        $idParkedVehicle = $data->id;
         $licensePlate = $data->licensePlate;
         $vehicleParkStatus = 0;
         $idParking = $data->idParking;
+
 
         date_default_timezone_set('America/Sao_Paulo');
         $departureTime = date("Y-m-d H:i:s");
 
         try {
+            // Update departure time ana value to pay, before update vehicle spark status
+            stayCount($idParkedVehicle, $licensePlate, $idParking);
 
             // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME
             $updateVehicleParkStatus=$pdo->prepare("UPDATE clientVehicle SET vehicleParkStatus=:vehicleParkStatus
@@ -401,12 +406,8 @@ switch ($option) {
             $updateVaccantsNumber->bindValue(":vaccantsQuantity", $vaccantsQuantity);
             $updateVaccantsNumber->execute();
 
-            file_get_contents('http://parkcar.dentistavelcis.com.br/vacancies/'.$idParking.'/'.$vaccantNumber);
-            // $licensePlate;
-            // $idClient;
-            // $idParking;
-            // $id;
-            stayCount($idClient, $licensePlate, $idParking);
+            // file_get_contents('http://smarttraffic.dentistavelcis.com.br/vacancies/'.$idParking.'/'.$vaccantNumber);
+  
 
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
