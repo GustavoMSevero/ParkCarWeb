@@ -6,20 +6,14 @@ error_reporting(E_ALL);
 
 include_once("con.php");
 
-$pdo = conectar();
-
 include_once("timeToMinutes.php");
 
 
-function stayCount($idClient, $licensePlate, $idParking) {
+function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
     $pdo = conectar();
     date_default_timezone_set('America/Sao_Paulo');
     // $weekDay = date('l'); // day of week
-    
-    // $idClient = 29;
-    // $licensePlate = 'IXW3620';
-    // $idParking = 15;
 
     try {
         // GET ENTRANCE DATA TO CALCULATE LENGTH OF STAY
@@ -100,12 +94,17 @@ function stayCount($idClient, $licensePlate, $idParking) {
             $valueToPay = $daily;
         }
 
-        $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
+        try {
+            $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
                                             WHERE id=:id");
-        $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
-        $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
-        // $updateLenghtAndValue->bindValue(":licensePlate", $licensePlate);
-        $updateLenghtAndValue->execute();
+            $updateLenghtAndValue->bindValue(":id", $idParkedVehicle);
+            $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
+            $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
+            $updateLenghtAndValue->execute();
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        
 
         $return = array(
             'entraceInMinutes' => $dayAndTimeEntryInMinutes,
@@ -113,7 +112,6 @@ function stayCount($idClient, $licensePlate, $idParking) {
             'permanenceInMinutes' => $permanenceInMinutes, // Tempo de permanencia em minutos
             'permanenceFormated' => $return_time, // Tempo de permanencia formatado (00:00:00)
             'valueToPay' => $valueToPay, // Valor a ser pago
-            'idClient' => $idClient,
             'licensePlate' => $licensePlate,
             'idParking' => $idParking,
             'entraceDateAndTimeFormated' => $entrance, // Horário de entrada 00:00:00
@@ -121,7 +119,6 @@ function stayCount($idClient, $licensePlate, $idParking) {
         );
 
         echo json_encode($return);
-        // return $return;
 
     } catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
