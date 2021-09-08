@@ -296,48 +296,64 @@ switch ($option) {
 
     case 'get paid vehicles':
 
+        $parkDate = date("Y-m-d");
         $idParking = $_GET['idParking'];
 
         try {
             $getPaidVehicles=$pdo->prepare("SELECT * FROM parkedVehicles WHERE idParking=:idParking 
-                                            AND vehicleParkStatus=0");
+                                            AND vehicleParkStatus=0 AND parkDate=:parkDate");
             $getPaidVehicles->bindvalue(":idParking", $idParking);
+            $getPaidVehicles->bindvalue(":parkDate", $parkDate);
             $getPaidVehicles->execute();
+
+            $quantity = $getPaidVehicles->rowCount();
+
+            if ($quantity != 0) {
                 
-            while ($line=$getPaidVehicles->fetch(PDO::FETCH_ASSOC)) {
+                while ($line=$getPaidVehicles->fetch(PDO::FETCH_ASSOC)) {
 
-                $id = $line['id'];
-                $licensePlate = $line['licensePlate'];
+                    $id = $line['id'];
+                    $licensePlate = $line['licensePlate'];
 
-                $parkDate = $line['parkDate'];
-                $entrance = $line['entrance'];
-                $departureTime = $line['departureTime'];
-                $lenghtOfStay = $line['lenghtOfStay'];
-                $valuePaid = $line['valuePaid'];
+                    $parkDate = $line['parkDate'];
+                    $entrance = $line['entrance'];
+                    $departureTime = $line['departureTime'];
+                    $lenghtOfStay = $line['lenghtOfStay'];
+                    $valuePaid = $line['valuePaid'];
 
-                $entranceP = explode(' ', $entrance);
-                $entranceDate = $entranceP[0];
-                // $entranceDateP = explode('-', $entranceDate);
-                // $entranceDate = $entranceDateP[2].'/'.$entranceDateP[1];
-                $entranceTime = $entranceP[1];
+                    $entranceP = explode(' ', $entrance);
+                    $entranceDate = $entranceP[0];
+                    $entranceTime = $entranceP[1];
 
-                $departureTimeP = explode(' ', $departureTime);
-                // $departureDate = $departureTimeP[0];
-                $departureTime = $departureTimeP[1];
+                    $departureTimeP = explode(' ', $departureTime);
+                    $departureTime = $departureTimeP[1];
 
-                $return[] = array(
-                    'id' => $id,
-                    'licensePlate' => $licensePlate,
-                    // 'entranceDate' => $entranceDate,
-                    'entranceTime' => $entranceTime,
-                    'departureTime' => $departureTime,
-                    'lenghtOfStay' => $lenghtOfStay,
-                    'valuePaid' => $valuePaid
+                    $return[] = array(
+                        'id' => $id,
+                        'licensePlate' => $licensePlate,
+                        // 'entranceDate' => $entranceDate,
+                        'entranceTime' => $entranceTime,
+                        'departureTime' => $departureTime,
+                        'lenghtOfStay' => $lenghtOfStay,
+                        'valuePaid' => $valuePaid
+                    );
+        
+                }
+
+                echo json_encode($return);
+            
+            } else {
+
+                $status = 0;
+                $msg = 'Nenhum veículo entrou ainda hoje.';
+                $return = array(
+                    'status' => $status,
+                    'msg' => $msg
                 );
-    
-            }
 
-            echo json_encode($return);
+                echo json_encode($return);
+                
+            }
 
             
         } catch (Exception $e) {
