@@ -94,16 +94,12 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
             $valueToPay = $daily;
         }
 
-        try {
-            $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
-                                            WHERE id=:id");
-            $updateLenghtAndValue->bindValue(":id", $idParkedVehicle);
-            $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
-            $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
-            $updateLenghtAndValue->execute();
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
+        $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
+                                        WHERE id=:idParkedVehicle");
+        $updateLenghtAndValue->bindValue(":idParkedVehicle", $idParkedVehicle);
+        $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
+        $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
+        $updateLenghtAndValue->execute();
         
 
         $return = array(
@@ -125,5 +121,11 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
     }
 
 }
+
+// $idParkedVehicle = 71;
+// $licensePlate = 'IXW3620';
+// $idParking = 15;
+
+// stayCount($idParkedVehicle, $licensePlate, $idParking)
 
 ?>
