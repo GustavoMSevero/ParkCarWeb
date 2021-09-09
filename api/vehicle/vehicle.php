@@ -347,10 +347,9 @@ switch ($option) {
         date_default_timezone_set('America/Sao_Paulo');
         $departureTime = date("Y-m-d H:i:s");
 
-        try {
-            // Update departure time ana value to pay, before update vehicle spark status
-            stayCount($idParkedVehicle, $licensePlate, $idParking);
+        stayCount($idParkedVehicle, $licensePlate, $idParking);
 
+        try {
             // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME
             $updateVehicleParkStatus=$pdo->prepare("UPDATE clientVehicle SET vehicleParkStatus=:vehicleParkStatus
                                             WHERE licensePlate=:licensePlate");
