@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', true);
 error_reporting(E_ALL);
 
-include_once("con.php");
+include_once("../con.php");
 
 $pdo = conectar();
 
@@ -125,6 +125,62 @@ switch ($option) {
             }
 
             echo json_encode($return);
+
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        
+        break;
+
+    case 'get user admin for edit':
+
+        $idUserAdmin = $_GET['idUserAdmin'];
+
+        try {
+            $getUserAdminForEdit=$pdo->prepare("SELECT * FROM usersAdmin WHERE idUserAdmin=:idUserAdmin");
+            $getUserAdminForEdit->bindValue(':idUserAdmin', $idUserAdmin);
+            $getUserAdminForEdit->execute();
+
+            // $getUserAdminForEdit->rowCount();
+
+            while ($line=$getUserAdminForEdit->fetch(PDO::FETCH_ASSOC)) {
+
+                    $name = $line['name'];
+                    $email = $line['email'];
+                    $password = $line['password'];
+    
+                    $return = array(
+                        'name' => $name,
+                        'email' => $email,
+                        'password' => $password
+                    );
+            }
+
+            echo json_encode($return);
+
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+        
+        break;
+
+    case 'update user admin':
+        // print_r($data);
+        // [password] => userAdmin@2021
+        $idUserAdmin = $data->idUserAdmin;
+        $name = $data->name;
+        $email = $data->email;
+        $password = $data->password;
+        $password = md5($password);
+
+        try {
+            $updateUserAdmin=$pdo->prepare("UPDATE usersAdmin SET name=:name, email=:email, password=:password
+                                            WHERE idUserAdmin=:idUserAdmin");
+            $updateUserAdmin->bindValue(':name', $name);
+            $updateUserAdmin->bindValue(':email', $email);
+            $updateUserAdmin->bindValue(':password', $password);
+            $updateUserAdmin->bindValue(':idUserAdmin', $idUserAdmin);
+            $updateUserAdmin->execute();
 
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
