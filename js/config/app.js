@@ -12,6 +12,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/register.html",
     })
 
+    .when("/editUserAdmin/:idUserAdmin", {
+        templateUrl: "views/account/admin/editUserAdmin.html",
+    })
+
     .when("/registerParking", {
         templateUrl: "views/account/parking/registerParking.html",
     })
