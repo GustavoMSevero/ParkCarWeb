@@ -5,8 +5,8 @@ ini_set('display_errors', true);
 error_reporting(E_ALL);
 
 include_once("../con.php");
-include_once("../jwt.php");
-include_once("../oneSignal.php");
+include_once("../functions/jwt.php");
+include_once("../functions/oneSignal.php");
 
 $pdo = conectar();
 
