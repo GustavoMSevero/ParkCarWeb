@@ -17,11 +17,11 @@ app.controller("checkParkingsCtrl", ['$scope', '$http', '$location', '$routePara
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin.php';
-		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin.php?option=';
+		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/admin.php';
+		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/admin.php?option=';
 	} else {
-		var urlPrefixAdmin = 'api/admin.php';
-		var urlOptionPrefixAdmin = 'api/admin.php?option=';
+		var urlPrefixAdmin = 'api/admin/admin.php';
+		var urlOptionPrefixAdmin = 'api/admin/admin.php?option=';
 	}
 
     $scope.logout = function() {
