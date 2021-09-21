@@ -40,6 +40,7 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
         $getParkingTimeAndPrices->execute();
         
         while ($line=$getParkingTimeAndPrices->fetch(PDO::FETCH_ASSOC)) {
+            $tolerancePeriod = $line['tolerancePeriod']; // 30 min
             $parkingTime_1 = $line['parkingTime_1']; // 30 min
             $parkingPrice_1 = $line['parkingPrice_1']; // 6,00
             $parkingTime_2 = $line['parkingTime_2']; // 1 hora
@@ -70,8 +71,9 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
         $valueToPay = 0;
 
-        // echo 'permanenceInMinutes '.$permanenceInMinutes.'<br>';
-        if ($permanenceInMinutes <= 30) {
+        if ($permanenceInMinutes <= $tolerancePeriod) {
+            $valueToPay = 0;
+        } elseif ($permanenceInMinutes <= 30) {
             // echo 'Pagar 30 min'.'<br>'; 6,00
             $valueToPay = $parkingPrice_1;
         } elseif ($permanenceInMinutes > 30 && $permanenceInMinutes <= 60) {
