@@ -72,8 +72,8 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/admin/information.html",
     })
 
-    .when("/historicAdmin", {
-        templateUrl: "views/account/admin/historicAdmin.html",
+    .when("/adminHistory", {
+        templateUrl: "views/account/admin/adminHistory.html",
     })
 
     .when("/registerUserAdmin", {
