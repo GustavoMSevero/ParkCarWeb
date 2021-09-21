@@ -46,7 +46,7 @@ switch ($option) {
     case 'login':
         $email = $data->email;
         $password = $data->password;
-        // $password = md5($data->password);
+        $password = md5($data->password);
 
         try {
             $loginUserAdmin=$pdo->prepare("SELECT * FROM usersAdmin WHERE email=:email AND password=:password");
