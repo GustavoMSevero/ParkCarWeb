@@ -328,9 +328,8 @@ switch ($option) {
             $updateVaccantsNumber->bindValue(":vaccantsQuantity", $vaccantsQuantity);
             $updateVaccantsNumber->execute();
 
-            // http://parkcar.dentistavelcis.com.br/vacancies/ESTACIONAMENTO/VAGAS
-            file_get_contents('http://parkcar.dentistavelcis.com.br/vacancies/'.$idParking.'/'.$vaccantNumber);
-
+            file_get_contents('http://ws.parkcar.app.br/vacancies/'.$idParking.'/'.$vaccantNumber);
+            
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }

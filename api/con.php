@@ -17,7 +17,6 @@ error_reporting(E_ALL);
 			// $password = "ParkCar2021";
 
 			$opcoes = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
-			// $pdo = new PDO("mysql:host=localhost;dbname=smarttraffic", "root", "root", $opcoes);
 			$pdo = new PDO($first.$dbname, $user, $password, $opcoes);	
 		} catch (Exception $e) {
 			echo $e->getMessage();
