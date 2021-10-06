@@ -150,50 +150,6 @@ switch ($option) {
 		
         break;
 
-    case 'get my parkings':
-        $idOwnerParking = $_GET['idOwnerParking'];
-
-        try {
-            $getMyParkings=$pdo->prepare("SELECT * FROM parking WHERE idOwnerParking=:idOwnerParking");
-            $getMyParkings->bindvalue(":idOwnerParking", $idOwnerParking);
-            $getMyParkings->execute();
-                
-            while ($line=$getMyParkings->fetch(PDO::FETCH_ASSOC)) {
-
-                $idParking = $line['idParking'];
-                $parkingName = $line['parkingName'];
-                $address = $line['address'];
-                $addressNumber = $line['addressNumber'];
-                $city = $line['city'];
-                $state = $line['state'];
-                $lat = $line['lat'];
-                $lng = $line['lng'];
-                $vaccantNumber = $line['vaccantNumber'];
-
-                $status = 1;
-                $return[] = array(
-                    'idParking' => $idParking,
-                    'parkingName' => $parkingName,
-                    'address' => $address,
-                    'addressNumber' => $addressNumber,
-                    'city' => $city,
-                    'state' => $state,
-                    'lat' => $lat,
-                    'lng' => $lng,
-                    'vaccantNumber' => $vaccantNumber
-                );
-    
-            }
-
-            echo json_encode($return);
-
-            
-        } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
-        }
-
-        break;
-
     case 'login':
         $email = $data->email;
         $password = md5($data->password);
@@ -252,6 +208,50 @@ switch ($option) {
 
         break;
 
+    case 'get my parkings':
+        $idOwnerParking = $_GET['idOwnerParking'];
+
+        try {
+            $getMyParkings=$pdo->prepare("SELECT * FROM parking WHERE idOwnerParking=:idOwnerParking");
+            $getMyParkings->bindvalue(":idOwnerParking", $idOwnerParking);
+            $getMyParkings->execute();
+                
+            while ($line=$getMyParkings->fetch(PDO::FETCH_ASSOC)) {
+
+                $idParking = $line['idParking'];
+                $parkingName = $line['parkingName'];
+                $address = $line['address'];
+                $addressNumber = $line['addressNumber'];
+                $city = $line['city'];
+                $state = $line['state'];
+                $lat = $line['lat'];
+                $lng = $line['lng'];
+                $vaccantNumber = $line['vaccantNumber'];
+
+                $status = 1;
+                $return[] = array(
+                    'idParking' => $idParking,
+                    'parkingName' => $parkingName,
+                    'address' => $address,
+                    'addressNumber' => $addressNumber,
+                    'city' => $city,
+                    'state' => $state,
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'vaccantNumber' => $vaccantNumber
+                );
+    
+            }
+
+            echo json_encode($return);
+
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
     case 'get local parkings lots':
 
         try {
@@ -286,6 +286,79 @@ switch ($option) {
             }
 
             echo json_encode($return);
+
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
+    case 'near parkings':
+
+        $geometry = $_GET['geometry'];
+        $geometry = json_decode($geometry);
+
+        $km = 1;
+        $KmToGrandes = $km * 0.009;
+
+        $lat = $geometry->latitude;
+        $lng = $geometry->longitude;
+
+        $latMax = $lat + $KmToGrandes;
+        $latMin = $lat - $KmToGrandes;
+        $lngMax = $lng + $KmToGrandes;
+        $lngMin = $lng - $KmToGrandes;
+
+        try {
+            $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber
+                                            FROM parking
+                                            WHERE lat BETWEEN :latMin AND :latMax 
+                                            AND lng BETWEEN :lngMin AND :lngMax 
+                                            AND activate=1");
+            $searchForNearbyParking->bindvalue(":latMin", $latMin);
+            $searchForNearbyParking->bindvalue(":latMax", $latMax);
+            $searchForNearbyParking->bindvalue(":lngMin", $lngMin);
+            $searchForNearbyParking->bindvalue(":lngMax", $lngMax);
+            $searchForNearbyParking->execute();
+
+            $searchForNearbyParking->execute();
+
+            $quantity = $searchForNearbyParking->rowCount();
+
+            if ($quantity != 0) {
+                
+                while ($line=$searchForNearbyParking->fetch(PDO::FETCH_ASSOC)) {
+
+                    $parkingName = $line['parkingName'];
+                    $address = $line['address'];
+                    $addressNumber = $line['addressNumber'];
+                    $vaccantNumber = $line['vaccantNumber'];
+                    
+
+                    $return[] = array(
+                        'parkingName' => $parkingName,
+                        'address' => $address,
+                        'addressNumber' => $addressNumber,
+                        'vaccantNumber' => $vaccantNumber
+                    );
+        
+                }
+
+                echo json_encode($return);
+            
+            } else {
+
+                $status = 0;
+                $msg = 'Nenhum estacionamento próximo do seu destino';
+                $return = array(
+                    'status' => $status,
+                    'msg' => $msg
+                );
+
+                echo json_encode($return);
+                
+            }
 
             
         } catch (Exception $e) {
