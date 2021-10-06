@@ -13,3 +13,21 @@ p {
 #changeButton {
     margin-top: 20px;
 }
+
+.ownerName {
+    /* background-color:burlywood; */
+    width: 25%;
+}
+
+#ownerName,
+#linkToEdit {
+    display: inline-block;
+}
+
+#ownerName {
+  
+}
+
+#linkToEdit {
+    margin-left: 20px;
+}
