@@ -45,6 +45,7 @@ app.controller("registerParkingCtrl", ['$scope', '$http', '$location', '$routePa
         $http.post(urlPrefixAdmin, parkingAddress).success(function(data) {
             // console.log(data)
             $scope.parkingAddress = '';
+            getMyParkings();
             alert(data.msgRegisterOK);
         })
     }
