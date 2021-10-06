@@ -136,8 +136,13 @@
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <div>
-                                                        <b>Estacionamento:</b> {{name}}
+                                                    <div class="ownerName">
+                                                        <div id="ownerName">
+                                                            <b>Nome do dono:</b> {{name}}
+                                                        </div>
+                                                        <div id="linkToEdit">
+                                                            <a href="#/editOwnerName/{{id}}">edit</a>
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <b>E-mail:</b> {{email}}
