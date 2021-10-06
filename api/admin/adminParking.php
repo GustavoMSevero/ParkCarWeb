@@ -405,6 +405,57 @@ switch ($option) {
         }
 
         break;
+
+    case 'get owner name': // login owner parking
+
+        $id = $_GET['id'];
+
+        try {
+            $getOwnername=$pdo->prepare("SELECT ownerName FROM ownerParking WHERE idOwnerParking=:id");
+            $getOwnername->bindValue(":id", $id);
+            $getOwnername->execute();
+
+            while ($line=$getOwnername->fetch(PDO::FETCH_ASSOC)) {
+
+                $ownerName = $line['ownerName'];
+
+                $return = array(
+                    'name' => $ownerName
+                );
+
+            }
+
+            echo json_encode($return);
+
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
+    case 'update owner name': // login owner parking
+
+        $id = $data->id;
+        $name = $data->name;
+
+        try {
+            $updateOwnerName=$pdo->prepare("UPDATE ownerParking SET ownerName=:name WHERE idOwnerParking=:id");
+            $updateOwnerName->bindValue(":name", $name);
+            $updateOwnerName->bindValue(":id", $id);
+            $updateOwnerName->execute();
+
+            $return = array(
+                'name' => $name
+            );
+
+            echo json_encode($return);
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
     
     default:
         # code...
