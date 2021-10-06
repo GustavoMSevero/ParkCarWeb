@@ -7,7 +7,6 @@ include_once("../con.php");
 include_once("../functions/jwt.php");
 include_once("../functions/oneSignal.php");
 include_once("../functions/stayCount-GaragemCarlosGomes.php");
-// include_once("../stopStayParking.php");
 
 $pdo = conectar();
 
@@ -339,7 +338,6 @@ switch ($option) {
     case 'stop counting time':
         $idParkedVehicle = $data->id;
         $licensePlate = $data->licensePlate;
-        $vehicleParkStatus = 0;
         $idParking = $data->idParking;
 
 
@@ -349,21 +347,19 @@ switch ($option) {
         stayCount($idParkedVehicle, $licensePlate, $idParking);
 
         try {
-            // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME
+            // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME IN clientVehicle
             $updateVehicleParkStatus=$pdo->prepare("UPDATE clientVehicle SET vehicleParkStatus=:vehicleParkStatus
                                             WHERE licensePlate=:licensePlate");
             $updateVehicleParkStatus->bindValue(":vehicleParkStatus", $vehicleParkStatus);
             $updateVehicleParkStatus->bindValue(":licensePlate", $licensePlate);
             $updateVehicleParkStatus->execute();
 
-            $updateParkedVehicles=$pdo->prepare("UPDATE parkedVehicles SET vehicleParkStatus=:vehicleParkStatus, departureTime=:departureTime
+            // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME IN parkedVehicles
+            $updateParkedVehicles=$pdo->prepare("UPDATE parkedVehicles SET vehicleParkStatus=0, departureTime=:departureTime
                                             WHERE licensePlate=:licensePlate");
-            $updateParkedVehicles->bindValue(":vehicleParkStatus", $vehicleParkStatus);
             $updateParkedVehicles->bindValue(":departureTime", $departureTime);
             $updateParkedVehicles->bindValue(":licensePlate", $licensePlate);
             $updateParkedVehicles->execute();
-
-
 
             //GET IDCLIENT BY LICENSEPLATE
             $getIdClient=$pdo->prepare("SELECT idClient FROM clientVehicle WHERE licensePlate=:licensePlate");
@@ -374,7 +370,7 @@ switch ($option) {
                 $idClient = $line['idClient'];
             }
 
-            //GET ID USER FROM DEVICEIDS TABLE
+            //GET ONSINGAL ID USER FROM DEVICEIDS TABLE
             $getDeviceID=$pdo->prepare("SELECT * FROM deviceIds WHERE userId=:userId");
             $getDeviceID->bindValue(":userId", $idClient);
             $getDeviceID->execute();
@@ -383,7 +379,7 @@ switch ($option) {
                 $id[] = $line['id'];
             }
 
-            // GET NUMBER VACCANTS
+            // GET NUMBER VACCANTS OF THE PARKING
             $getVaccantsNumber=$pdo->prepare("SELECT vaccantNumber, parkingName FROM parking WHERE idParking=:idParking");
             $getVaccantsNumber->bindValue(":idParking", $idParking);
             $getVaccantsNumber->execute();
@@ -404,7 +400,7 @@ switch ($option) {
             $updateVaccantsNumber->bindValue(":vaccantsQuantity", $vaccantsQuantity);
             $updateVaccantsNumber->execute();
 
-            // file_get_contents('http://smarttraffic.dentistavelcis.com.br/vacancies/'.$idParking.'/'.$vaccantNumber);
+            file_get_contents('http://ws.parkcar.app.br/vacancies/'.$idParking.'/'.$vaccantNumber);
   
 
         } catch (Exception $e) {
