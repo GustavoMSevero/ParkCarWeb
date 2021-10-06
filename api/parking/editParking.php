@@ -41,8 +41,8 @@ switch ($option) {
                 $addressNumber = $line['addressNumber'];
                 $city = $line['city'];
                 $state = $line['state'];
-                $lat = $line['lat'];
-                $lng = $line['lng'];
+                $latitude = $line['latitude'];
+                $longitude = $line['longitude'];
                 $vaccantNumber = $line['vaccantNumber'];
 
                 $status = 1;
@@ -53,8 +53,8 @@ switch ($option) {
                     'addressNumber' => $addressNumber,
                     'city' => $city,
                     'state' => $state,
-                    'lat' => $lat,
-                    'lng' => $lng,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
                     'vaccantNumber' => $vaccantNumber
                 );
     
@@ -150,8 +150,8 @@ switch ($option) {
             // decode the json
             $resp = json_decode($resp_json, true);
 
-            $lat = $resp['results'][0]['geometry']['location']['lat'];
-            $lng = $resp['results'][0]['geometry']['location']['lng'];
+            $latitude = $resp['results'][0]['geometry']['location']['lat'];
+            $longitude = $resp['results'][0]['geometry']['location']['lng'];
 
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -161,7 +161,7 @@ switch ($option) {
         try {
             $address = utf8_decode($address);
             $updateParking=$pdo->prepare("UPDATE parking 
-                                            SET parkingName=:parkingName, zipcode=:zipcode, address=:address, addressNumber=:addressNumber, neighborhood=:neighborhood, city=:city, state=:state, lat=:lat, lng=:lng
+                                            SET parkingName=:parkingName, zipcode=:zipcode, address=:address, addressNumber=:addressNumber, neighborhood=:neighborhood, city=:city, state=:state, latitude=:latitude, longitude=:longitude
                                             WHERE idParking=:idParking");
             $updateParking->bindValue(":idParking", $idParking);
             $updateParking->bindValue(":parkingName", $parkingName);
@@ -171,8 +171,8 @@ switch ($option) {
             $updateParking->bindValue(":neighborhood", $neighborhood);
             $updateParking->bindValue(":city", $city);
             $updateParking->bindValue(":state", $state);
-            $updateParking->bindValue(":lat", $lat);
-            $updateParking->bindValue(":lng", $lng);
+            $updateParking->bindValue(":latitude", $latitude);
+            $updateParking->bindValue(":longitude", $longitude);
             $updateParking->execute();
 
             $toleranceTime = $data->newToleranceTime;

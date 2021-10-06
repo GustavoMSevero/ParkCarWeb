@@ -30,7 +30,6 @@ if($data){
 
 switch ($option) {
     case 'register':
-        // var_dump($data);
         $name = $data->clientName;
         $rg = $data->rg;
         $cpf = $data->cpf;
