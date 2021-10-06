@@ -52,8 +52,8 @@ switch ($option) {
             // decode the json
             $resp = json_decode($resp_json, true);
 
-            $lat = $resp['results'][0]['geometry']['location']['lat'];
-            $lng = $resp['results'][0]['geometry']['location']['lng'];
+            $latitude = $resp['results'][0]['geometry']['location']['lat'];
+            $longitude = $resp['results'][0]['geometry']['location']['lng'];
 
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -81,7 +81,7 @@ switch ($option) {
                 echo json_encode($return);
 
             } else {
-                $registerParking=$pdo->prepare("INSERT INTO parking (idParking, idOwnerParking, zipcode, address, addressNumber, neighborhood, city, state, parkingName, parkingPass, email, password, activate, vaccantNumber, lat, lng) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $registerParking=$pdo->prepare("INSERT INTO parking (idParking, idOwnerParking, zipcode, address, addressNumber, neighborhood, city, state, parkingName, parkingPass, email, password, activate, vaccantNumber, latitude, longitude) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $registerParking->bindValue(1, NULL);
                 $registerParking->bindValue(2, $idOwnerParking);
                 $registerParking->bindValue(3, $zipcode);
@@ -96,8 +96,8 @@ switch ($option) {
                 $registerParking->bindValue(12, $password);
                 $registerParking->bindValue(13, $activate);
                 $registerParking->bindValue(14, $vaccantNumber);
-                $registerParking->bindValue(15, $lat);
-                $registerParking->bindValue(16, $lng);
+                $registerParking->bindValue(15, $latitude);
+                $registerParking->bindValue(16, $longitude);
                 $registerParking->execute();
 
                 $parkingEmail = $email;
@@ -224,8 +224,8 @@ switch ($option) {
                 $addressNumber = $line['addressNumber'];
                 $city = $line['city'];
                 $state = $line['state'];
-                $lat = $line['lat'];
-                $lng = $line['lng'];
+                $latitude = $line['latitude'];
+                $longitude = $line['longitude'];
                 $vaccantNumber = $line['vaccantNumber'];
 
                 $status = 1;
@@ -236,8 +236,8 @@ switch ($option) {
                     'addressNumber' => $addressNumber,
                     'city' => $city,
                     'state' => $state,
-                    'lat' => $lat,
-                    'lng' => $lng,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
                     'vaccantNumber' => $vaccantNumber
                 );
     
@@ -266,8 +266,8 @@ switch ($option) {
                 $addressNumber = $line['addressNumber'];
                 $city = $line['city'];
                 $state = $line['state'];
-                $lat = $line['lat'];
-                $lng = $line['lng'];
+                $latitude = $line['latitude'];
+                $longitude = $line['longitude'];
                 $vaccantNumber = $line['vaccantNumber'];
 
                 $status = 1;
@@ -278,8 +278,8 @@ switch ($option) {
                     'addressNumber' => $addressNumber,
                     'city' => $city,
                     'state' => $state,
-                    'lat' => $lat,
-                    'lng' => $lng,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
                     'vaccantNumber' => $vaccantNumber
                 );
     
@@ -311,10 +311,10 @@ switch ($option) {
         $lngMin = $lng - $KmToGrandes;
 
         try {
-            $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber
+            $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber, latitude, longitude
                                             FROM parking
-                                            WHERE lat BETWEEN :latMin AND :latMax 
-                                            AND lng BETWEEN :lngMin AND :lngMax 
+                                            WHERE latitude BETWEEN :latMin AND :latMax 
+                                            AND longitude BETWEEN :lngMin AND :lngMax 
                                             AND activate=1");
             $searchForNearbyParking->bindvalue(":latMin", $latMin);
             $searchForNearbyParking->bindvalue(":latMax", $latMax);
@@ -334,13 +334,16 @@ switch ($option) {
                     $address = $line['address'];
                     $addressNumber = $line['addressNumber'];
                     $vaccantNumber = $line['vaccantNumber'];
-                    
+                    $latitude = $line['latitude'];
+                    $longitude = $line['longitude'];
 
                     $return[] = array(
                         'parkingName' => $parkingName,
                         'address' => $address,
                         'addressNumber' => $addressNumber,
-                        'vaccantNumber' => $vaccantNumber
+                        'vaccantNumber' => $vaccantNumber,
+                        'latitude' => floatval($latitude),
+                        'longitude' => floatval($longitude)
                     );
         
                 }
