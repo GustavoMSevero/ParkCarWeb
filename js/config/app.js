@@ -64,6 +64,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/parking/ownerArea.html",
     })
 
+    .when("/editOwnerName/:idParking", {
+        templateUrl: "views/account/parking/editOwnerName.html",
+    })
+
     .when("/financialAdmin", {
         templateUrl: "views/account/admin/financial.html",
     })
