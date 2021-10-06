@@ -1,0 +1,12 @@
+#newOwnerName {
+    width: 20%;
+}
+
+#editOwnerNameButton {
+
+}
+
+#newOwnerName,
+#editOwnerNameButton {
+    display: inline-block;
+}
