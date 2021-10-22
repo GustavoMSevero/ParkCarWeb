@@ -88,6 +88,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/admin/checkParkings.html",
     })
 
+    .when("/moreinfos/:idParking", {
+        templateUrl: "views/account/admin/moreinfos.html",
+    })
+
     .when("/checkClients", {
         templateUrl: "views/account/admin/checkClients.html",
     })
