@@ -247,6 +247,7 @@ switch ($option) {
             $getParkings->execute();
 
             while ($line=$getParkings->fetch(PDO::FETCH_ASSOC)) {
+                    $idParking = $line['idParking'];
                     $parkingName = $line['parkingName'];
                     $city = $line['city'];
                     $state = $line['state'];
@@ -259,6 +260,7 @@ switch ($option) {
                     }
 
                     $return[] = array(
+                        'idParking' => $idParking,
                         'parkingName' => $parkingName,
                         'city' => $city,
                         'state' => $state,
