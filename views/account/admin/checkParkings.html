@@ -31,7 +31,7 @@
         <script async defer src="js/config/buttons.js"></script>
 
         <!-- Title -->
-        <title>Smart Traffic</title>
+        <title>ParkCar</title>
 
     </head>
 
@@ -145,13 +145,13 @@
                                                             <label for="inputZip">Listagem de estacionamentos</label>
                                                             <table>
                                                                 <tr>
-                                                                    <td width="200">Nome</td>
+                                                                    <td width="250">Nome</td>
                                                                     <td width="200">Cidade</td>
                                                                     <td width="100">Estado</td>
                                                                     <td width="150">Vagas</td>
                                                                 </tr>
                                                                 <tr ng-repeat="lop in listOfParkings">
-                                                                    <td>{{lop.parkingName}}</td>
+                                                                    <td><a href="#/moreinfos/{{lop.idParking}}">{{lop.parkingName}}</td></a>
                                                                     <td>{{lop.city}}</td>
                                                                     <td>{{lop.state}}</td>
                                                                     <td>{{lop.vaccantNumber}}</td>
