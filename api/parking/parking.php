@@ -28,7 +28,7 @@ if($data){
 
 switch ($option) {
       case 'register':
-        // print_r($data);
+
         $idOwnerParking = $data->idOwnerParking;
         $zipcode = $data->zipcode;
         $address = $data->address;
