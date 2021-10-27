@@ -34,28 +34,85 @@ switch ($option) {
         $ownerPassword = md5($data->ownerPassword);
 
         try {
+            // GET owner to check if already exists
+            $getOwner=$pdo->prepare("SELECT ownerEmail, ownerPassword 
+                                    FROM ownerParking 
+                                    WHERE ownerPassword=:ownerPassword 
+                                    AND ownerEmail=:ownerEmail");
+            $getOwner->bindValue(":ownerPassword", $ownerPassword);
+            $getOwner->bindValue(":ownerEmail", $ownerEmail);
+            $getOwner->execute();
 
-            $registerOwnerParking=$pdo->prepare("INSERT INTO ownerParking (idOwnerParking, ownerName, moreParkings, ownerEmail, ownerPassword) VALUES(?,?,?,?,?)");
-            $registerOwnerParking->bindValue(1, NULL);
-            $registerOwnerParking->bindValue(2, $ownerName);
-            $registerOwnerParking->bindValue(3, $moreParkings);
-            $registerOwnerParking->bindValue(4, $ownerEmail);
-            $registerOwnerParking->bindValue(5, $ownerPassword);
-            $registerOwnerParking->execute();
+            $qtd = $getOwner->rowCount();
 
-            $idOwnerParking = $pdo->lastInsertId();
-            $status = 1;
+            if ($qtd > 0) {
+                // echo 'já exists ';
+                // echo $qtd;
+                $status = 2;
+                $existsMessagem = utf8_encode('E-mail e senha já cadastrados');
 
-            $return = array(
-                'status' => $status,
-                'id' => $idOwnerParking,
-                'name' => $ownerName,
-                'moreParkings' => $moreParkings
-            );
+                $return = array(
+                    'status' => $status,
+                    'existsMessagem' => $existsMessagem
+                );
 
-            echo json_encode($return);
+                echo json_encode($return);
+            } else {
+                // echo 'não existe ';
+                // echo $qtd;
+                $registerOwnerParking=$pdo->prepare("INSERT INTO ownerParking (idOwnerParking, ownerName, moreParkings, ownerEmail, ownerPassword) VALUES(?,?,?,?,?)");
+                $registerOwnerParking->bindValue(1, NULL);
+                $registerOwnerParking->bindValue(2, $ownerName);
+                $registerOwnerParking->bindValue(3, $moreParkings);
+                $registerOwnerParking->bindValue(4, $ownerEmail);
+                $registerOwnerParking->bindValue(5, $ownerPassword);
+                $registerOwnerParking->execute();
 
+                $idOwnerParking = $pdo->lastInsertId();
+                $status = 1;
 
+                $mail = new PHPMailer();
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.uni5.net';
+                // $mail->Host       = 'smtp.parkcar.app.br';
+                $mail->SMTPAuth   = true; 
+                $mail->Username   = 'boasvindas@parkcar.app.br';
+                $mail->Password   = 'STbv@2021';
+                $mail->Port       = '587';
+                $image = '../imgs/logo.png';
+                // <img src='cid:".$image." width='100' height='50' >
+
+                //Recipients
+                $site = 'ParkCar';
+                $mail->setFrom('boasvindas@parkcar.app.br', $site);
+                $mail->addAddress($ownerEmail, $ownerName);
+
+                // Content
+                $mail->Subject = "SEJA BEM-VINDO A PARKCAR";
+                $mail->Body    = "<html lang='en'>
+                                    <head>
+                                        <meta charset='UTF-8'>
+                                    </head>
+                                    <body>
+                                        <p>Seja bem-vindo a ParkCar, ".$ownerName.".<br>
+                                        Seu cadastro, em nosso sistema, foi efetuado com sucesso!</p>
+                                    </body>
+                                </html>";
+                $mail->IsHTML(true); // Set email format to HTML
+
+                $mail->send();
+                // echo 'Message has been sent';
+
+                $return = array(
+                    'status' => $status,
+                    'id' => $idOwnerParking,
+                    'name' => $ownerName,
+                    'moreParkings' => $moreParkings
+                );
+
+                echo json_encode($return);
+            }
+            
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
