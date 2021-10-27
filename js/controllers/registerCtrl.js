@@ -16,6 +16,7 @@ app.controller("registerCtrl", ['$scope', '$http', '$window', '$location', '$roo
                 localStorage.setItem('parkcar_moreParkings', data.moreParkings);
                 $location.path('/account');
             } else {
+                alert(data.existsMessagem)
                 return;
             }
         });
