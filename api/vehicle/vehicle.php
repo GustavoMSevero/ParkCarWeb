@@ -411,16 +411,16 @@ switch ($option) {
 
     case 'get existing vehicles':
 
-        $licensePlate = $_GET['licensePlate'];
-        $licensePlate = strtoupper($licensePlate);
+        $renavam = $_GET['renavam'];
+        // $licensePlate = strtoupper($licensePlate);
 
         try {
 
-            $getAllVehicles=$pdo->prepare("SELECT clientVehicle.brand, clientVehicle.model, clientVehicle.licensePlate, clientVehicle.idClientVehicle, client.name, client.idClient
+            $getAllVehicles=$pdo->prepare("SELECT clientVehicle.brand, clientVehicle.model, clientVehicle.licensePlate, clientVehicle.idClientVehicle, clientVehicle.renavam, client.name, client.idClient
                                             FROM clientVehicle, client 
                                             WHERE clientVehicle.idclient=client.idclient
-                                            AND clientVehicle.`licensePlate`=:licensePlate");
-            $getAllVehicles->bindValue(':licensePlate', $licensePlate);
+                                            AND clientVehicle.`renavam`=:renavam");
+            $getAllVehicles->bindValue(':renavam', $renavam);
             $getAllVehicles->execute();
 
             $exists = $getAllVehicles->rowCount();
@@ -431,6 +431,7 @@ switch ($option) {
                     $idClient = $line['idClient'];
                     $idClientVehicle = $line['idClientVehicle'];
                     $licensePlate = $line['licensePlate'];
+                    $renavam = $line['renavam'];
                     $brand = $line['brand'];
                     $model = $line['model'];
                     $clientName = $line['name'];
@@ -438,6 +439,7 @@ switch ($option) {
                     $return = array(
                         'idClient' => $idClient,
                         'licensePlate' => $licensePlate,
+                        'renavam' => $renavam,
                         'idClientVehicle' => $idClientVehicle,
                         'brand' => $brand,
                         'model' => $model,
@@ -582,6 +584,9 @@ switch ($option) {
                     $lenghtOfStay = $line['lenghtOfStay'];
                     $valuePaid = $line['valuePaid'];
 
+                    $parkDateP = explode('-', $parkDate);
+                    $parkDate = $parkDateP[2].'/'.$parkDateP[1].'/'.$parkDateP[0];
+
                     $entranceP = explode(' ', $entrance);
                     $entranceDate = $entranceP[0];
                     $entranceTime = $entranceP[1];
@@ -593,6 +598,7 @@ switch ($option) {
                         'id' => $id,
                         'parkingName' => $parkingName,
                         'licensePlate' => $licensePlate,
+                        'entranceDate' => $parkDate,
                         'entranceTime' => $entranceTime,
                         'departureTime' => $departureTime,
                         'lenghtOfStay' => $lenghtOfStay,
