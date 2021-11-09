@@ -34,11 +34,13 @@ switch ($option) {
                 $licensePlate = $line['licensePlate'];
                 $brand = $line['brand'];
                 $model = $line['model'];
+                $renavam = $line['renavam'];
 
                 $return = array(
                     'licensePlate' => $licensePlate,
                     'brand' => $brand,
-                    'model' => $model
+                    'model' => $model,
+                    'renavam' => $renavam
                 );
                
             }
@@ -57,14 +59,16 @@ switch ($option) {
         $brand = $data->brand;
         $model = $data->model;
         $licensePlate = $data->licensePlate;
+        $renavam = $data->renavam;
 
         try {
 
-            $updateDataVehicles=$pdo->prepare("UPDATE clientVehicle SET brand=:brand, model=:model, licensePlate=:licensePlate
+            $updateDataVehicles=$pdo->prepare("UPDATE clientVehicle SET brand=:brand, model=:model, licensePlate=:licensePlate, renavam=:renavam
                                                 WHERE idClientVehicle=:idClientVehicle");
             $updateDataVehicles->bindValue(':brand', $brand);
             $updateDataVehicles->bindValue(':model', $model);
             $updateDataVehicles->bindValue(':licensePlate', $licensePlate);
+            $updateDataVehicles->bindValue(':renavam', $renavam);
             $updateDataVehicles->bindValue(':idClientVehicle', $idClientVehicle);
             $updateDataVehicles->execute();
 
