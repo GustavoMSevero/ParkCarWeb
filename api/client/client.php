@@ -37,27 +37,27 @@ switch ($option) {
         $email = $data->email;
         $password = md5($data->password);
 
-        $licensePlate = $data->licensePlate;
-        $idClientVehicle = $data->idClientVehicle;
+        // $licensePlate = $data->licensePlate;
+        // $idClientVehicle = $data->idClientVehicle;
 
-        $onesignalId = $data->onesignalId;
+        // $onesignalId = $data->onesignalId;
 
-        $vehicleParkStatus = 0; // 0 not parked, 1 parked
+        // $vehicleParkStatus = 0; // 0 not parked, 1 parked
         $parkingPass = 1; // 1 parking pass agree
 
-        if ( preg_match('/\s/',$licensePlate) ) {
-            // echo 'tem espaços';
-            $lp = explode(' ', $licensePlate);
-            $licensePlate = $lp[0].$lp[1];
-        } else {
-            // echo 'não tem espaços';
-        }
-        // echo $licensePlate;
+        // if ( preg_match('/\s/',$licensePlate) ) {
+        //     // echo 'tem espaços';
+        //     $lp = explode(' ', $licensePlate);
+        //     $licensePlate = $lp[0].$lp[1];
+        // } else {
+        //     // echo 'não tem espaços';
+        // }
+        // // echo $licensePlate;
 
 
-        if ($idClientVehicle == NULL || $idClientVehicle == null) { // CADASTRAR VEÍCULO
-            $carBrand = $data->carBrand;
-            $carModel = $data->carModel;
+        // if ($idClientVehicle == NULL || $idClientVehicle == null) { // CADASTRAR VEÍCULO
+        //     $carBrand = $data->carBrand;
+        //     $carModel = $data->carModel;
 
             try {
                 $checkIfUserExists=$pdo->prepare("SELECT idClient FROM client WHERE email=:email AND cpf=:cpf");
@@ -91,18 +91,18 @@ switch ($option) {
                     $idClient=$pdo->lastInsertId();
 
                     //ONE SIGNAL
-                    $userType = 'client';
-                    $oneSignalId = 0; 
-                    updateOneSignalId($idClient, $userType, $oneSignalId);
+                    // $userType = 'client';
+                    // $oneSignalId = 0; 
+                    // updateOneSignalId($idClient, $userType, $oneSignalId);
 
-                    $registerVehicle=$pdo->prepare("INSERT INTO clientVehicle (idClientVehicle, idClient, brand, model, licensePlate, vehicleParkStatus) VALUES(?,?,?,?,?,?)");
-                    $registerVehicle->bindValue(1, NULL);
-                    $registerVehicle->bindValue(2, $idClient);
-                    $registerVehicle->bindValue(3, $carBrand);
-                    $registerVehicle->bindValue(4, $carModel);
-                    $registerVehicle->bindValue(5, $licensePlate);
-                    $registerVehicle->bindValue(6, $vehicleParkStatus);
-                    $registerVehicle->execute();
+        //             $registerVehicle=$pdo->prepare("INSERT INTO clientVehicle (idClientVehicle, idClient, brand, model, licensePlate, vehicleParkStatus) VALUES(?,?,?,?,?,?)");
+        //             $registerVehicle->bindValue(1, NULL);
+        //             $registerVehicle->bindValue(2, $idClient);
+        //             $registerVehicle->bindValue(3, $carBrand);
+        //             $registerVehicle->bindValue(4, $carModel);
+        //             $registerVehicle->bindValue(5, $licensePlate);
+        //             $registerVehicle->bindValue(6, $vehicleParkStatus);
+        //             $registerVehicle->execute();
 
                     $mail = new PHPMailer();
                     $mail->isSMTP();
@@ -135,7 +135,7 @@ switch ($option) {
 
                     $mail->send();
                     //echo 'Message has been sent';
-                    $msg = 'E-mail de boas-vindas enviada com sucesso para '.$clientName.'! '.$clientEmail;
+                    $msg = 'E-mail de boas-vindas enviada com sucesso para '.$name.'! '.$email;
 
                     $return = array(
                         'msg' => $msg
@@ -148,55 +148,53 @@ switch ($option) {
                 echo 'Caught exception: ',  $e->getMessage(), "\n";
             }
             
-        } else { // VEÍCULO EXISTE
+        // } else { // VEÍCULO EXISTE
             
-            try {
-                $checkIfUserExists=$pdo->prepare("SELECT idClient FROM client WHERE email=:email AND cpf=:cpf");
-                $checkIfUserExists->bindValue(":email", $email);
-                $checkIfUserExists->bindValue(":cpf", $cpf);
-                $checkIfUserExists->execute();
+        //     try {
+        //         $checkIfUserExists=$pdo->prepare("SELECT idClient FROM client WHERE email=:email AND cpf=:cpf");
+        //         $checkIfUserExists->bindValue(":email", $email);
+        //         $checkIfUserExists->bindValue(":cpf", $cpf);
+        //         $checkIfUserExists->execute();
 
-                $exists = $checkIfUserExists->rowCount();
+        //         $exists = $checkIfUserExists->rowCount();
 
-                if ($exists != 0) {
-                    $status = 1;
-                    $msg = 'Usuário já existente';
-                    $return = array(
-                        'status' => $status,
-                        'msg' => $msg
-                    );
+        //         if ($exists != 0) {
+        //             $status = 1;
+        //             $msg = 'Usuário já existente';
+        //             $return = array(
+        //                 'status' => $status,
+        //                 'msg' => $msg
+        //             );
 
-                    echo json_encode($return);
-                } else {
-                    $registerClient=$pdo->prepare("INSERT INTO client (idClient, name, rg, cpf, cnh, parkingPass, email, password) VALUES(?,?,?,?,?,?,?,?)");
-                    $registerClient->bindValue(1, NULL);
-                    $registerClient->bindValue(2, $name);
-                    $registerClient->bindValue(3, $rg);
-                    $registerClient->bindValue(4, $cpf);
-                    $registerClient->bindValue(5, $cnh);
-                    $registerClient->bindValue(6, $parkingPass);
-                    $registerClient->bindValue(7, $email);
-                    $registerClient->bindValue(8, $password);
-                    $registerClient->execute();
+        //             echo json_encode($return);
+        //         } else {
+        //             $registerClient=$pdo->prepare("INSERT INTO client (idClient, name, rg, cpf, cnh, parkingPass, email, password) VALUES(?,?,?,?,?,?,?,?)");
+        //             $registerClient->bindValue(1, NULL);
+        //             $registerClient->bindValue(2, $name);
+        //             $registerClient->bindValue(3, $rg);
+        //             $registerClient->bindValue(4, $cpf);
+        //             $registerClient->bindValue(5, $cnh);
+        //             $registerClient->bindValue(6, $parkingPass);
+        //             $registerClient->bindValue(7, $email);
+        //             $registerClient->bindValue(8, $password);
+        //             $registerClient->execute();
 
-                    $idClient=$pdo->lastInsertId();
+        //             $idClient=$pdo->lastInsertId();
 
-                    $idClientOwnerVehicle = $data->idClientOwnerVehicle; // ID DO CLIENTE DONO DO VEÍCULO
+        //             $idClientOwnerVehicle = $data->idClientOwnerVehicle; // ID DO CLIENTE DONO DO VEÍCULO
 
-                    $addVehicleAnotherUser=$pdo->prepare("INSERT INTO sharedVehicles (id, idVehicle, idClient, idOtherUser) VALUES(?,?,?,?)");
-                    $addVehicleAnotherUser->bindValue(1, NULL);
-                    $addVehicleAnotherUser->bindValue(2, $idClientVehicle);
-                    $addVehicleAnotherUser->bindValue(3, $idClientOwnerVehicle);
-                    $addVehicleAnotherUser->bindValue(4, $idClient);
-                    $addVehicleAnotherUser->execute();
-                }
+        //             $addVehicleAnotherUser=$pdo->prepare("INSERT INTO sharedVehicles (id, idVehicle, idClient, idOtherUser) VALUES(?,?,?,?)");
+        //             $addVehicleAnotherUser->bindValue(1, NULL);
+        //             $addVehicleAnotherUser->bindValue(2, $idClientVehicle);
+        //             $addVehicleAnotherUser->bindValue(3, $idClientOwnerVehicle);
+        //             $addVehicleAnotherUser->bindValue(4, $idClient);
+        //             $addVehicleAnotherUser->execute();
+        //         }
 
-            } catch (Exception $e) {
-                echo 'Caught exception: ',  $e->getMessage(), "\n";
-            }
-        }
-
-        
+        //     } catch (Exception $e) {
+        //         echo 'Caught exception: ',  $e->getMessage(), "\n";
+        //     }
+        // }
 
         break;
 
