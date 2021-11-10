@@ -42,6 +42,9 @@ switch ($option) {
         while ($line=$getClientCredits->fetch(PDO::FETCH_ASSOC)) {
 
             $creditValue = $line['creditValue'];
+            setlocale(LC_MONETARY, 'pt_BR');
+            $creditValue = money_format('%n', $creditValue);
+
 
             $return = array(
                 'creditValue' => $creditValue
