@@ -29,12 +29,30 @@ $response = array(
     'customer' => $customer->id
 );
 
-$buyCredits=$pdo->prepare("INSERT INTO credits (idCredits, idClient, customerStripe, creditValue) VALUES(?,?,?,?)");
-$buyCredits->bindValue(1, NULL);
-$buyCredits->bindValue(2, $idClient);
-$buyCredits->bindValue(3, $response['customer']);
-$buyCredits->bindValue(4, $price);
-$buyCredits->execute();
+// $idClient = 29;
+// echo json_encode($response);
 
+$checkIfHasCredits = $pdo->prepare("SELECT idCredits FROM credits WHERE idClient=:idClient");
+$checkIfHasCredits->bindValue(":idClient", $idClient);
+$checkIfHasCredits->execute();
 
-echo json_encode($response);
+$qty = $checkIfHasCredits->rowCount();
+
+if ($qty > 0) {
+  // echo 'já tem créditos';
+  $updateCreditValue=$pdo->prepare("UPDATE credits SET creditValue=:creditValue WHERE idClient=:idClient");
+  $updateCreditValue->bindValue(":creditValue", $price);
+  $updateCreditValue->bindValue(":idClient", $idClient);
+  $updateCreditValue->execute();
+
+} else {
+  // echo 'não tem créditos';
+  $buyCredits=$pdo->prepare("INSERT INTO credits (idCredits, idClient, customerStripe, creditValue) VALUES(?,?,?,?)");
+  $buyCredits->bindValue(1, NULL);
+  $buyCredits->bindValue(2, $idClient);
+  $buyCredits->bindValue(3, $response['customer']);
+  $buyCredits->bindValue(4, $price);
+  $buyCredits->execute();
+  
+}
+
