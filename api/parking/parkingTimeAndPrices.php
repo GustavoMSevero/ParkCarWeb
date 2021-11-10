@@ -278,7 +278,31 @@ switch ($option) {
             $updateTimeAndPrices->bindValue(":adicionalPrice_2", $adicionalPrice_2);
             $updateTimeAndPrices->bindValue(":daily", $daily);
             $updateTimeAndPrices->bindValue(":idParkingTimeAndPrices", $idParkingTimeAndPrices);                
-            $updateTimeAndPrices->execute();
+            $success = $updateTimeAndPrices->execute();
+            
+            if ($success == 1) {
+
+                $status = 1;
+                $msg = 'Atualizado com sucesso!';
+
+                $return = array(
+                    'status' => $status,
+                    'msg' => $msg
+                );
+
+                echo json_encode($return);
+
+            } else {
+                $status = 0;
+                $msg = 'Erro ao atualizar';
+                
+                $return = array(
+                    'status' => $status,
+                    'msg' => $msg
+                );
+
+                echo json_encode($return);
+            }
 
 
         } catch (Exception $e) {
