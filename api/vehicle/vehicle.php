@@ -20,6 +20,76 @@ if($data){
 }
 
 switch ($option) {
+    case 'register vehicle':
+
+        $licensePlate = $data->licensePlate;
+        $idClient = $data->idClient;
+        $typeVehicle = $data->typeVehicle;
+        $renavam = $data->renavam;
+
+        // $onesignalId = $data->onesignalId;
+
+        $vehicleParkStatus = 0; // 0 not parked, 1 parked
+        $sharedVehicle = 0;
+
+        if ( preg_match('/\s/',$licensePlate) ) {
+            // echo 'tem espaços';
+            $lp = explode(' ', $licensePlate);
+            $licensePlate = $lp[0].$lp[1];
+        } else {
+            // echo 'não tem espaços';
+        }
+        // echo $licensePlate;
+        $carBrand = $data->carBrand;
+        $carModel = $data->carModel;
+
+        $checkVehicleAlreadyExists=$pdo->prepare("SELECT idClientVehicle FROM clientVehicle WHERE licensePlate=:licensePlate");
+        $checkVehicleAlreadyExists->bindValue(":licensePlate", $licensePlate);
+        $checkVehicleAlreadyExists->execute();
+
+        $qty = $checkVehicleAlreadyExists->rowCount();
+
+        if ($qty > 0) {
+
+            $status = 0;
+            $msg = 'Veículo já cadastrado';
+            
+            $return = array(
+                'status' => $status,
+                'msg' => $msg
+            );
+
+            echo json_encode($return);
+
+        } else {
+
+            $registerVehicle=$pdo->prepare("INSERT INTO clientVehicle (idClientVehicle, idClient, typeVehicle, brand, model, licensePlate, renavam, sharedVehicle, vehicleParkStatus)
+                                            VALUES(?,?,?,?,?,?,?,?,?)");
+            $registerVehicle->bindValue(1, NULL);
+            $registerVehicle->bindValue(2, $idClient);
+            $registerVehicle->bindValue(3, $typeVehicle);
+            $registerVehicle->bindValue(4, $carBrand);
+            $registerVehicle->bindValue(5, $carModel);
+            $registerVehicle->bindValue(6, $licensePlate);
+            $registerVehicle->bindValue(7, $renavam);
+            $registerVehicle->bindValue(8, $sharedVehicle);
+            $registerVehicle->bindValue(9, $vehicleParkStatus);
+            $registerVehicle->execute();
+
+            $status = 1;
+            $msg = 'Veículo cadastrado';
+            
+            $return = array(
+                'status' => $status,
+                'msg' => $msg
+            );
+
+            echo json_encode($return);
+
+        }
+ 
+        break;
+
     case 'get vehicle':
 
         $userId = verifyJWT();
@@ -218,7 +288,7 @@ switch ($option) {
 
             $exists = $getAllClientsVehicles->rowCount();
 
-            if ($exists == 1) {
+            if ($exists > 0) {
                 while ($line=$getAllClientsVehicles->fetch(PDO::FETCH_ASSOC)) {
 
                     $idClientVehicle = $line['idClientVehicle'];
