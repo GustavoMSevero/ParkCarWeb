@@ -48,6 +48,11 @@ app.controller("editTimeAndPricesCtrl", ['$scope', '$http', '$location', '$route
         // console.log(newParkingTimeAndPrices)
         $http.put(urlPrefixParkingTimeAndPrices, newParkingTimeAndPrices).success(function(response) {
             // console.log(response)
+            if (response.status == 1) {
+                alert(response.msg)
+            } else {
+                alert(response.msg)
+            }
         })
     }
 
