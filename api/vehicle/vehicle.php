@@ -169,7 +169,8 @@ switch ($option) {
                                             FROM  parkedVehicles p, client c, clientVehicle v
                                             WHERE p.vehicleParkStatus=:vehicleParkStatus
                                             AND c.idClient = p.idClient
-                                            AND v.idClient = c.idClient;");
+                                            AND v.idClient = c.idClient
+                                            AND p.licensePlate = v.licensePlate");
             $getAllVehicles->bindValue(':vehicleParkStatus', $vehicleParkStatus);
             $getAllVehicles->execute();
 
