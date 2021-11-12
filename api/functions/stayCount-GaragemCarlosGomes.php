@@ -102,6 +102,31 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
         $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
         $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
         $updateLenghtAndValue->execute();
+
+        //GET IDCLIENT BY LICENSEPLATE (está pegando o id do propritário do veículo)
+        $getIdClient=$pdo->prepare("SELECT idClient FROM clientVehicle WHERE licensePlate=:licensePlate");
+        $getIdClient->bindValue(":licensePlate", $licensePlate);
+        $getIdClient->execute();
+
+        while ($line=$getIdClient->fetch(PDO::FETCH_ASSOC)) {
+            $idClient = $line['idClient'];
+        }
+
+        $getcreditsBalance=$pdo->prepare("SELECT creditValue FROM credits WHERE idClient=:idClient");
+        $getcreditsBalance->bindValue(":idClient", $idClient);
+        $getcreditsBalance->execute();
+
+        while ($line=$getcreditsBalance->fetch(PDO::FETCH_ASSOC)) {
+            $creditValue = $line['creditValue'];
+        }
+
+        // Debit value paid from credits
+        $newCreditValue = $creditValue - $valueToPay;
+
+        $debitValueFromCredits=$pdo->prepare("UPDATE credits SET creditValue=:creditValue WHERE idClient=:idClient");
+        $debitValueFromCredits->bindValue(":creditValue", $newCreditValue);
+        $debitValueFromCredits->bindValue(":idClient", $idClient);
+        $debitValueFromCredits->execute();
         
 
         $return = array(
