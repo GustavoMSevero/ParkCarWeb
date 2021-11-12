@@ -438,6 +438,80 @@ switch ($option) {
 
         break;
 
+    case 'get paid vehicles by date':
+
+        $parkDate = $_GET['date'];
+        $idParking = $_GET['idParking'];
+
+        $parkDateP = explode('/', $parkDate);
+        $parkDate = $parkDateP[2].'-'.$parkDateP[1].'-'.$parkDateP[0];
+
+        try {
+            $getPaidVehicles=$pdo->prepare("SELECT * FROM parkedVehicles WHERE idParking=:idParking 
+                                            AND vehicleParkStatus=0 AND parkDate=:parkDate");
+            $getPaidVehicles->bindvalue(":idParking", $idParking);
+            $getPaidVehicles->bindvalue(":parkDate", $parkDate);
+            $getPaidVehicles->execute();
+
+            $quantity = $getPaidVehicles->rowCount();
+
+            if ($quantity > 0) {
+                
+                while ($line=$getPaidVehicles->fetch(PDO::FETCH_ASSOC)) {
+
+                    $id = $line['id'];
+                    $licensePlate = $line['licensePlate'];
+
+                    $parkDate = $line['parkDate'];
+                    $entrance = $line['entrance'];
+                    $departureTime = $line['departureTime'];
+                    $lenghtOfStay = $line['lenghtOfStay'];
+                    $valuePaid = $line['valuePaid'];
+
+                    $entranceP = explode(' ', $entrance);
+                    $entranceDate = $entranceP[0];
+                    $entranceTime = $entranceP[1];
+
+                    $parkDateP = explode('-', $parkDate);
+                    $parkDate = $parkDateP[2].'/'.$parkDateP[1].'/'.$parkDateP[0];
+
+                    $departureTimeP = explode(' ', $departureTime);
+                    $departureTime = $departureTimeP[1];
+
+                    $return[] = array(
+                        'id' => $id,
+                        'licensePlate' => $licensePlate,
+                        'parkDate' => $parkDate,
+                        'entranceTime' => $entranceTime,
+                        'departureTime' => $departureTime,
+                        'lenghtOfStay' => $lenghtOfStay,
+                        'valuePaid' => $valuePaid
+                    );
+        
+                }
+
+                echo json_encode($return);
+            
+            } else {
+
+                $status = 0;
+                $msg = 'Nenhum veículo entrou ainda hoje.';
+                $return = array(
+                    'status' => $status,
+                    'msg' => $msg
+                );
+
+                echo json_encode($return);
+                
+            }
+
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
     default:
         # code...
         break;
