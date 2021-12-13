@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                        		<a class="nav-link " ng-href="#">
+                        		<a class="nav-link " ng-href="#/financialParking">
                           			<span>Financeiro</span>
                         		</a>
                             </li>
@@ -88,6 +88,11 @@
                             <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/parkingOwner">
                           			<span>Dono Estacionamento</span>
+                        		</a>
+                            </li>
+                            <li class="nav-item">
+                        		<a class="nav-link" ng-click="logout()" ng-href="#/">
+                          			<span>Sair</span>
                         		</a>
                             </li>
 						</ul>
@@ -103,7 +108,7 @@
                       		<ul class="navbar-nav border-left flex-row ">
  
                         		<li class="nav-item dropdown">
-                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/address" role="button" aria-haspopup="true" aria-expanded="false">
+                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/registerParking" role="button" aria-haspopup="true" aria-expanded="false">
                             			<img class="user-avatar rounded-circle mr-2" src="images/avatars/admin.png" alt="Admin">
                             			<span class="d-none d-md-inline-block">
                                             {{name}} - {{typeUser}}
@@ -111,7 +116,7 @@
                           			</a>
                           			<div class="dropdown-menu dropdown-menu-small">
                                         <div class="dropdown-divider"></div>
-                            			<a class="dropdown-item text-danger" ng-href="#/address" ng-click="logout()">
+                            			<a class="dropdown-item text-danger" ng-href="#/registerParking" ng-click="logout()">
                               				<i class="material-icons text-danger">&#xE879;</i> Sair 
                               			</a>
                           			</div>
