@@ -27,6 +27,11 @@ app.controller("editTimeAndPricesCtrl", ['$scope', '$http', '$location', '$route
 		var urlOptionPrefixAdmin = 'api/parking/adminParking.php?option=';
 	}
 
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
+
     var getTimeAndPricesToEdit = function() {
         var option = 'get time and prices to edit';
         var idParking = $scope.id;

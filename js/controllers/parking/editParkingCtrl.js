@@ -26,7 +26,7 @@ app.controller("editParkingCtrl", ['$scope', '$http', '$location', '$routeParams
 	}
 
     $scope.logout = function() {
-        // localStorage.clear();
+        localStorage.clear();
         $location.path('/');
     }
 

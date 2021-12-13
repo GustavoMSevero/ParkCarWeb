@@ -14,14 +14,19 @@ app.controller("addressCtrl", ['$scope', '$http', '$location', '$routeParams', f
         $scope.typeUser =  $scope.admin = localStorage.getItem('parkcar_typeUser');
         console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.admin);
     }
-    
 
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
+    
 	if(location.hostname == 'localhost'){
 		var urlPrefixParkingAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/adminParking.php';
 		var urlOptionPrefixParkingAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/adminParking.php?option=';
 	} else {
 		var urlPrefixParkingAdmin = 'api/admin/adminParking.php';
 	}
+    
 
     var getParkingAddress = function() {
         var option = 'get parking address';

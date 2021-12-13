@@ -15,6 +15,11 @@ app.controller("ownerAreaCtrl", ['$scope', '$http', '$location', function ($scop
         $scope.typeUser =  $scope.admin = localStorage.getItem('parkcar_typeUser');
         // console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.admin);
     }
+
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
     
 
 	if(location.hostname == 'localhost'){

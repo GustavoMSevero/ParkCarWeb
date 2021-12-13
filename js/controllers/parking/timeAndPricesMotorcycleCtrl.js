@@ -17,6 +17,11 @@ app.controller("timeAndPricesMotorcycleCtrl", ['$scope', '$http', '$location', '
 
     $scope.idParkingBranch = $routeParams.idParking;
 
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
+
 	if(location.hostname == 'localhost'){
 		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';
 		var urlPrefixParkingTimeAndPrices = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php';

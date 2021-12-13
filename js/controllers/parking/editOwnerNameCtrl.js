@@ -25,6 +25,11 @@ app.controller("editOwnerNameCtrl", ['$scope', '$http', '$location', function ($
         var urlOptionPrefixAdmin = 'api/admin/adminParking.php?option=';
 	}
 
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
+
     var getOwnerName = function() {
         var option = 'get owner name';
         $http.get(urlOptionPrefixAdmin + option + '&id=' + $scope.id).success(function(response) {

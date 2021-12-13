@@ -14,8 +14,14 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
         $scope.typeUser =  $scope.admin = localStorage.getItem('parkcar_typeUser');
         console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.admin);
     }
-
+    
     $scope.idParkingBranch = $routeParams.idParking;
+
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
+
 
 	if(location.hostname == 'localhost'){
 		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';

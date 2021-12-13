@@ -23,6 +23,9 @@ app.controller("vaccantsCtrl", ['$scope', '$http', '$location', '$routeParams', 
 	}
 
 
-	
+	$scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
 	
 }]);

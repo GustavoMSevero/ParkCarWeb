@@ -16,6 +16,10 @@ app.controller("accountCtrl", ['$scope', '$http', '$location', '$routeParams', f
         // console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.admin);
     }
     
+    $scope.logout = function() {
+        localStorage.clear();
+        $location.path('/');
+    }
 
 	if(location.hostname == 'localhost'){
 		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin.php';
@@ -23,10 +27,6 @@ app.controller("accountCtrl", ['$scope', '$http', '$location', '$routeParams', f
 		var urlPrefixAdmin = 'api/admin.php';
 	}
 
-    $scope.logout = function() {
-        // localStorage.clear();
-        $location.path('/');
-    }
 	
 	
 }]);
