@@ -32,8 +32,8 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/account.html",
     })
 
-    .when("/financial", {
-        templateUrl: "views/account/parking/financial.html",
+    .when("/financialParking", {
+        templateUrl: "views/account/parking/financialParking.html",
     })
 
     .when("/historic", {
