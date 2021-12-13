@@ -1,0 +1,16 @@
+
+#form, #btnPegar {
+   display: inline-block;
+}
+
+#form {
+    width: 30%;
+}
+
+#btnPegar {
+
+}
+
+#totalValuePaid {
+    margin-top: 20px;
+}
