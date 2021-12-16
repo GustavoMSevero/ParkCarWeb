@@ -36,6 +36,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/parking/financialParking.html",
     })
 
+    .when("/parkingLogo", {
+        templateUrl: "views/account/parking/parkingLogo.html",
+    })
+
     .when("/historic", {
         templateUrl: "views/account/parking/historic.html",
     })
