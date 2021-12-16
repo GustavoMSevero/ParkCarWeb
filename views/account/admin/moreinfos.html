@@ -171,9 +171,31 @@
                                                         </div>
                                                         <div>
                                                             <form name="formTax">
-                                                                <input class="form-control" id="fee" type="text" name="" ng-model="fee.fee" id="">
-                                                                <button class="btn btn-success" id="btnSaveFees" ng-click="saveFee(fee)">SALVAR</button>
+                                                                <input class="form-control" id="fee" type="text" name="fee" ng-model="fee.fee" required>
+                                                                <button class="btn btn-success" ng-disabled="formTax.$invalid" id="btnSaveFees" ng-click="saveFee(fee)">SALVAR</button>
                                                             </form>
+                                                        </div>
+
+                                                        <div ng-repeat="fs in fees" id="showFee">
+                                                            <div>
+                                                                Taxa de {{fs.fee}}
+                                                            </div>
+                                                            <div>
+                                                                {{fs.price_1}}
+                                                            </div>
+                                                            <div>
+                                                                {{fs.price_2}}
+                                                            </div>
+                                                            <div>
+                                                                {{fs.aditionalPrice_1}}
+                                                            </div>
+                                                            <div>
+                                                                {{fs.aditionalPrice_2}}
+                                                            </div>
+                                                            <div>
+                                                                {{fs.daly}}
+                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

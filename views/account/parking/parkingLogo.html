@@ -31,12 +31,12 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
 
         <!-- Title -->
-        <title>Smart Traffic</title>
+        <title>ParkCar</title>
 
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="parkingOwnerCtrl">
+        <div class="container-fluid" ng-controller="registerParkingCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -118,7 +118,7 @@
                       		<ul class="navbar-nav border-left flex-row ">
  
                         		<li class="nav-item dropdown">
-                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/address" role="button" aria-haspopup="true" aria-expanded="false">
+                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/registerParking" role="button" aria-haspopup="true" aria-expanded="false">
                             			<img class="user-avatar rounded-circle mr-2" src="images/avatars/admin.png" alt="Admin">
                             			<span class="d-none d-md-inline-block">
                                             {{name}} - {{typeUser}}
@@ -126,7 +126,7 @@
                           			</a>
                           			<div class="dropdown-menu dropdown-menu-small">
                                         <div class="dropdown-divider"></div>
-                            			<a class="dropdown-item text-danger" ng-href="#/address" ng-click="logout()">
+                            			<a class="dropdown-item text-danger" ng-href="#/registerParking" ng-click="logout()">
                               				<i class="material-icons text-danger">&#xE879;</i> Sair 
                               			</a>
                           			</div>
@@ -140,30 +140,25 @@
                     	</nav>
                   	</div>
 
-                  	<div class="main-content-container container-fluid px-4">
+                  	<div class="main-content-container container-fluid px-4" ng-controller="parkingLogoCtrl">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Admin</h6>
+                                        <h6 class="m-0">Logo</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <form>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="password">SENHA DE ACESSO</label>
-                                                                <input class="form-control" type="email" name="email" id="" ng-model="superAdmin.email" placeholder="email@example.com">
-                                                                <input class="form-control" type="password" name="checkPassword" id="" ng-model="superAdmin.checkPassword">
-                                                            </div>
-                                                        </div>
-                                                        
-
-                                                        <button type="button" class="btn btn-success" ng-click="getAccess(superAdmin)">ACESSAR</button>
-                                                    </form>
-                                                    
+                                                    <div class="textoSelecione">
+                                                        Selecione uma imagem
+                                                        <button class="btn btn-success" type="button" ng-click="uploadLogo()">
+                                                            Selecionar</button>
+                                                    </div>
+                                                    <div>
+                                                        <img src="{{ image }}" alt="logo do estacionamento">
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>
