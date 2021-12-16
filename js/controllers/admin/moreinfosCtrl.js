@@ -16,6 +16,7 @@ app.controller("moreinfosCtrl", ['$scope', '$http', '$location', '$routeParams',
     }
     
     $scope.idParking = $routeParams.idParking;
+    // console.log(`idParking ${$scope.idParking}`)
 
 	if(location.hostname == 'localhost'){
 		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/admin.php';
@@ -30,6 +31,28 @@ app.controller("moreinfosCtrl", ['$scope', '$http', '$location', '$routeParams',
         $location.path('/');
     }
 
+    var getDataParkingById = function() {
+        var option = 'get data parking by id';
+        $http.get(urlOptionPrefixAdmin + option + '&idParking=' + $scope.idParking).success(function(data) {
+            $scope.parkingData = data;
+        })
+    }
+    getDataParkingById();
     
+    $scope.saveFee = function(fee) {
+        fee.option = 'save fee';
+        fee.idParking = $scope.idParking;
+        $http.post(urlPrefixAdmin, fee).success(function(data) {
+            getFeeParking();
+        })
+    }
+
+    var getFeeParking = function() {
+        var option = 'get fee parking';
+        $http.get(urlOptionPrefixAdmin + option + '&idParking=' + $scope.idParking).success(function(data) {
+            $scope.fees = data;
+        })
+    }
+    getFeeParking();
 	
 }]);
