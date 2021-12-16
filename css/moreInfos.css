@@ -1,0 +1,21 @@
+
+#parkingName {
+    width: 95%;
+    margin-bottom: 20px;
+}
+
+.fee {
+    margin-top: 20px;
+}
+
+#feesValue {
+    width: 20%;
+}
+
+#fee {
+    width: 20%;
+}
+
+#btnSaveFees {
+    margin-top: 10px;
+}
