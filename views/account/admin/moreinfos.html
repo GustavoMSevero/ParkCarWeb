@@ -69,13 +69,13 @@
 									<span>Histórico</span>
 								</a>
                             </li>
-                            <li class="nav-item" ng-show="{{admin}}"">
+                            <li class="nav-item" ng-show="{{admin}}">
                                 <a class="nav-link " ng-href="#/registerUserAdmin">
                                     <span>Cadastrar Usuário Admin</span>
                                 </a>
 							</li>
 						    <li class="nav-item" ng-show="{{parking}}">
-                        		<a class="nav-link " ng-href="#/financial">
+                        		<a class="nav-link " ng-href="#/financialParking">
                           			<span>Financeiro</span>
                         		</a>
                             </li>
@@ -140,29 +140,46 @@
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <!-- <label for="inputZip">Listagem de estacionamentos</label>
-                                                            <table>
-                                                                <tr>
-                                                                    <td width="250">Nome</td>
-                                                                    <td width="200">Cidade</td>
-                                                                    <td width="100">Estado</td>
-                                                                    <td width="150">Vagas</td>
-                                                                </tr>
-                                                                <tr ng-repeat="lop in listOfParkings">
-                                                                    <td><a href="#/moreinfos/{{lop.idParking}}">{{lop.parkingName}}</td></a>
-                                                                    <td>{{lop.city}}</td>
-                                                                    <td>{{lop.state}}</td>
-                                                                    <td>{{lop.vaccantNumber}}</td>
-                                                                </tr>
-                                                            </table> -->
+                                                    <div class="form-row" ng-repeat="pd in parkingData">
+                                                        <div id="parkingName">
+                                                            {{pd.parkingName}} - {{pd.city}}/{{pd.state}} - {{pd.vaccantNumber}} vagas
                                                         </div>
-                                                        <a type="button" href="#/checkParkings" class="btn btn-light">Voltar</a>
+                                                        <div class="timeAndPrices">
+                                                            <div>
+                                                                Tolerância: {{pd.tolerancePeriod}} min
+                                                            </div>
+                                                            <div>
+                                                                {{pd.parkingTime_1}} min - {{pd.parkingPrice_1}}
+                                                            </div>
+                                                            <div>
+                                                                {{pd.parkingTime_2}} min - {{pd.parkingPrice_2}}
+                                                            </div>
+                                                            <div>
+                                                                {{pd.adicionalTime_1}} min - {{pd.adicionalPrice_1}}
+                                                            </div>
+                                                            <div>
+                                                                {{pd.adicionalTime_2}} min - {{pd.adicionalPrice_2}}
+                                                            </div>
+                                                            <div>
+                                                                Diária - {{pd.daily}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fee">
+                                                        <div id="labelFee">
+                                                            Taxa cobrada
+                                                        </div>
+                                                        <div>
+                                                            <form name="formTax">
+                                                                <input class="form-control" id="fee" type="text" name="" ng-model="fee.fee" id="">
+                                                                <button class="btn btn-success" id="btnSaveFees" ng-click="saveFee(fee)">SALVAR</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
+                                        <a type="button" href="#/checkParkings" class="btn btn-light">Voltar</a>
                                     </div>
                                 </div>
                             </div>
