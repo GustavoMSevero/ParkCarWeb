@@ -311,11 +311,17 @@ switch ($option) {
         $lngMin = $lng - $KmToGrandes;
 
         try {
-            $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber, latitude, longitude
-                                            FROM parking
-                                            WHERE latitude BETWEEN :latMin AND :latMax 
-                                            AND longitude BETWEEN :lngMin AND :lngMax 
-                                            AND activate=1");
+            $searchForNearbyParking=$pdo->prepare("SELECT p.idParking, p.parkingName, p.address, p.addressNumber, p.vaccantNumber, p.latitude, p.longitude, pl.idParking, pl.logoName
+                                                FROM parking p, parkingLogo pl 
+                                                WHERE p.idParking = pl.idParking
+                                                AND latitude BETWEEN :latMin AND :latMax
+                                                AND longitude BETWEEN :lngMin AND :lngMax 
+                                                AND activate=1");
+            // $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber, latitude, longitude
+            //                                 FROM parking
+            //                                 WHERE latitude BETWEEN :latMin AND :latMax 
+            //                                 AND longitude BETWEEN :lngMin AND :lngMax 
+            //                                 AND activate=1");
             $searchForNearbyParking->bindvalue(":latMin", $latMin);
             $searchForNearbyParking->bindvalue(":latMax", $latMax);
             $searchForNearbyParking->bindvalue(":lngMin", $lngMin);
@@ -330,6 +336,7 @@ switch ($option) {
                 
                 while ($line=$searchForNearbyParking->fetch(PDO::FETCH_ASSOC)) {
 
+                    $idParking = $line['idParking'];
                     $parkingName = $line['parkingName'];
                     $address = $line['address'];
                     $addressNumber = $line['addressNumber'];
@@ -337,7 +344,26 @@ switch ($option) {
                     $latitude = $line['latitude'];
                     $longitude = $line['longitude'];
 
+                    $getParkingLogo=$pdo->prepare("SELECT logoName FROM parkingLogo WHERE idParking=:idParking");
+                    $getParkingLogo->bindvalue(":idParking", $idParking);
+                    $getParkingLogo->execute();
+
+                    $exists = $getParkingLogo->rowCount();
+
+                    if ($exists != 0) {
+                        while ($line=$getParkingLogo->fetch(PDO::FETCH_ASSOC)) {
+                            $logoName = $line['logoName'];
+                            $image = 'https://www.parkcar.app.br/web/api/parking/uploadLogoParking/'.$logoName;
+                        }
+                    } else {
+                        $logoName = 'estacionamento.png';
+                        $image = 'https://www.parkcar.app.br/web/imgs/'.$logoName;
+                    }
+
+
                     $return[] = array(
+                        'image' => $image,
+                        'idparking' => $idparking,
                         'parkingName' => $parkingName,
                         'address' => $address,
                         'addressNumber' => $addressNumber,
