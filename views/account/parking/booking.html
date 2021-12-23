@@ -31,12 +31,12 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
 
         <!-- Title -->
-        <title>Smart Traffic</title>
+        <title>ParkCar</title>
 
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="historicCtrl">
+        <div class="container-fluid" ng-controller="bookingCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -59,7 +59,7 @@
                                     <span>Admin - Procurar Estágios</span>
                                 </a>
                             </li>
-                            <li class="nav-item" ng-show="{{admin}}"">
+                            <li class="nav-item" ng-show="{{admin}}">
                                 <a class="nav-link " ng-href="#/changeEmail">
                                     <span>Admin - Alterar email</span>
                                 </a>
@@ -71,19 +71,29 @@
                             </li>
 
                             <li class="nav-item" ng-show="{{parking}}">
+                                <a class="nav-link " ng-href="#/registerParking">
+                                    <span>Adicionar Estacionamento</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/financialParking">
                           			<span>Financeiro</span>
                         		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                        		<a class="nav-link " ng-href="#">
+                        		<a class="nav-link " ng-href="#/parkingHistory">
                           			<span>Histórico</span>
                         		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                                <a class="nav-link " ng-href="#/registerParking">
-                                    <span>Adicionar Estacionamento</span>
-                                </a>
+                        		<a class="nav-link " ng-href="#/parkingLogo">
+                          			<span>Logo</span>
+                        		</a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
+                        		<a class="nav-link " ng-href="#/booking">
+                          			<span>Reserva</span>
+                        		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/parkingOwner">
@@ -108,7 +118,7 @@
                       		<ul class="navbar-nav border-left flex-row ">
  
                         		<li class="nav-item dropdown">
-                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/historic" role="button" aria-haspopup="true" aria-expanded="false">
+                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/registerParking" role="button" aria-haspopup="true" aria-expanded="false">
                             			<img class="user-avatar rounded-circle mr-2" src="images/avatars/admin.png" alt="Admin">
                             			<span class="d-none d-md-inline-block">
                                             {{name}} - {{typeUser}}
@@ -116,7 +126,7 @@
                           			</a>
                           			<div class="dropdown-menu dropdown-menu-small">
                                         <div class="dropdown-divider"></div>
-                            			<a class="dropdown-item text-danger" ng-href="#/historic" ng-click="logout()">
+                            			<a class="dropdown-item text-danger" ng-href="#/registerParking" ng-click="logout()">
                               				<i class="material-icons text-danger">&#xE879;</i> Sair 
                               			</a>
                           			</div>
@@ -133,65 +143,65 @@
                   	<div class="main-content-container container-fluid px-4">
                         <div class="row">
                             <div class="col-lg-12">
-                                <!-- <div class="card card-small mb-4">
+                                <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Agendar Cliente</h6>
+                                        <h6 class="m-0">Reserva</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <form name="formAgendar">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="inputZip">Cliente</label>
-                                                                <select class="form-control" name="cliente" id="" ng-model="agendar.cliente">
-                                                                    <option value="">Selecione cliente...</option>
-                                                                </select>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <div>
+                                                                Seu estacionamento permite fazer reserva de vagas?
                                                             </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="feFirstName">Unidade</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.nomeUnidade" id="feFirstName" placeholder="Nome da unidade" value="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-4">
-                                                                <label for="feInputAddress">Endereço</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.logradouro" id="feInputAddress" placeholder="Endereço">
-                                                            </div>
-                                                            
-                                                            <div class="form-group col-md-4">
-                                                                <label for="number">Número</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.numero" id="">
-                                                            </div>
-                                                            <div class="form-group col-md-4">
-                                                                <label for="number">Complemento</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.complemento" id="">
+                                                            <div>
+                                                                <form name="formBooking">
+                                                                    <div id="inputBooking">
+                                                                        <select class="form-control" name="booking" ng-model="allowBooking.allow" id="">
+                                                                            <option value="1">Sim</option>
+                                                                            <option value="0">Não</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div id="buttonBooking">
+                                                                        <button type="button" class="btn btn-success" ng-click="register(allowBooking)">SALVAR</button>
+                                                                    </div>
+                                                                </form>
+
+                                                                <div id="answerAllowBooking">
+                                                                    Permite fazer reservas: <b>{{allow}}</b>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="number">Bairro</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.bairro" id="">
-                                                            </div>
-                                                            <div class="form-group col-md-6">
-                                                                <label for="number">Cidade</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.localidade" id="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label for="number">UF</label>
-                                                                <input type="text" class="form-control" ng-model="unidade.uf" id="">
-                                                            </div>
-                                                        </div>
-                                                        <button class="btn btn-accent" ng-click="addUnit(unidade)">Salvar</button>                                                      
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                </div> -->
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="card card-small mb-4">
+                                        <div class="card-header border-bottom">
+                                            <!-- <h6 class="m-0">Dados do Estacionamento</h6> -->
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item p-3">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                            <!-- Epa! -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
         
                         </div>

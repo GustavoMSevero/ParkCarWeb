@@ -31,12 +31,12 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
 
         <!-- Title -->
-        <title>ParkCar</title>
+        <title>Smart Traffic</title>
 
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="parkingLogoCtrl">
+        <div class="container-fluid" ng-controller="parkingHistoryCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -118,7 +118,7 @@
                       		<ul class="navbar-nav border-left flex-row ">
  
                         		<li class="nav-item dropdown">
-                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/registerParking" role="button" aria-haspopup="true" aria-expanded="false">
+                          			<a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" ng-href="#/historic" role="button" aria-haspopup="true" aria-expanded="false">
                             			<img class="user-avatar rounded-circle mr-2" src="images/avatars/admin.png" alt="Admin">
                             			<span class="d-none d-md-inline-block">
                                             {{name}} - {{typeUser}}
@@ -126,7 +126,7 @@
                           			</a>
                           			<div class="dropdown-menu dropdown-menu-small">
                                         <div class="dropdown-divider"></div>
-                            			<a class="dropdown-item text-danger" ng-href="#/registerParking" ng-click="logout()">
+                            			<a class="dropdown-item text-danger" ng-href="#/historic" ng-click="logout()">
                               				<i class="material-icons text-danger">&#xE879;</i> Sair 
                               			</a>
                           			</div>
@@ -140,30 +140,96 @@
                     	</nav>
                   	</div>
 
-                  	<div class="main-content-container container-fluid px-4" ng-controller="parkingLogoCtrl">
+                  	<div class="main-content-container container-fluid px-4">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Logo</h6>
+                                        <h6 class="m-0">Histórico</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <div class="textoSelecione">
-                                                        Selecione uma imagem
-                                                        <button class="btn btn-success" type="button" ng-click="uploadLogo()">
-                                                            Selecionar</button>
-                                                    </div>
-                                                    <div>
-                                                        <img src="{{ image }}" alt="logo do estacionamento">
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <div class="labelData">
+                                                                <div id="searchByDate">
+                                                                    Data
+                                                                </div>
+                                                                <div id="searchByLicensePlate">
+                                                                    Placa
+                                                                </div>
+                                                                <div id="searchEntranceTime">
+                                                                    Entrada
+                                                                </div>
+                                                                <div id="searchByDepartureTime">
+                                                                    Saída
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="showData">
+                                                                <div id="inputDate">
+                                                                    <input class="form-control" type="text" name="" ng-model="parkDate" id="">
+                                                                </div>
+                                                                <div id="inputLicensePlate">
+                                                                    <input class="form-control" type="text" name="" ng-model="licensePlate" id="">
+                                                                </div>
+                                                                <div id="inputEntranceTime">
+                                                                    <input class="form-control" type="text" name="" ng-model="entranceTime" id="">
+                                                                </div>
+                                                                <div id="inputDepartureTime">
+                                                                    <input class="form-control" type="text" name="" ng-model="departureTime" id="">
+                                                                </div>
+                                                            </div>
+
+                                                            <table class="table table-striped">
+                                                                <tr>
+                                                                    <td width="100" align="center"><b>Data</b></td>
+                                                                    <td width="100" align="center"><b>Placa</b></td>
+                                                                    <td width="100" align="center"><b>Entrada</b></td>
+                                                                    <td width="100" align="center"><b>Saida</b></td>
+                                                                    <td width="100" align="center"><b>Permanência</b></td>
+                                                                    <td width="100" align="center"><b>Valor</b></td>
+                                                                </tr>
+                                                                <tr ng-repeat="ph in parkingHistory | filter:parkDate | filter:licensePlate | filter:entranceTime | filter:departureTime">
+                                                                    <td align="center">{{ph.parkDate}}</td>
+                                                                    <td align="center">{{ph.licensePlate}}</td>
+                                                                    <td align="center">{{ph.entranceTime}}</td>
+                                                                    <td align="center">{{ph.departureTime}}</td>
+                                                                    <td align="right">{{ph.lenghtOfStay}}</td>
+                                                                    <td align="right">{{ph.valuePaid}}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
+
+                                <!-- <div class="col-lg-12">
+                                    <div class="card card-small mb-4">
+                                        <div class="card-header border-bottom">
+                                            <h6 class="m-0">Dados do Estacionamento</h6>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item p-3">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                            Epa!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> -->
+
                             </div>
         
                         </div>

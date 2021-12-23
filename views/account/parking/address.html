@@ -71,19 +71,34 @@
                             </li>
 
                             <li class="nav-item" ng-show="{{parking}}">
+                                <a class="nav-link " ng-href="#/registerParking">
+                                    <span>Adicionar Estacionamento</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/financialParking">
                           			<span>Financeiro</span>
                         		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                        		<a class="nav-link " ng-href="#">
+                        		<a class="nav-link " ng-href="#/parkingHistory">
                           			<span>Histórico</span>
                         		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                                <a class="nav-link " ng-href="#">
-                                    <span>Adicionar Estacionamento</span>
-                                </a>
+                        		<a class="nav-link " ng-href="#/parkingLogo">
+                          			<span>Logo</span>
+                        		</a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
+                        		<a class="nav-link " ng-href="#/booking">
+                          			<span>Reserva</span>
+                        		</a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
+                        		<a class="nav-link " ng-href="#/parkingOwner">
+                          			<span>Dono Estacionamento</span>
+                        		</a>
                             </li>
                             <li class="nav-item">
                         		<a class="nav-link" ng-click="logout()" ng-href="#/">
