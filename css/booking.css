@@ -1,0 +1,17 @@
+
+#inputBooking {
+    width: 25%;
+}
+
+#buttonBooking {
+
+}
+
+#inputBooking,
+#buttonBooking {
+    display: inline-block;
+}
+
+#answerAllowBooking {
+    margin-top: 20px;
+}

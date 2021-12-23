@@ -1,0 +1,53 @@
+
+.labelData {
+}
+
+#searchByDate,
+#searchByLicensePlate,
+#searchEntranceTime,
+#searchByDepartureTime {
+    display: inline-block;
+}
+
+#searchByDate {
+    width: 17%;
+}
+
+#searchByLicensePlate {
+    width: 17%;
+}
+
+#searchEntranceTime {
+    width: 17%;
+}
+
+#searchByDepartureTime {
+    width: 17%;
+}
+
+.showData {
+    margin-bottom: 20px;
+}
+
+#inputDate,
+#inputLicensePlate,
+#inputEntranceTime,
+#inputDepartureTime {
+    display: inline-block;
+}
+
+#inputDate {
+    width: 17%;
+}
+
+#inputLicensePlate {
+    width: 17%;
+}
+
+#inputEntranceTime {
+    width: 17%;
+}
+
+#inputDepartureTime {
+    width: 17%;
+}
