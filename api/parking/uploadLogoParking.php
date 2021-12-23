@@ -61,31 +61,22 @@ switch ($option) {
                 $idParking = $linha['idParking'];
                 $logoName = $linha['logoName'];
 
-                $imagem = 'http://localhost:8888/Projects/web/ParkCarWeb/api/parking/uploadLogoParking/'.$logoName;
-
-                // if (file_exists($imagem)) {
-                //     unlink($imagem);
-                // }
-
-
                 if(move_uploaded_file($_FILES['file_jpg']['tmp_name'], $uploadfile)) {
 
-                $logoName = $_FILES[ 'file_jpg' ][ 'name' ];
-                $extension = $_FILES[ 'file_jpg' ][ 'type' ];
-                $local = $_FILES[ 'file_jpg' ][ 'tmp_name' ];
-                $size = $_FILES[ 'file_jpg' ][ 'size' ];
+                    $logoName = $_FILES[ 'file_jpg' ][ 'name' ];
+                    $extension = $_FILES[ 'file_jpg' ][ 'type' ];
+                    $local = $_FILES[ 'file_jpg' ][ 'tmp_name' ];
+                    $size = $_FILES[ 'file_jpg' ][ 'size' ];
 
-                try {
-                    $qryUpdateImage=$pdo->prepare('UPDATE parkingLogo SET logoName=:logoName WHERE idLogo=:idLogo');
-                    $qryUpdateImage->bindValue('logoName', $logoName);
-                    $qryUpdateImage->bindValue('idLogo', $idLogo);
-                    $qryUpdateImage->execute();
+                    try {
+                        $qryUpdateImage=$pdo->prepare('UPDATE parkingLogo SET logoName=:logoName WHERE idLogo=:idLogo');
+                        $qryUpdateImage->bindValue(':logoName', $logoName);
+                        $qryUpdateImage->bindValue(':idLogo', $idLogo);
+                        $qryUpdateImage->execute();
 
-                } catch (Exception $e) {
-                    echo 'Caught exception: ',  $e->getMessage(), "\n";
-                }
-
-                
+                    } catch (Exception $e) {
+                        echo 'Caught exception: ',  $e->getMessage(), "\n";
+                    }
 
                 }
 
