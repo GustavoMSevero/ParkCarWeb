@@ -53,7 +53,7 @@ app.controller("parkingLogoCtrl", ['$scope', '$http', '$location', '$routeParams
 	      processData: false
 	    })
 	      .then(function(response) {
-	        console.log(response);
+              console.log(response)
             getParkingLogo();
 
 	  }, function(response) {
