@@ -538,6 +538,57 @@ switch ($option) {
 
         break;
 
+    case 'get parking history by parking':
+
+        $idParking = $_GET['idParking'];
+
+        try {
+            $getPaidVehicles=$pdo->prepare("SELECT * FROM parkedVehicles WHERE idParking=:idParking 
+                                            AND vehicleParkStatus=0");
+            $getPaidVehicles->bindvalue(":idParking", $idParking);
+            $getPaidVehicles->execute();
+                
+                while ($line=$getPaidVehicles->fetch(PDO::FETCH_ASSOC)) {
+
+                    $id = $line['id'];
+                    $licensePlate = $line['licensePlate'];
+
+                    $parkDate = $line['parkDate'];
+                    $entrance = $line['entrance'];
+                    $departureTime = $line['departureTime'];
+                    $lenghtOfStay = $line['lenghtOfStay'];
+                    $valuePaid = $line['valuePaid'];
+
+                    $parkDateP = explode('-', $parkDate);
+                    $parkDate = $parkDateP[2].'/'.$parkDateP[1].'/'.$parkDateP[0];
+
+                    $entranceP = explode(' ', $entrance);
+                    $entranceDate = $entranceP[0];
+                    $entranceTime = $entranceP[1];
+
+                    $departureTimeP = explode(' ', $departureTime);
+                    $departureTime = $departureTimeP[1];
+
+                    $return[] = array(
+                        'id' => $id,
+                        'licensePlate' => $licensePlate,
+                        'parkDate' => $parkDate,
+                        'entranceTime' => $entranceTime,
+                        'departureTime' => $departureTime,
+                        'lenghtOfStay' => $lenghtOfStay,
+                        'valuePaid' => $valuePaid
+                    );
+        
+                }
+
+                echo json_encode($return);
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
+
     default:
         # code...
         break;
