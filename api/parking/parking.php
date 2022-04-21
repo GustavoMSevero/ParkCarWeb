@@ -311,17 +311,11 @@ switch ($option) {
         $lngMin = $lng - $KmToGrandes;
 
         try {
-            $searchForNearbyParking=$pdo->prepare("SELECT p.idParking, p.parkingName, p.address, p.addressNumber, p.vaccantNumber, p.latitude, p.longitude, pl.idParking, pl.logoName
-                                                FROM parking p, parkingLogo pl 
-                                                WHERE p.idParking = pl.idParking
-                                                AND latitude BETWEEN :latMin AND :latMax
+            $searchForNearbyParking=$pdo->prepare("SELECT idParking, parkingName, address, addressNumber, vaccantNumber, latitude, longitude
+                                                FROM parking
+                                                WHERE latitude BETWEEN :latMin AND :latMax 
                                                 AND longitude BETWEEN :lngMin AND :lngMax 
                                                 AND activate=1");
-            // $searchForNearbyParking=$pdo->prepare("SELECT parkingName, address, addressNumber, vaccantNumber, latitude, longitude
-            //                                 FROM parking
-            //                                 WHERE latitude BETWEEN :latMin AND :latMax 
-            //                                 AND longitude BETWEEN :lngMin AND :lngMax 
-            //                                 AND activate=1");
             $searchForNearbyParking->bindvalue(":latMin", $latMin);
             $searchForNearbyParking->bindvalue(":latMax", $latMax);
             $searchForNearbyParking->bindvalue(":lngMin", $lngMin);
@@ -360,10 +354,24 @@ switch ($option) {
                         $image = 'https://www.parkcar.app.br/web/imgs/'.$logoName;
                     }
 
+                    $getParkingAllowBooking=$pdo->prepare("SELECT allow FROM allowBooking WHERE idParking=:idParking");
+                    $getParkingAllowBooking->bindvalue(":idParking", $idParking);
+                    $getParkingAllowBooking->execute();
+
+                    $existsAllow = $getParkingAllowBooking->rowCount();
+
+                    if ($existsAllow != 0) {
+                        while ($line=$getParkingAllowBooking->fetch(PDO::FETCH_ASSOC)) {
+                            $allow = $line['allow'];
+                        }
+                    } else {
+                        $allow = 0;
+                    }
 
                     $return[] = array(
+                        'allow' => $allow,
                         'image' => $image,
-                        'idparking' => $idparking,
+                        'idParking' => $idParking,
                         'parkingName' => $parkingName,
                         'address' => $address,
                         'addressNumber' => $addressNumber,
