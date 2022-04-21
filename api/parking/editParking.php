@@ -8,15 +8,6 @@ include_once("../functions/jwt.php");
 
 $pdo = conectar();
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require 'PHPMailer/src/Exception.php';
-require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
-
-$mail = new PHPMailer(true);
-
 $data = file_get_contents("php://input");
 $data = json_decode($data);
 
