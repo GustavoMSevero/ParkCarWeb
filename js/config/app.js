@@ -20,6 +20,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/parking/registerParking.html",
     })
 
+    .when("/updatePassword", {
+        templateUrl: "views/account/parking/updatePassword.html",
+    })
+
     .when("/editParking/:idParking", {
         templateUrl: "views/account/parking/editParking.html",
     })

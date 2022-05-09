@@ -237,13 +237,12 @@ switch ($option) {
                     $idParking = $line['idParking'];
                     $idClient = $line['idClient'];
 
-                    $getInformations=$pdo->prepare("SELECT p.licensePlate, p.entrance, p.vehicleParkStatus,  v.model, v.brand, pa.parkingName
-                                                    FROM  parkedVehicles p, client c, clientVehicle v, parking pa
-                                                    WHERE c.idClient=p.idClient
-                                                    AND c.idClient=v.idClient
-                                                    AND p.vehicleParkStatus=:vehicleParkStatus
-                                                    AND c.idClient=:idClient
-                                                    AND pa.idParking=p.idParking");
+                    $getInformations=$pdo->prepare("SELECT p.id, p.licensePlate, p.entrance, p.vehicleParkStatus ,c.name, v.model, v.brand
+                                                    FROM  parkedVehicles p, client c, clientVehicle v
+                                                    WHERE p.vehicleParkStatus=:vehicleParkStatus
+                                                    AND c.idClient = p.idClient
+                                                    AND v.idClient = c.idClient
+                                                    AND p.licensePlate = v.licensePlate");
 
                     $getInformations->bindValue(":vehicleParkStatus", $vehicleParkStatus);
                     // $getInformations->bindValue(":idParking", $idParking);

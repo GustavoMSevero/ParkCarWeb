@@ -6,7 +6,7 @@ app.controller("accountCtrl", ['$scope', '$http', '$location', '$routeParams', f
         $scope.id = localStorage.getItem('parkcar_id');
         $scope.name = localStorage.getItem('parkcar_name');
         $scope.parking = localStorage.getItem('parkcar_typeUser');
-        console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.parking);
+        // console.log($scope.id +' '+ $scope.name +' '+ $scope.typeUser +' '+ $scope.parking);
 
     } else {
         $scope.admin = $scope.typeUser;

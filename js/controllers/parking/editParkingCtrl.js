@@ -54,10 +54,10 @@ app.controller("editParkingCtrl", ['$scope', '$http', '$location', '$routeParams
         newParkingAddress.option = 'update parking';
         newParkingAddress.idParking = $scope.idParking;
         console.log(newParkingAddress);
-        // $http.put(urlPrefixAdmin, newParkingAddress).success(function(data) {
-        //     console.log(data);
-        //     alert(data.msg);
-        // })
+        $http.put(urlPrefixAdmin, newParkingAddress).success(function(data) {
+            // console.log(data);
+            alert(data.msg);
+        })
     }
 	
 }]);
