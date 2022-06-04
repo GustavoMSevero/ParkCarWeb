@@ -628,14 +628,16 @@ switch ($option) {
 
         // $parkDate = date("Y-m-d");
         $idClient = $_GET['idClient'];
+        $vehicleParkStatus=0;
 
         try {
             $getPaidVehicles=$pdo->prepare("SELECT parkedVehicles.*, parking.parkingName 
                                             FROM parkedVehicles, parking 
-                                            WHERE idClient=:idclient 
-                                            AND vehicleParkStatus=0 
+                                            WHERE idClient=:idClient 
+                                            AND vehicleParkStatus=:vehicleParkStatus 
                                             AND parking.idParking=parkedVehicles.idParking");
             $getPaidVehicles->bindvalue(":idClient", $idClient);
+            $getPaidVehicles->bindvalue(":vehicleParkStatus", $vehicleParkStatus);
             $getPaidVehicles->execute();
 
             $quantity = $getPaidVehicles->rowCount();
