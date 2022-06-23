@@ -398,6 +398,44 @@ switch ($option) {
             $updateVaccantsNumber->execute();
 
             file_get_contents('http://ws.parkcar.app.br/vacancies/'.$idParking.'/'.$vaccantNumber);
+
+            // GET ENTRY TICKET INFO
+            $getParkingData=$pdo->prepare("SELECT parkingName, address FROM parking WHERE idParking=:idParking");
+            $getParkingData->bindValue(":idParking", $idParking);
+            $getParkingData->execute();
+
+            while ($line=$getParkingData->fetch(PDO::FETCH_ASSOC)) {
+                $parkingName = $line['parkingName'];
+                $parkingAddress = $line['address'];
+            }
+
+            if ($cnpj == '') {
+                $cnpj = null;
+            }
+
+            if ($parkingPhone == '') {
+                $parkingPhone = null;
+            }
+
+            $licensePlate;
+            $entranceP = explode(" ", $entrance);
+            $entrayDate = $entranceP[0];
+            $entrayTime = $entranceP[1];
+
+            // SAVE ENTRY TICKET INFO
+            $insertEntrayTicketInfo=$pdo->prepare("INSERT INTO entry_ticket (id_entry_ticket, entrance, parkingName, parkingAddress, CNPJ, 
+                                                parkingPhone, licensePlate, entryDate, entryTime) VALUES(?,?,?,?,?,?,?,?,?)");
+            $insertEntrayTicketInfo->bindValue(0, NULL);
+            $insertEntrayTicketInfo->bindValue(1, $entrance);
+            $insertEntrayTicketInfo->bindValue(2, $parkingName);
+            $insertEntrayTicketInfo->bindValue(3, $parkingAddress);
+            $insertEntrayTicketInfo->bindValue(4, $cnpj);
+            $insertEntrayTicketInfo->bindValue(5, $parkingPhone);
+            $insertEntrayTicketInfo->bindValue(6, $licensePlate);
+            $insertEntrayTicketInfo->bindValue(7, $entrayDate);
+            $insertEntrayTicketInfo->bindValue(8, $entrayTime);
+            $insertEntrayTicketInfo->execute();
+            
             
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
