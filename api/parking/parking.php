@@ -354,6 +354,7 @@ switch ($option) {
                         $image = 'https://www.parkcar.app.br/web/imgs/'.$logoName;
                     }
 
+                    // Verify is allow booking
                     $getParkingAllowBooking=$pdo->prepare("SELECT allow FROM allowBooking WHERE idParking=:idParking");
                     $getParkingAllowBooking->bindvalue(":idParking", $idParking);
                     $getParkingAllowBooking->execute();
