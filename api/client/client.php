@@ -189,6 +189,33 @@ switch ($option) {
         }
 
         break;
+
+    case 'get licensePlate client to check ticket status':
+
+        $userId = $_GET['userId'];
+
+        try {
+            $getLicensePlateByUserId=$pdo->prepare("SELECT licensePlate FROM clientVehicle WHERE idClient=:userID");
+            $getLicensePlateByUserId->bindValue(":userID", $userId);
+            $getLicensePlateByUserId->execute();
+
+            while ($line=$getLicensePlateByUserId->fetch(PDO::FETCH_ASSOC)) {
+                $licensePlate = $line['licensePlate'];;
+
+                $return[] = array(
+                    'licensePlate' => $licensePlate
+                );
+            }
+
+            echo json_encode($return);
+
+            
+
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+
+        break;
     
     default:
         # code...
