@@ -1,0 +1,42 @@
+
+#selectModality
+#inputModalityPrice
+#registerModality {
+    display: inline-block;
+}
+
+#selectModality {
+    width: 30%;
+}
+
+#inputModalityPrice {
+    margin-top: 10px;
+    width: 30%;
+}
+
+#registerModality {
+    margin-top: 10px;
+    width: 30%;
+}
+
+#inputCustomerName {
+    width: 30%;
+}
+#inputCustomerLicensePlate {
+    width: 30%;
+}
+#registerCustomer {
+    width: 30%;
+}
+
+#registerCustomer {
+    margin-top: 10px;
+}
+
+.showModalities {
+    margin-top: 20px;
+}
+
+.showCustomers {
+    margin-top: 20px;
+}
