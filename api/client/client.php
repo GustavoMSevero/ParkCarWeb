@@ -195,15 +195,17 @@ switch ($option) {
         $userId = $_GET['userId'];
 
         try {
-            $getLicensePlateByUserId=$pdo->prepare("SELECT licensePlate FROM clientVehicle WHERE idClient=:userID");
+            $getLicensePlateByUserId=$pdo->prepare("SELECT idClientVehicle, licensePlate FROM clientVehicle WHERE idClient=:userID");
             $getLicensePlateByUserId->bindValue(":userID", $userId);
             $getLicensePlateByUserId->execute();
 
             while ($line=$getLicensePlateByUserId->fetch(PDO::FETCH_ASSOC)) {
                 $licensePlate = $line['licensePlate'];;
+                $idClientVehicle = $line['idClientVehicle'];;
 
                 $return[] = array(
-                    'licensePlate' => $licensePlate
+                    'licensePlate' => $licensePlate,
+                    'idClientVehicle' => $idClientVehicle
                 );
             }
 
