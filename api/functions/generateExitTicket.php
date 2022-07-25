@@ -64,47 +64,22 @@
                 $amountPaid = $line['valuePaid'];
             }
 
-            // SAVE DEPARTURE DATA TICKET
-            $insertDepartureData=$pdo->prepare("INSERT INTO exit_ticket (id_exit_ticket, parkingName, parkingAddress, CNPJ, parkingPhone, licensePlate, entryDate, 
-                                            entryTime, exitDate, exitTime, stayOfTime, paymentType, amountPaid, statusTicket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $insertDepartureData->bindValue(1, NULL);
-            $insertDepartureData->bindValue(2, $parkingName);
-            $insertDepartureData->bindValue(3, $parkingAddress);
-            $insertDepartureData->bindValue(4, $cnpj);
-            $insertDepartureData->bindValue(5, $parkingPhone);
-            $insertDepartureData->bindValue(6, $licensePlate);
-            $insertDepartureData->bindValue(7, $entryDate);
-            $insertDepartureData->bindValue(8, $entryTime);
-            $insertDepartureData->bindValue(9, $exitDate);
-            $insertDepartureData->bindValue(10, $exitTime);
-            $insertDepartureData->bindValue(11, $diff);
-            $insertDepartureData->bindValue(12, $paymentType);
-            $insertDepartureData->bindValue(13, $amountPaid);
-            $insertDepartureData->bindValue(14, $status);
-            $insertDepartureData->execute();
-
-            $statusTicketEntryToZero = 0;
-            $statusTicketExistToOne = 1;
-
-            $updateStatusTicketEntry=$pdo->prepare("UPDATE entry_ticket SET statusTicket=:statusTicket
+            // UPDATE TICKET
+            $updateStatusTicketEntry=$pdo->prepare("UPDATE ticket SET statusTicket=:statusTicket, exitDate=:exitDate, exitTime=:exitTime,
+                                            stayOfTime=:stayOfTime, paymentType=:paymentType, amountPaid=:amountPaid
                                             WHERE licensePlate=:licensePlate 
                                             AND entryDate=:entryDate 
                                             AND entryTime=:entryTime");
-            $updateStatusTicketEntry->bindValue(":statusTicket", $statusTicketEntryToZero);
+            $updateStatusTicketEntry->bindValue(":statusTicket", $status);
+            $updateStatusTicketEntry->bindValue(":exitDate", $exitDate);
+            $updateStatusTicketEntry->bindValue(":exitTime", $exitTime);
+            $updateStatusTicketEntry->bindValue(":stayOfTime", $diff);
+            $updateStatusTicketEntry->bindValue(":paymentType", $paymentType);
+            $updateStatusTicketEntry->bindValue(":amountPaid", $amountPaid);
             $updateStatusTicketEntry->bindValue(":licensePlate", $licensePlate);
             $updateStatusTicketEntry->bindValue(":entryDate", $entryDate);
             $updateStatusTicketEntry->bindValue(":entryTime", $entryTime);
             $updateStatusTicketEntry->execute();
-
-            $updateStatusTicketExit=$pdo->prepare("UPDATE exit_ticket SET statusTicket=:statusTicket
-                                            WHERE licensePlate=:licensePlate 
-                                            AND entryDate=:entryDate 
-                                            AND entryTime=:entryTime");
-            $updateStatusTicketExit->bindValue(":statusTicket", $statusTicketExistToOne);
-            $updateStatusTicketExit->bindValue(":licensePlate", $licensePlate);
-            $updateStatusTicketExit->bindValue(":entryDate", $entryDate);
-            $updateStatusTicketExit->bindValue(":entryTime", $entryTime);
-            $updateStatusTicketExit->execute();
 
 
         } catch (Exception $e) {
