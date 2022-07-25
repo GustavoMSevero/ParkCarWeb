@@ -423,6 +423,7 @@ switch ($option) {
         stayCount($idParkedVehicle, $licensePlate, $idParking);
 
         try {
+            $vehicleParkStatus = 0;
             // UPDATE VEHICLE PARK STATUS AND DEPARTURE TIME IN clientVehicle
             $updateVehicleParkStatus=$pdo->prepare("UPDATE clientVehicle SET vehicleParkStatus=:vehicleParkStatus
                                             WHERE licensePlate=:licensePlate");
