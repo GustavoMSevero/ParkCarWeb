@@ -709,6 +709,39 @@ switch ($option) {
 
         break;
 
+    case 'check status ticket':
+
+        $licensePlate = $_GET['licensePlate'];
+        $dateEntry = $_GET['dateEntry'];
+        $timeEntry = $_GET['timeEntry'];
+
+        try {
+            $getTicketStatus=$pdo->prepare("SELECT * FROM ticket WHERE licensePlate=:licensePlate
+                                            AND entryDate=:entryDate
+                                            AND entryTime=:entryTime");
+            $getTicketStatus->bindValue(":licensePlate", $licensePlate);
+            $getTicketStatus->bindValue(":entryDate", $dateEntry);
+            $getTicketStatus->bindValue(":entryTime", $timeEntry);
+            $getTicketStatus->execute();
+
+            while ($line=$getTicketStatus->fetch(PDO::FETCH_ASSOC)) {
+
+                $statusTicket = $line['statusTicket'];
+
+                $return = array(
+                    'statusTicket' => $statusTicket
+                );
+    
+            }
+
+            echo json_encode($return);
+            
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+    
+        break;
+
     default:
         # code...
         break;
