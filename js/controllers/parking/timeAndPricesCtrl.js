@@ -51,9 +51,10 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
         parkingTimeAndPrices.option = 'register time and prices',
         parkingTimeAndPrices.idParking = $scope.id,
         parkingTimeAndPrices.idParkingBranch = $scope.idParkingBranch
+
         $http.post(urlPrefixParkingTimeAndPrices, parkingTimeAndPrices).success(function(response) {
             // console.log(response);
-            $scope.parkingTimeAndPrices = '';
+            alert(response.msg);
             getParkingTimeAndPrices();
         })
     }
@@ -62,7 +63,7 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
         var option = 'get parking time and prices';
         $http.get(urlOptionPrefixParkingTimeAndPrices + option + '&id_parking=' + $scope.id + '&idParkingBranch='+ $scope.idParkingBranch).success(function(response) {
             // console.log(response);
-            $scope.timeAndPrices = response;
+            $scope.parkingTimeAndPrices = response;
         })
 
     }
