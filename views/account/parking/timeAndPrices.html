@@ -178,56 +178,56 @@
                                                                             <br>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_01"
+                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_1"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="stayValue" ng-model="parkingTimeAndPrices.timeValue_01"
+                                                                                <label>Valor</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="stayValue" ng-model="parkingTimeAndPrices.parkingPrice_1"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_02"
+                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_2"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="stayValue" ng-model="parkingTimeAndPrices.timeValue_02"
+                                                                                <label>Valor</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="stayValue" ng-model="parkingTimeAndPrices.parkingPrice_2"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período adicional 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_01" ng-model="parkingTimeAndPrices.addPeriod_01"
+                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_01" ng-model="parkingTimeAndPrices.additionalTime_1"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor adicional 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addValue_01" ng-model="parkingTimeAndPrices.addValue_01"
+                                                                                <label>Valor adicional</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="addValue_01" ng-model="parkingTimeAndPrices.additionalPrice_1"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período adicional 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_02" ng-model="parkingTimeAndPrices.addPeriod_02"
+                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_02" ng-model="parkingTimeAndPrices.additionalTime_2"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor adicional 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addValue_02" ng-model="parkingTimeAndPrices.addValue_02"
+                                                                                <label>Valor adicional</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="addValue_02" ng-model="parkingTimeAndPrices.additionalPrice_2"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
@@ -249,52 +249,6 @@
                                                             </div>
                                                         </div>
 
-                                                            <div>
-                                                                Tolerânca de: <b>{{timeAndPrices.tolerancePeriod}}</b> min.
-                                                            </div>
-                                                                <br>
-                                                            <div>
-                                                                <div id="parkingTime_01">
-                                                                {{timeAndPrices.parkingTime_1}} min.
-                                                                </div>
-                                                                <div id="parkingPrice_01">
-                                                                {{timeAndPrices.parkingPrice_1}}
-                                                                </div>
-                                                            </div>
-    
-                                                            <div>
-                                                                <div id="parkingTime_02">
-                                                                    {{timeAndPrices.parkingTime_2}} min.
-                                                                </div>
-                                                                <div id="parkingPrice_02">
-                                                                    {{timeAndPrices.parkingPrice_2}}
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            
-    
-                                                            <div>
-                                                                <div id="adicionalTime_1">
-                                                                    {{timeAndPrices.adicionalTime_1}} min. adicionais
-                                                                </div>
-                                                                <div id="adicionalPrice_1">
-                                                                    {{timeAndPrices.adicionalPrice_1}}
-                                                                </div>
-                                                            </div>
-    
-                                                            <div>
-                                                                <div id="adicionalTime_2">
-                                                                    {{timeAndPrices.adicionalTime_2}} min. adicionais
-                                                                </div>
-                                                                <div id="adicionalPrice_2">
-                                                                    {{timeAndPrices.adicionalPrice_2}}
-                                                                </div>
-                                                            </div>
-                                                            
-
-                                                            <div id="editTimeAndPrices">
-                                                                <a href="#/editTimeAndPrices/{{timeAndPrices.idParkingTimeAndPrices}}/{{timeAndPrices.idSubparking}}">editar dados</a>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
