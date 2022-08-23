@@ -163,9 +163,24 @@
                                                         <div class="form-row">
                                                             <div class="form-group col-md-6">
                                                                 <div>
-                                                                    <label>tolerância</label>
+                                                                    <label>dia de tolerância (caso houver)</label>
                                                                     <div>
-                                                                        <input class="form-control" class="add-input" type="text" name="tolerancePeriod" ng-model="parkingTimeAndPrices.tolerancePeriod"
+                                                                        <select class="form-control toleranceDay" ng-model="parkingTimeAndPrices.toleranceDay" name="toleranceDay" id="">
+                                                                            <option value="1">Domingo</option>
+                                                                            <option value="2">Segunda</option>
+                                                                            <option value="3">Terça</option>
+                                                                            <option value="4">Quarta</option>
+                                                                            <option value="5">Quinta</option>
+                                                                            <option value="6">Sexta</option>
+                                                                            <option value="7">Sábado</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div>
+                                                                    <label>tempo de tolerância nos demais dias</label>
+                                                                    <div>
+                                                                        <input class="form-control tolerancePeriod" class="add-input" type="text" name="tolerancePeriod" ng-model="parkingTimeAndPrices.tolerancePeriod"
                                                                             placeholder="00:00"
                                                                             required
                                                                         />
@@ -178,7 +193,7 @@
                                                                             <br>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_1"
+                                                                                <input class="form-control periodOfStay1" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_1"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
@@ -192,7 +207,7 @@
                                                                             </div>
                                                                             <div id="periodOfStay">
                                                                                 <label>Período 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_2"
+                                                                                <input class="form-control periodOfStay2" class="add-input" type="text" name="periodOfStay" ng-model="parkingTimeAndPrices.parkingTime_2"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
@@ -205,35 +220,63 @@
                                                                                 />
                                                                             </div>
                                                                             <div id="periodOfStay">
-                                                                                <label>Período adicional 1</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_01" ng-model="parkingTimeAndPrices.additionalTime_1"
+                                                                                <label>Período 3</label>
+                                                                                <input class="form-control addPeriod_01" class="add-input" type="text" name="addPeriod_01" ng-model="parkingTimeAndPrices.parkingTime_3"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor adicional</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addValue_01" ng-model="parkingTimeAndPrices.additionalPrice_1"
+                                                                                <label>Valor</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="addValue_01" ng-model="parkingTimeAndPrices.parkingPrice_3"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="periodOfStay">
-                                                                                <label>Período adicional 2</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addPeriod_02" ng-model="parkingTimeAndPrices.additionalTime_2"
+                                                                                <label>Período 4</label>
+                                                                                <input class="form-control addPeriod_02" class="add-input" type="text" name="addPeriod_02" ng-model="parkingTimeAndPrices.parkingTime_4"
                                                                                     placeholder="00:00"
                                                                                     required
                                                                                 />
                                                                             </div>
                                                                             <div id="stayValue">
-                                                                                <label>Valor adicional</label>
-                                                                                <input class="form-control" class="add-input" type="text" name="addValue_02" ng-model="parkingTimeAndPrices.additionalPrice_2"
+                                                                                <label>Valor</label>
+                                                                                <input class="form-control" class="add-input" type="text" name="addValue_02" ng-model="parkingTimeAndPrices.parkingPrice_4"
                                                                                     placeholder="0,00"
                                                                                     required
                                                                                 />
                                                                             </div>
+
+                                                                            <div id="periodOfStay">
+                                                                                <label>Adicional</label>
+                                                                                <input class="form-control addPeriod" class="add-input" type="text" name="addPeriod" ng-model="parkingTimeAndPrices.addPeriod"
+                                                                                    placeholder="00:00"
+                                                                                    required
+                                                                                />
+                                                                            </div>
+                                                                            <div id="stayValue">
+                                                                                <label>Valor</label>
+                                                                                <input class="form-control addValue" class="add-input" type="text" name="addValue" ng-model="parkingTimeAndPrices.addValue"
+                                                                                    placeholder="0,00"
+                                                                                    required
+                                                                                />
+                                                                            </div>
+
+                                                                            <br>
+                                                                            <br>
+
+                                                                            <div id="dailyPeriod">
+                                                                                Após quanto tempo conta como diária?
+                                                                                <input class="form-control dailyPeriod" class="add-input" type="text" name="dailyPeriod" ng-model="parkingTimeAndPrices.dailyPeriod"
+                                                                                    placeholder="00:00"
+                                                                                    required
+                                                                                />
+                                                                            </div>
+
                                                                             <div id="dailyValue">
                                                                                 <label>Diária</label>
+            
                                                                                 <input class="form-control" class="add-input" type="text" name="daily" ng-model="parkingTimeAndPrices.daily"
                                                                                     placeholder="0,00"
                                                                                     required
