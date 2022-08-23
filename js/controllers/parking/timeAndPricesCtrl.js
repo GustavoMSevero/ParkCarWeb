@@ -24,9 +24,9 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
 
 
 	if(location.hostname == 'localhost'){
-		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';
-		var urlPrefixParkingTimeAndPrices = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php';
-		var urlOptionPrefixParkingTimeAndPrices = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php?option=';
+		var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';
+		var urlPrefixParkingTimeAndPrices = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php';
+		var urlOptionPrefixParkingTimeAndPrices = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php?option=';
 	} else {
 		var urlOptionPrefixAdmin = 'api/admin/adminParking.php?option=';
         var urlPrefixParkingTimeAndPrices = 'api/parking/parkingTimeAndPrices.php';
@@ -44,14 +44,10 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
 
     $scope.parkingTimeAndPrices = {};
     $scope.registerTimeAndPrice = function(parkingTimeAndPrices) {
-        var weekDay = parseInt(parkingTimeAndPrices.dayOfWeek);
-        var daysOfWeek = ["", "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-        parkingTimeAndPrices.dayOfWeek = daysOfWeek[weekDay];
-
         parkingTimeAndPrices.option = 'register time and prices',
         parkingTimeAndPrices.idParking = $scope.id,
         parkingTimeAndPrices.idParkingBranch = $scope.idParkingBranch
-
+        // console.log(parkingTimeAndPrices)
         $http.post(urlPrefixParkingTimeAndPrices, parkingTimeAndPrices).success(function(response) {
             // console.log(response);
             alert(response.msg);

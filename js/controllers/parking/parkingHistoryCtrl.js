@@ -23,7 +23,7 @@ app.controller("parkingHistoryCtrl", ['$scope', '$http', '$location', '$routePar
     
 
 	if(location.hostname == 'localhost'){
-        var urlOptionParking = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/parking.php?option=';
+        var urlOptionParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parking.php?option=';
 	} else {
         var urlOptionParking = 'api/parking/parking.php?option=';
 	}

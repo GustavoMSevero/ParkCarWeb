@@ -18,8 +18,8 @@ app.controller("editParkingCtrl", ['$scope', '$http', '$location', '$routeParams
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/editParking.php';
-		var urlOptionPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/editParking.php?option=';
+		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/editParking.php';
+		var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/editParking.php?option=';
 	} else {
 		var urlPrefixAdmin = 'api/parking/editParking.php';
         var urlOptionPrefixAdmin = 'api/parking/editParking.php?option=';

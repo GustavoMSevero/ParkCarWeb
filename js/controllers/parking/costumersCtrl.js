@@ -23,10 +23,10 @@ app.controller("customerCtrl", ['$scope', '$http', '$location', '$routeParams', 
     
 
 	if(location.hostname == 'localhost'){
-        var urlModality = 'http://localhost:8888/Projects/web/ParkCarWeb/api/parking/modality.php';
-        var urlOptionModality = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/modality.php?option=';
-        var urlCustomer = 'http://localhost:8888/Projects/web/ParkCarWeb/api/parking/customer.php';
-        var urlOptionCustomer = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/customer.php?option=';
+        var urlModality = 'http://localhost:8892/Projects/web/ParkCarWeb/api/parking/modality.php';
+        var urlOptionModality = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/modality.php?option=';
+        var urlCustomer = 'http://localhost:8892/Projects/web/ParkCarWeb/api/parking/customer.php';
+        var urlOptionCustomer = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/customer.php?option=';
 	} else {
         var urlModality = 'api/parking/modality.php';
         var urlOptionModality = 'api/parking/modality.php?option=';

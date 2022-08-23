@@ -23,7 +23,7 @@ app.controller("parkingLogoCtrl", ['$scope', '$http', '$location', '$routeParams
     
 
 	if(location.hostname == 'localhost'){
-        var urlOptionUploadLogoParking = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/uploadLogoParking.php?option=';
+        var urlOptionUploadLogoParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/uploadLogoParking.php?option=';
 	} else {
         var urlOptionUploadLogoParking = 'api/parking/parking.php?option=';
 	}
