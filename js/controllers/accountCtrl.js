@@ -22,7 +22,7 @@ app.controller("accountCtrl", ['$scope', '$http', '$location', '$routeParams', f
     }
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin.php';
+		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin.php';
 	} else {
 		var urlPrefixAdmin = 'api/admin.php';
 	}

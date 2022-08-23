@@ -1,8 +1,8 @@
 app.controller("loginCtrl", ['$scope', '$http', '$window', '$location', '$rootScope', function ($scope, $http, $window, $location, $rootScope) {
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/admin.php';
-		var urlPrefixParking = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/admin/adminParking.php';
+		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/admin.php';
+		var urlPrefixParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/adminParking.php';
 	} else {
 		var urlPrefixAdmin = 'api/admin/admin.php';
 		var urlPrefixParking = 'api/admin/adminParking.php';
