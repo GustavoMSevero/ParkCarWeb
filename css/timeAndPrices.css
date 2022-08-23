@@ -1,7 +1,24 @@
-
-#periodOfStay {
-    width: 45%;
+.toleranceDay {
+    width: 50% !important;
 }
+
+.tolerancePeriod {
+    width: 25% !important;
+}
+
+.periodOfStay1,
+.periodOfStay2,
+.addPeriod_01,
+.addPeriod_02,
+.addPeriod {
+    width: 25% !important;
+}
+
+
+
+/* #periodOfStay {
+    width: 45%;
+} */
 
 #stayValue {
     width: 20%;
@@ -79,6 +96,10 @@
 #adicionalPrice_2 {
     display: inline-block;
     margin-bottom: 10px;
+}
+
+#dailyPeriod {
+    width: 45%;
 }
 
 #dailyValue {
