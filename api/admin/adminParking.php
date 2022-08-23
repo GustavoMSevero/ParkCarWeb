@@ -187,6 +187,7 @@ switch ($option) {
         $typeUser = $data->typeUser;
         $email = $data->email;
         $password = md5($data->password);
+        // echo $password;
 
         try {
             $searchOwnerParking=$pdo->prepare("SELECT * FROM ownerParking
