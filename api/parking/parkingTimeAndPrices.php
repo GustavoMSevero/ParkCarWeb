@@ -62,6 +62,7 @@ switch ($option) {
         $parkingPrice_2 = str_replace(",",".",$parkingPrice_2);
         $parkingPrice_3 = str_replace(",",".",$parkingPrice_3);
         $parkingPrice_4 = str_replace(",",".",$parkingPrice_4);
+        $addValue = str_replace(",",".",$addValue);
         $daily = str_replace(",",".",$daily);
 
         try {
