@@ -1,0 +1,52 @@
+
+#firstname,
+#secondname,
+#floor {
+    display: inline-block;
+}
+
+
+#firstname {
+    width: 25%;
+}
+
+#secondname {
+    width: 25%;
+}
+
+#licensePlate {
+    width: 15%;
+}
+
+#contract {
+    width: 12%;
+}
+
+#floor {
+    width: 10%;
+}
+
+#codFloor {
+    width: 10%;
+}
+
+#customerBox {
+    width: 10%;
+}
+
+#contractValue {
+    width: 15%;
+}
+
+#licensePlate,
+#contract,
+/* #floor, */
+#codFloor,
+#customerBox,
+#contractValue {
+    display: inline-block;
+}
+
+.showCustomers {
+    margin-top: 20px;
+}

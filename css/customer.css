@@ -1,0 +1,75 @@
+
+#selectContract {
+    width: 81%;
+}
+
+#selectContract,
+#btnRegisterContract {
+    display: inline-block;
+}
+
+.showContracts {
+    margin-top: 20px;
+}
+
+#firstname,
+#secondname,
+#floor {
+    display: inline-block;
+}
+
+
+#firstname {
+    width: 25%;
+}
+
+#secondname {
+    width: 25%;
+}
+
+#licensePlate {
+    width: 15%;
+}
+
+#contract {
+    width: 12%;
+}
+
+#contractStartDate {
+    width: 12%;
+}
+
+#contractEndDate {
+    width: 12%;
+}
+
+#floor {
+    width: 15%;
+}
+
+#codFloor {
+    width: 15%;
+}
+
+#customerBox {
+    width: 15%;
+}
+
+#contractValue {
+    width: 15%;
+}
+
+#licensePlate,
+#contract,
+/* #floor, */
+#contractStartDate,
+#contractEndDate,
+#codFloor,
+#customerBox,
+#contractValue {
+    display: inline-block;
+}
+
+.showCustomers {
+    margin-top: 20px;
+}
