@@ -36,7 +36,7 @@
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="bookingCtrl">
+        <div class="container-fluid" ng-controller="customersCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -155,7 +155,7 @@
                             <div class="col-lg-12">
                                 <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Reserva</h6>
+                                        <h6 class="m-0">Clientes</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
@@ -164,24 +164,29 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
                                                             <div>
-                                                                Seu estacionamento permite fazer reserva de vagas?
+                                                                CADASTRO DE CONTRATO
                                                             </div>
-                                                            <div>
-                                                                <form name="formBooking">
-                                                                    <div id="inputBooking">
-                                                                        <select class="form-control" name="booking" ng-model="allowBooking.allow" id="">
-                                                                            <option value="1">Sim</option>
-                                                                            <option value="0">Não</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div id="buttonBooking">
-                                                                        <button type="button" class="btn btn-success" ng-click="register(allowBooking)">SALVAR</button>
-                                                                    </div>
-                                                                </form>
-
-                                                                <div id="answerAllowBooking">
-                                                                    Permite fazer reservas: <b>{{allow}}</b>
+                                                            <form>
+                                                                <div id="selectContract">
+                                                                    <input type="text" class="form-control" name="contract" ng-model="contract.contractType" id="">
                                                                 </div>
+                                                                
+                                                                <div id="btnRegisterContract">
+                                                                    <button type="button" class="btn btn-success" ng-click="registerContract(contract)">ADICIONAR</button>
+                                                                </div>
+                                                            </form>
+
+                                                            <div class="showContracts">
+                                                                <table class="table table-striped">
+                                                                    <tr>
+                                                                        <td><b>ID</b></td>
+                                                                        <td><b>CONTRATO</b></td>
+                                                                    </tr>
+                                                                    <tr ng-repeat="cC in customerContracts">
+                                                                        <td>{{cC.idCustomerContract}}</td>
+                                                                        <td>{{cC.contractType}}</td>
+                                                                    </tr>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -194,15 +199,89 @@
                                 <div class="col-lg-12">
                                     <div class="card card-small mb-4">
                                         <div class="card-header border-bottom">
-                                            <!-- <h6 class="m-0">Dados do Estacionamento</h6> -->
+                                            Clientes
                                         </div>
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item p-3">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                            <!-- Epa! -->
+                                                            <div class="form-group col-md-12">
+                                                                <form>
+                                                                    <div id="firstname">
+                                                                        <input class="form-control" type="text" name="firstname" ng-model="customer.firstname" id="" placeholder="nome">
+                                                                    </div>
+                                                                    <div id="secondname">
+                                                                        <input class="form-control" type="text" name="secondname" ng-model="customer.secondname" id="" placeholder="sobrenome">
+                                                                    </div>
+
+                                                                    <div id="licensePlate">
+                                                                        <input type="text" class="form-control" name="licensePlate" ng-model="customer.licensePlate" id="" placeholder="placa">
+                                                                    </div>
+
+                                                                    <div id="contract">
+                                                                        <select class="form-control" name="contract" ng-model="customer.contract" id="">
+                                                                            <option value="">Contrato...</option>
+                                                                            <option ng-repeat="cc in customerContracts" value="{{ cc.idCustomerContract }}">{{ cc.contractType }}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    
+                                                                    <div>
+                                                                        
+                                                                        Início Contrato
+                                                                        <div id="contractStartDate">
+                                                                            <input class="form-control" type="date" name="contractStartDate" ng-model="customer.contractStartDate" id="">
+                                                                        </div>
+                                                                        Fim Contrato
+                                                                        <div id="contractEndDate">
+                                                                            <input class="form-control" type="date" name="contractEndDate" ng-model="customer.contractEndDate" id="">
+                                                                        </div>
+
+                                                                        <div id="floor">
+                                                                            <select class="form-control" name="floor" ng-model="customer.floor" id="">
+                                                                                <option value="">Andar...</option>
+                                                                                <option value="T">Térreo</option>
+                                                                                <option value="1">1º</option>
+                                                                                <option value="2">2º</option>
+                                                                                <option value="3">3º</option>
+                                                                                <option value="4">4º</option>
+                                                                                <option value="5">5º</option>
+                                                                                <option value="6">6º</option>
+                                                                                <option value="7">7º</option>
+                                                                                <option value="8">8º</option>
+                                                                                
+                                                                            </select>
+                                                                        </div>
+                                                                        <div id="codFloor">
+                                                                            <input type="text" class="form-control" name="codFloor" ng-model="customer.codFloor" id="" placeholder="código andar">
+                                                                        </div>
+                                                                        <div id="customerBox">
+                                                                            <input type="text" class="form-control" name="customerBox" ng-model="customer.customerBox" id="" placeholder="box">
+                                                                        </div>
+                                                                        <div id="contractValue">
+                                                                            <input type="text" class="form-control" name="contractValue" ng-model="customer.contractValue" id="" placeholder="valor">
+                                                                        </div>
+
+                                                                        <button type="button" class="btn btn-success" ng-click="registerCustomer(customer)">ADICIONAR</button>
+                                                                    </div>
+                                                                </form>
+
+                                                                <div class="showCustomers">
+                                                                    <table class="table table-striped">
+                                                                        <tr>
+                                                                            <td><b>Cliente</b></td>
+                                                                            <td><b>Placa</b></td>
+                                                                            <td><b>Contrato</b></td>
+                                                                            <td><b></b></td>
+                                                                        </tr>
+                                                                        <tr ng-repeat="pc in parkingCustomers">
+                                                                            <td>{{pc.firstname}} {{pc.secondname}}</td>
+                                                                            <td>{{pc.licensePlate}}</td>
+                                                                            <td>{{pc.contractType}}</td>
+                                                                            <td><a class="link-edit" href="#/editCustomer/{{pc.idParkingCustomer}}">edit</a></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

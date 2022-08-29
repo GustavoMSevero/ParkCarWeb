@@ -36,7 +36,7 @@
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="customerCtrl">
+        <div class="container-fluid" ng-controller="editCustomerCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -81,7 +81,7 @@
                                 </a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
-                        		<a class="nav-link " ng-href="#/costumers">
+                        		<a class="nav-link " ng-href="#/customers">
                           			<span>Clientes</span>
                         		</a>
                             </li>
@@ -155,103 +155,77 @@
                             <div class="col-lg-12">
                                 <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Modalidades</h6>
+                                        <h6 class="m-0">Editar Cliente</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-12">
                                                             <form>
-                                                                <div id="selectModality">
-                                                                    <select class="form-control" name="modality" ng-model="modality.type" id="">
-                                                                        <option value="">Tipo</option>
-                                                                        <option value="Mensalista">Mensalista</option>
-                                                                        <option value="Diarista">Diarista</option>
-                                                                    </select>
+                                                                <div id="firstname">
+                                                                    <input class="form-control" type="text" name="firstname" ng-model="newCustomer.firstname" id="" placeholder="nome">
                                                                 </div>
-                                                                <div id="inputModalityPrice">
-                                                                    <input class="form-control" type="text" name="price" ng-model="modality.price" id="">
+                                                                <div id="secondname">
+                                                                    <input class="form-control" type="text" name="secondname" ng-model="newCustomer.secondname" id="" placeholder="sobrenome">
                                                                 </div>
-                                                                <div id="registerModality">
-                                                                    <button type="button" class="btn btn-success" ng-click="registerModality(modality)">ADICIONAR</button>
-                                                                </div>
-                                                            </form>
 
-                                                            <div class="showModalities">
-                                                                <table class="table table-striped">
-                                                                    <tr>
-                                                                        <td>ID</td>
-                                                                        <td>MODALIDADE</td>
-                                                                        <td>PRIÇO</td>
-                                                                    </tr>
-                                                                    <tr ng-repeat="pM in parkingModalities">
-                                                                        <td>{{pM.idParkingModality}}</td>
-                                                                        <td>{{pM.type}}</td>
-                                                                        <td align="right">{{pM.price}}</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                                <div id="licensePlate">
+                                                                    <input type="text" class="form-control" name="licensePlate" ng-model="newCustomer.licensePlate" id="" placeholder="placa">
+                                                                </div>
+                                                                
+                                                                <!-- <div> -->
+                                                                    
+                                                                    <div id="contract">
+                                                                        <select class="form-control" name="contract" ng-model="newCustomer.idCustomerContract" id="">
+                                                                            <option ng-repeat="cc in customerContracts" value="{{ cc.idCustomerContract }}">{{ cc.contractType }}</option>
+                                                                        </select>
+                                                                    </div>
+
+                                                                    Início Contrato
+                                                                    <div id="contractStartDate">
+                                                                        <input class="form-control" type="text" name="contractStartDate" ng-model="newCustomer.contractStartDate" id="">
+                                                                    </div>
+                                                                    Fim Contrato
+                                                                    <div id="contractEndDate">
+                                                                        <input class="form-control" type="text" name="contractEndDate" ng-model="newCustomer.contractEndDate" id="">
+                                                                    </div>
+
+                                                                    <div id="floor">
+                                                                        <select class="form-control" name="floor" ng-model="newCustomer.parkingFloor" id="">
+                                                                            <option value="">Andar...</option>
+                                                                            <option value="T">Térreo</option>
+                                                                            <option value="1">1º</option>
+                                                                            <option value="2">2º</option>
+                                                                            <option value="3">3º</option>
+                                                                            <option value="4">4º</option>
+                                                                            <option value="5">5º</option>
+                                                                            <option value="6">6º</option>
+                                                                            <option value="7">7º</option>
+                                                                            <option value="8">8º</option>
+                                                                            
+                                                                        </select>
+                                                                    </div>
+                                                                    <div id="codFloor">
+                                                                        <input type="text" class="form-control" name="codFloor" ng-model="newCustomer.codFloor" id="" placeholder="código andar">
+                                                                    </div>
+                                                                    <div id="customerBox">
+                                                                        <input type="text" class="form-control" name="customerBox" ng-model="newCustomer.box" id="" placeholder="box">
+                                                                    </div>
+                                                                    <div id="contractValue">
+                                                                        <input type="text" class="form-control" name="contractValue" ng-model="newCustomer.value" id="" placeholder="valor">
+                                                                    </div>
+
+                                                                    <button type="button" class="btn btn-success" ng-click="updateCustomer(newCustomer)">ATUALIZAR</button>
+                                                                <!-- </div> -->
+                                                            </form>
+                                                    
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="card card-small mb-4">
-                                        <div class="card-header border-bottom">
-                                            Clientes
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item p-3">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <form>
-                                                                    <div id="inputCustomerName">
-                                                                        <input type="text" class="form-control" name="customer" ng-model="customer.costumer" placeholder="Nome" id="">
-                                                                    </div>
-                                                                    <div id="inputCustomerLicensePlate">
-                                                                        <input type="text" class="form-control" name="licensePlate" ng-model="customer.licensePlate" placeholder="XYZ1234" id="">
-                                                                    </div>
-                                                                    <div id="selectModality">
-                                                                        <select class="form-control" name="modality" ng-model="customer.type" id="">
-                                                                            <option value="">Tipo</option>
-                                                                            <option value="Mensalista">Mensalista</option>
-                                                                            <option value="Diarista">Diarista</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div id="registerCustomer">
-                                                                        <button type="button" class="btn btn-success" ng-click="registerCustomer(customer)">ADICIONAR</button>
-                                                                    </div>
-                                                                </form>
-                                                                <div class="showCustomers">
-                                                                    <table class="table table-striped">
-                                                                        <tr>
-                                                                            <td>ID</td>
-                                                                            <td>CLIENTE</td>
-                                                                            <td>PLACA</td>
-                                                                            <td>MODALIDADE</td>
-                                                                        </tr>
-                                                                        <tr ng-repeat="pC in parkingCustomers">
-                                                                            <td>{{pC.idParkingCustomer}}</td>
-                                                                            <td>{{pC.customer}}</td>
-                                                                            <td>{{pC.licensePlate}}</td>
-                                                                            <td>{{pC.type}}</td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
 
