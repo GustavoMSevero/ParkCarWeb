@@ -91,14 +91,14 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
             echo 'É dia de tolerância';
         } else {
             echo 'Não é dia de tolerância';
-            echo "<br>";
+            // echo "<br>";
 
-            $dayAndTimeEntry = date("2021-09-01 13:00:00");
-            // $dayAndTimeEntry = $entrance;
+            // $dayAndTimeEntry = date("2021-09-01 13:00:00");
+            $dayAndTimeEntry = $entrance;
             $dayAndTimeEntrey_DateTime = new DateTime($dayAndTimeEntry);
 
-            $departureDayAndTime = date("2021-09-01 18:00:00");
-            // $departureDayAndTime = date("Y-m-d H:i:s");
+            // $departureDayAndTime = date("2021-09-01 18:00:00");
+            $departureDayAndTime = date("Y-m-d H:i:s");
             $departureDayAndTime_DateTime = new DateTime($departureDayAndTime);
 
             $difference = $dayAndTimeEntrey_DateTime ->diff($departureDayAndTime_DateTime );
@@ -116,41 +116,41 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
             $excedente = $parkingTime_4 + $addPeriod;
 
             if ($permanenceInMinutes <= $tolerancePeriod) {
-                echo "Dentro da tolerância. Isento de pagamento"."<br>";
-                echo "<br>";
+                // echo "Dentro da tolerância. Isento de pagamento"."<br>";
+                // echo "<br>";
             //                                                                              60
             } elseif ($permanenceInMinutes > $tolerancePeriod && $permanenceInMinutes < $parkingTime_2) { 
                 // se o tempo de tolerância acabou, paga
-                echo $parkingTime_1."<br>";
-                echo "Paga ".$parkingPrice_1;
+                // echo $parkingTime_1."<br>";
+                // echo "Paga ".$parkingPrice_1;
                 $valueToPay = $parkingPrice_1;
             //                                        60                                    120
             } elseif ($permanenceInMinutes >= $parkingTime_2 && $permanenceInMinutes < $parkingTime_3) {
-                echo $parkingTime_2."<br>";
-                echo "Paga ".$parkingPrice_2;
-                echo "<br>";
+                // echo $parkingTime_2."<br>";
+                // echo "Paga ".$parkingPrice_2;
+                // echo "<br>";
                 $valueToPay = $parkingPrice_2;
             //                                      120                                 180 
             } elseif ($permanenceInMinutes >= $parkingTime_3 && $permanenceInMinutes < $parkingTime_4) {
-                echo $parkingTime_3."<br>";
-                echo "Paga ".$parkingPrice_3;
-                echo "<br>";
+                // echo $parkingTime_3."<br>";
+                // echo "Paga ".$parkingPrice_3;
+                // echo "<br>";
                 $valueToPay = $parkingPrice_3;
             //                                     240                                  300
             } elseif ($permanenceInMinutes >= $parkingTime_4 && $permanenceInMinutes < $excedente) {
-                echo $parkingTime_4."<br>";
-                echo "Paga ".$parkingPrice_4;
-                echo "<br>";
+                // echo $parkingTime_4."<br>";
+                // echo "Paga ".$parkingPrice_4;
+                // echo "<br>";
                 $valueToPay = $parkingPrice_4;
             //                                     240                                  300
             } elseif ($permanenceInMinutes >= $excedente && $permanenceInMinutes < $dailyPeriod) {
-                echo $parkingTime_4." e ".$addPeriod."<br>";
-                echo "Paga ".$parkingPrice_4 + $addValue;
-                echo "<br>";
+                // echo $parkingTime_4." e ".$addPeriod."<br>";
+                // echo "Paga ".$parkingPrice_4 + $addValue;
+                // echo "<br>";
                 $valueToPay = $parkingPrice_4 + $addValue;
                 
             } elseif ($permanenceInMinutes >= $dailyPeriod) {
-                echo "Cobrar diária ".$daily."<br>";
+                // echo "Cobrar diária ".$daily."<br>";
                 $valueToPay = $daily;
             }
 
