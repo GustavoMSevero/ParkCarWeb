@@ -12,6 +12,10 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/register.html",
     })
 
+    .when("/forgotPassword", {
+        templateUrl: "views/forgotPassword.html",
+    })
+
     .when("/editUserAdmin/:idUserAdmin", {
         templateUrl: "views/account/admin/editUserAdmin.html",
     })
