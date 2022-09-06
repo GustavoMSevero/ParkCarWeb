@@ -8,7 +8,7 @@ include_once("../functions/jwt.php");
 include_once("../functions/oneSignal.php");
 include_once("../functions/generateEntryTicket.php");
 include_once("../functions/generateExitTicket.php");
-include_once("../functions/stayCount-GaragemCarlosGomes.php");
+include_once("../functions/lenght-of-stay.php");
 
 $pdo = conectar();
 
