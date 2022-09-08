@@ -13,7 +13,7 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
     $pdo = conectar();
     date_default_timezone_set('America/Sao_Paulo');
-    $dayOfTheWeek = date('l');
+    // $dayOfTheWeek = date('l');
 
     try {
         // GET ENTRANCE DATA TO CALCULATE LENGTH OF STAY
