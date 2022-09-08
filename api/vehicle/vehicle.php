@@ -8,7 +8,8 @@ include_once("../functions/jwt.php");
 include_once("../functions/oneSignal.php");
 include_once("../functions/generateEntryTicket.php");
 include_once("../functions/generateExitTicket.php");
-include_once("../functions/lenght-of-stay.php");
+// include_once("../functions/lenght-of-stay.php");
+include_once("../functions/stayCount-GaragemCarlosGomes.php");
 
 $pdo = conectar();
 
@@ -239,20 +240,19 @@ switch ($option) {
                     $idParking = $line['idParking'];
                     $idClient = $line['idClient'];
 
-                    $getInformations=$pdo->prepare("SELECT p.id, p.licensePlate, p.entrance, p.vehicleParkStatus ,c.name, v.model, v.brand
-                                                    FROM  parkedVehicles p, client c, clientVehicle v
-                                                    WHERE p.vehicleParkStatus=:vehicleParkStatus
-                                                    AND c.idClient = p.idClient
+                    $getInformations=$pdo->prepare("SELECT pv.id, pv.licensePlate, pv.entrance, pv.vehicleParkStatus, pv.idParking ,c.name, v.model, v.brand, p.parkingName
+                                                    FROM  parkedVehicles pv, client c, clientVehicle v, parking p
+                                                    WHERE pv.vehicleParkStatus=:vehicleParkStatus
+                                                    AND c.idClient = pv.idClient
                                                     AND v.idClient = c.idClient
-                                                    AND p.licensePlate = v.licensePlate");
+                                                    AND pv.licensePlate = v.licensePlate
+                                                    AND p.idParking = pv.idParking");
 
                     $getInformations->bindValue(":vehicleParkStatus", $vehicleParkStatus);
-                    // $getInformations->bindValue(":idParking", $idParking);
-                    $getInformations->bindValue(":idClient", $idClient);
                     $getInformations->execute();
 
                     while ($line=$getInformations->fetch(PDO::FETCH_ASSOC)) {
-                        $parkingName = $line['parkingName'];
+                        // $parkingName = $line['parkingName'];
                         $brand = $line['brand'];
                         $model = $line['model'];
                         $licensePlate = $line['licensePlate'];
@@ -712,24 +712,45 @@ switch ($option) {
     case 'check status ticket':
 
         $licensePlate = $_GET['licensePlate'];
-        $dateEntry = $_GET['dateEntry'];
-        $timeEntry = $_GET['timeEntry'];
+        // $dateEntry = $_GET['dateEntry'];
+        // $timeEntry = $_GET['timeEntry'];
 
         try {
-            $getTicketStatus=$pdo->prepare("SELECT * FROM ticket WHERE licensePlate=:licensePlate
-                                            AND entryDate=:entryDate
-                                            AND entryTime=:entryTime");
+            $getTicketStatus=$pdo->prepare("SELECT * FROM ticket WHERE licensePlate=:licensePlate ORDER BY id_ticket DESC LIMIT 1");
             $getTicketStatus->bindValue(":licensePlate", $licensePlate);
-            $getTicketStatus->bindValue(":entryDate", $dateEntry);
-            $getTicketStatus->bindValue(":entryTime", $timeEntry);
             $getTicketStatus->execute();
 
             while ($line=$getTicketStatus->fetch(PDO::FETCH_ASSOC)) {
 
                 $statusTicket = $line['statusTicket'];
+                $parkingName = $line['parkingName'];
+                $parkingAddress = $line['parkingAddress'];
+                @$CPNJ = $line['CPNJ'];
+                @$parkingPhone = $line['parkingPhone'];
+
+                $entryDate = $line['entryDate'];
+                $entryTime = $line['entryTime'];
+
+                @$exitDate = $line['exitDate'];
+                @$exitTime = $line['exitTime'];
+                @$stayOfTime = $line['stayOfTime'];
+                @$paymentType = $line['paymentType'];
+                @$amountPaid = $line['amountPaid'];
 
                 $return = array(
-                    'statusTicket' => $statusTicket
+                    'statusTicket' => $statusTicket,
+                    'parkingName' => $parkingName,
+                    'parkingAddress' => $parkingAddress,
+                    'CPNJ' => $CPNJ,
+                    'parkingPhone' => $parkingPhone,
+                    'entryDate' => $entryDate,
+                    'entryTime' => $entryTime,
+
+                    'exitDate' => $exitDate,
+                    'exitTime' => $exitTime,
+                    'stayOfTime' => $stayOfTime,
+                    'paymentType' => $paymentType,
+                    'amountPaid' => $amountPaid
                 );
     
             }
