@@ -13,7 +13,7 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
     $pdo = conectar();
     date_default_timezone_set('America/Sao_Paulo');
-    // $weekDay = date('l'); // day of week
+    $weekDay = date('l'); // day of week
 
     try {
         // GET ENTRANCE DATA TO CALCULATE LENGTH OF STAY
@@ -34,23 +34,33 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
             $parkingName = $line['parkingName'];
         }
 
-        $getParkingTimeAndPrices=$pdo->prepare("SELECT * FROM timeAndPrices_1 
-                                                WHERE idParking=:idParking");
-        $getParkingTimeAndPrices->bindValue(":idParking", $idParking);
-        $getParkingTimeAndPrices->execute();
+        $get_time_and_prices_from_parking=$pdo->prepare("SELECT * FROM timeAndPrices WHERE idParking=:idParking");
+        $get_time_and_prices_from_parking->bindValue(":idParking", $idParking);
+        $get_time_and_prices_from_parking->execute();
         
-        while ($line=$getParkingTimeAndPrices->fetch(PDO::FETCH_ASSOC)) {
-            $tolerancePeriod = $line['tolerancePeriod']; // 30 min
-            $parkingTime_1 = $line['parkingTime_1']; // 30 min
-            $parkingPrice_1 = $line['parkingPrice_1']; // 6,00
-            $parkingTime_2 = $line['parkingTime_2']; // 1 hora
-            $parkingPrice_2 = $line['parkingPrice_2']; // 12,00
-            $adicionalTime_1 = $line['adicionalTime_1']; // 30 min adicional
-            $adicionalPrice_1 = $line['adicionalPrice_1']; // 5,00
-            $adicionalTime_2 = $line['adicionalTime_2']; // 1 hora adicional
-            $adicionalPrice_2 = $line['adicionalPrice_2']; // 10,00
+        while ($line=$get_time_and_prices_from_parking->fetch(PDO::FETCH_ASSOC)) {
+            $toleranceDay = $line['toleranceDay'];
+            $tolerancePeriod = $line['tolerancePeriod'];
+            
+            $parkingTime_1 = $line['parkingTime_1'];
+            $parkingPrice_1 = $line['parkingPrice_1'];
+            
+            $parkingTime_2 = $line['parkingTime_2'];
+            $parkingPrice_2 = $line['parkingPrice_2'];
+            
+            $parkingTime_3 = $line['parkingTime_3'];
+            $parkingPrice_3 = $line['parkingPrice_3'];
+            
+            $parkingTime_4 = $line['parkingTime_4'];
+            $parkingPrice_4 = $line['parkingPrice_4'];
+    
+            $addPeriod = $line['addPeriod'];
+            $addValue = $line['addValue'];
+            
+            $dailyPeriod = $line['dailyPeriod'];
             $daily = $line['daily'];
         }
+
 
         // $dayAndTimeEntry = date("2021-08-30 07:00:00");
         $dayAndTimeEntry = $entrance;
@@ -71,28 +81,46 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
         $valueToPay = 0;
 
+        $parkingTime_4 = intval($parkingTime_4);
+        $addPeriod = intval($addPeriod);
+        $excedente = $parkingTime_4 + $addPeriod;
+
         if ($permanenceInMinutes <= $tolerancePeriod) {
-            $valueToPay = 0;
-        } elseif ($permanenceInMinutes <= 30) {
-            // echo 'Pagar 30 min'.'<br>'; 6,00
+            // echo "Dentro da tolerância. Isento de pagamento"."<br>";
+            // echo "<br>";
+        //                                                                              60
+        } elseif ($permanenceInMinutes > $tolerancePeriod && $permanenceInMinutes < $parkingTime_2) { 
+            // se o tempo de tolerância acabou, paga
+            // echo $parkingTime_1."<br>";
+            // echo "Paga ".$parkingPrice_1;
             $valueToPay = $parkingPrice_1;
-        } elseif ($permanenceInMinutes > 30 && $permanenceInMinutes <= 60) {
-            // echo 'Pagar 1 hora'.'<br>'; 12,00
+        //                                        60                                    120
+        } elseif ($permanenceInMinutes >= $parkingTime_2 && $permanenceInMinutes < $parkingTime_3) {
+            // echo $parkingTime_2."<br>";
+            // echo "Paga ".$parkingPrice_2;
+            // echo "<br>";
             $valueToPay = $parkingPrice_2;
-        } elseif ($permanenceInMinutes > 60 && $permanenceInMinutes <= 90) {
-            // echo 'Pagar 1:30'.'<br>'; 17,00
-            $valueToPay = ($parkingPrice_2 + $adicionalPrice_1);
-        } elseif ($permanenceInMinutes > 90 && $permanenceInMinutes <= 120) {
-            // echo 'Pagar 2:00 horas'.'<br>'; 22,00
-            $valueToPay = ($parkingPrice_2 + $adicionalPrice_2);
-        } elseif ($permanenceInMinutes > 120 && $permanenceInMinutes <= 150) {
-            // echo 'Pagar 2:30 horas '.'<br>'; 27,00
-            $valueToPay = ($parkingPrice_2 + $adicionalPrice_2 + $adicionalPrice_1);
-        } elseif ($permanenceInMinutes > 150 && $permanenceInMinutes <= 180) {
-            // echo 'Pagar 3:00 horas '.'<br>'; 32,00
-            $valueToPay = $parkingPrice_2 + ($adicionalPrice_2 * 2);
-        } elseif ($permanenceInMinutes > 180 && $permanenceInMinutes <= 210) {
-            // echo 'Pagar 3:30 horas '.'<br>'; 37,00
+        //                                      120                                 180 
+        } elseif ($permanenceInMinutes >= $parkingTime_3 && $permanenceInMinutes < $parkingTime_4) {
+            // echo $parkingTime_3."<br>";
+            // echo "Paga ".$parkingPrice_3;
+            // echo "<br>";
+            $valueToPay = $parkingPrice_3;
+        //                                     240                                  300
+        } elseif ($permanenceInMinutes >= $parkingTime_4 && $permanenceInMinutes < $excedente) {
+            // echo $parkingTime_4."<br>";
+            // echo "Paga ".$parkingPrice_4;
+            // echo "<br>";
+            $valueToPay = $parkingPrice_4;
+        //                                     240                                  300
+        } elseif ($permanenceInMinutes >= $excedente && $permanenceInMinutes < $dailyPeriod) {
+            // echo $parkingTime_4." e ".$addPeriod."<br>";
+            // echo "Paga ".$parkingPrice_4 + $addValue;
+            // echo "<br>";
+            $valueToPay = $parkingPrice_4 + $addValue;
+            
+        } elseif ($permanenceInMinutes >= $dailyPeriod) {
+            // echo "Cobrar diária ".$daily."<br>";
             $valueToPay = $daily;
         }
 
@@ -149,10 +177,10 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
 }
 
-// $idParkedVehicle = 71;
-// $licensePlate = 'IXW3620';
-// $idParking = 15;
+$idParkedVehicle = 10;
+$licensePlate = 'IXW3620';
+$idParking = 15;
 
-// stayCount($idParkedVehicle, $licensePlate, $idParking)
+stayCount($idParkedVehicle, $licensePlate, $idParking);
 
 ?>
