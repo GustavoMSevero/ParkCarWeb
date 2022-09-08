@@ -57,10 +57,10 @@
             $insertEntrayTicketInfo->execute();
 
             // SAVE JUST ENTRY DATE AND ENTRY TIME TO BE LOCATED LATER TO DOWN TICKET 
-            $saveDateTimeEntry=$pdo->prepare("INSERT INTO date_time_entry (date_entry, time_entry) VALUES(?,?)");
-            $saveDateTimeEntry->bindValue(1, $entryDate);
-            $saveDateTimeEntry->bindValue(2, $entryTime);
-            $saveDateTimeEntry->execute();
+            // $saveDateTimeEntry=$pdo->prepare("INSERT INTO date_time_entry (date_entry, time_entry) VALUES(?,?)");
+            // $saveDateTimeEntry->bindValue(1, $entryDate);
+            // $saveDateTimeEntry->bindValue(2, $entryTime);
+            // $saveDateTimeEntry->execute();
             
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
