@@ -725,6 +725,7 @@ switch ($option) {
                 $statusTicket = $line['statusTicket'];
                 $parkingName = $line['parkingName'];
                 $parkingAddress = $line['parkingAddress'];
+                $licensePlate = $line['licensePlate'];
                 @$CPNJ = $line['CPNJ'];
                 @$parkingPhone = $line['parkingPhone'];
 
@@ -737,12 +738,19 @@ switch ($option) {
                 @$paymentType = $line['paymentType'];
                 @$amountPaid = $line['amountPaid'];
 
+                $entryDateP = explode("-", $entryDate);
+                $entryDate = $entryDateP[2].'/'.$entryDateP[1].'/'.$entryDateP[0];
+
+                $exitDateP = explode("-", $exitDate);
+                $exitDate = $exitDateP[2].'/'.$exitDateP[1].'/'.$exitDateP[0];
+
                 $return = array(
                     'statusTicket' => $statusTicket,
                     'parkingName' => $parkingName,
                     'parkingAddress' => $parkingAddress,
                     'CPNJ' => $CPNJ,
                     'parkingPhone' => $parkingPhone,
+                    'licensePlate' => $licensePlate,
                     'entryDate' => $entryDate,
                     'entryTime' => $entryTime,
 
