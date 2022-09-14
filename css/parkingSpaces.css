@@ -1,0 +1,14 @@
+
+#parkingFloor,
+#floorQuantity,
+#btnRegisterParkingSpaces {
+    display: inline-block;
+}
+
+#parkingFloor {
+    width: 30%;
+}
+
+#floorQuantity {
+    width: 15%;
+}
