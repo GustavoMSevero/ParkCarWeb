@@ -34,7 +34,7 @@ switch ($option) {
 
         try {
 
-            $checkIfEmailExists=$pdo->prepare("SELECT * FROM ownerParking WHERE ownerEmail=:email");
+            $checkIfEmailExists=$pdo->prepare("SELECT * FROM parking WHERE email=:email");
             $checkIfEmailExists->bindValue(":email", $email);
             $checkIfEmailExists->execute();
 
@@ -55,15 +55,15 @@ switch ($option) {
                 $mail->Host       = 'smtp.uni5.net';
                 // $mail->Host       = 'smtp.parkcar.app.br';
                 $mail->SMTPAuth   = true; 
-                $mail->Username   = 'recuperacaosenha@parkcar.app.br';
-                $mail->Password   = 'STbv@2021';
+                $mail->Username   = 'contato@parkcar.app.br';
+                $mail->Password   = 'ContatoParkcar2021';
                 $mail->Port       = '587';
                 $image = '../imgs/logo.png';
                 // <img src='cid:".$image." width='100' height='50' >
 
                 //Recipients
                 $site = 'ParkCar';
-                $mail->setFrom('recuperacaosenha@parkcar.app.br', $site);
+                $mail->setFrom('contato@parkcar.app.br', $site);
                 $mail->addAddress($email, $parkingName);
 
                 // Content
