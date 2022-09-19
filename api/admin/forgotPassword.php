@@ -43,7 +43,7 @@ switch ($option) {
             if ($exists != 0) {
             
                 while ($line=$checkIfEmailExists->fetch(PDO::FETCH_ASSOC)) {
-                    $email = $line['ownerEmail'];
+                    $email = $line['email'];
                     $parkingName = $line['parkingName'];
                 }
 
@@ -51,6 +51,7 @@ switch ($option) {
                 $parkingEmail = $email;
 
                 $mail = new PHPMailer();
+                $mail->CharSet = 'UTF-8';
                 $mail->isSMTP();
                 $mail->Host       = 'smtp.uni5.net';
                 // $mail->Host       = 'smtp.parkcar.app.br';
@@ -59,6 +60,7 @@ switch ($option) {
                 $mail->Password   = 'ContatoParkcar2021';
                 $mail->Port       = '587';
                 $image = '../imgs/logo.png';
+                $mail->AddEmbeddedImage('../imgs/logo.png', 'logo');
                 // <img src='cid:".$image." width='100' height='50' >
 
                 //Recipients
@@ -67,12 +69,13 @@ switch ($option) {
                 $mail->addAddress($email, $parkingName);
 
                 // Content
-                $mail->Subject = "RECUPERAÇÃO DE SENHA PARKCAR";
+                $mail->Subject = "RECUPERAÇÃO DE SENHA";
                 $mail->Body    = "<html lang='en'>
                                     <head>
                                         <meta charset='UTF-8'>
                                     </head>
                                     <body>
+                                        <img src='cid:logo width='100' height='50' >
                                         <p>Olá, ".$parkingName.".<br>
                                         Recebemos um pedido de recuperação de senha!</p>
                                         <a href ='http://www.parkcar.app.br'>http://www.parkcar.app.br</a>
@@ -82,13 +85,10 @@ switch ($option) {
                 $mail->IsHTML(true); // Set email format to HTML
 
                 $mail->send();
-                echo 'Message has been sent';
-                $msg = 'E-mail de boas-vindas enviada com sucesso para '.$parkingName.'! '.$parkingEmail;
-                $msgRegisterOK = 'Estacionamento '.$parkingName.' adicionado com sucesso';
+                $msg = 'Pedido de recuperação de senha enviada com sucesso para '.$parkingName.'! '.$parkingEmail;
 
                 $return = array(
-                    'msg' => $msg,
-                    'msgRegisterOK' => $msgRegisterOK
+                    'msg' => $msg
                 );
 
                 echo json_encode($return);
