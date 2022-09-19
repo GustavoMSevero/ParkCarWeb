@@ -10,7 +10,7 @@ app.controller("forgotPasswordCtrl", ['$scope', '$http', '$window', '$location',
         user.option = 'forgot password';
         // console.log(user)
         $http.post(urlPrefixAdmin, user).success(function(response) {
-            console.log(response)
+            // console.log(response)
             if (response.status == 0) {
                 $scope.msgErro = response.msg;
             } else {
