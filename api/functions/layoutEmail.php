@@ -9,7 +9,7 @@
 <body>
     <img src="../imgs/logo.png" width="100" height="50" >
     <!-- <img src="../imgs/android-icon.png" width="100" height="100" > -->
-    <p>Seja bem-vindo a Smart Traffic.<br>
+    <p>Seja bem-vindo a ParkCar!<br>
     Seu cadastro, em nosso sistema, foi efetuado com sucesso!</p>
 
 </body>
