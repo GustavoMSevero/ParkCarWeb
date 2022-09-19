@@ -132,7 +132,7 @@ switch ($option) {
                 $mail->IsHTML(true); // Set email format to HTML
 
                 $mail->send();
-                echo 'Message has been sent';
+                // echo 'Message has been sent';
                 $msg = 'E-mail de boas-vindas enviada com sucesso para '.$parkingName.'! '.$parkingEmail;
                 $msgRegisterOK = 'Estacionamento '.$parkingName.' adicionado com sucesso';
 
