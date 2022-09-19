@@ -1,5 +1,5 @@
 <?php
-
+// EXEMPLO GUSTAVO
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', true);
 error_reporting(E_ALL);
@@ -13,7 +13,7 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
     $pdo = conectar();
     date_default_timezone_set('America/Sao_Paulo');
-    // $dayOfTheWeek = date('l');
+    $weekDay = date('l'); // day of week
 
     try {
         // GET ENTRANCE DATA TO CALCULATE LENGTH OF STAY
@@ -61,146 +61,104 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
             $daily = $line['daily'];
         }
 
-        $daysOfTheWeek = array(
-            "Monday"=>2, 
-            "Tuesday"=>3, 
-            "Wednesday"=>4, 
-            "Thursday"=>5, 
-            "Friday"=>6, 
-            "Saturday"=>7, 
-            "Sunday"=>1
-        );
 
-        $daysOfTheWeekInvert = array(
-            1=>"Sunday",
-            2=>"Monday",
-            3=>"Tuesday",
-            4=>"Wednesday",
-            5=>"Thursday",
-            6=>"Friday",
-            7=>"Saturday",
-        );
+        // $entrance = date("2022-09-10 10:00:00");
+        $dayAndTimeEntry = $entrance;
+        $dayAndTimeEntrey_DateTime = new DateTime($dayAndTimeEntry);
 
-        $tD = (int)$toleranceDay;
-        $numberOfToleranceDayParking = $daysOfTheWeekInvert[$tD];
-        echo "Dia de tolerância é ".$numberOfToleranceDayParking."<br>";
 
-        $numberOfTheWeek = $daysOfTheWeek[$dayOfTheWeek];
+        // $departureDayAndTime = date("2021-08-30 10:30:00");
+        $departureDayAndTime = date("Y-m-d H:i:s");
+        $departureDayAndTime_DateTime = new DateTime($departureDayAndTime);
 
-        if ($toleranceDay == $numberOfTheWeek) {
-            echo 'É dia de tolerância';
-        } else {
-            echo 'Não é dia de tolerância';
-            // echo "<br>";
+        $difference = $dayAndTimeEntrey_DateTime ->diff($departureDayAndTime_DateTime );
+        $return_time = $difference ->format('%H:%I:%S');
 
-            // $dayAndTimeEntry = date("2021-09-01 13:00:00");
-            $dayAndTimeEntry = $entrance;
-            $dayAndTimeEntrey_DateTime = new DateTime($dayAndTimeEntry);
+        $dayAndTimeEntryInMinutes = dateAndTimeToNumber($dayAndTimeEntry);
+        $departureDayAndTimeMinutes = dateAndTimeToNumber($departureDayAndTime);
 
-            // $departureDayAndTime = date("2021-09-01 18:00:00");
-            $departureDayAndTime = date("Y-m-d H:i:s");
-            $departureDayAndTime_DateTime = new DateTime($departureDayAndTime);
+        $permanenceInMinutes = ($dayAndTimeEntryInMinutes - $departureDayAndTimeMinutes) * -1;
 
-            $difference = $dayAndTimeEntrey_DateTime ->diff($departureDayAndTime_DateTime );
-            $return_time = $difference ->format('%H:%I:%S');
+        $valueToPay = 0;
 
-            $dayAndTimeEntryInMinutes = dateAndTimeToNumber($dayAndTimeEntry);
-            $departureDayAndTimeMinutes = dateAndTimeToNumber($departureDayAndTime);
+        $parkingTime_4 = intval($parkingTime_4);
+        $addPeriod = intval($addPeriod);
+        $excedente = $parkingTime_4 + $addPeriod;
 
-            $permanenceInMinutes = ($dayAndTimeEntryInMinutes - $departureDayAndTimeMinutes) * -1;
-
-            $valueToPay = 0;
-
-            $parkingTime_4 = intval($parkingTime_4);
-            $addPeriod = intval($addPeriod);
-            $excedente = $parkingTime_4 + $addPeriod;
-
-            if ($permanenceInMinutes <= $tolerancePeriod) {
-                // echo "Dentro da tolerância. Isento de pagamento"."<br>";
-                // echo "<br>";
-            //                                                                              60
-            } elseif ($permanenceInMinutes > $tolerancePeriod && $permanenceInMinutes < $parkingTime_2) { 
-                // se o tempo de tolerância acabou, paga
-                // echo $parkingTime_1."<br>";
-                // echo "Paga ".$parkingPrice_1;
-                $valueToPay = $parkingPrice_1;
-            //                                        60                                    120
-            } elseif ($permanenceInMinutes >= $parkingTime_2 && $permanenceInMinutes < $parkingTime_3) {
-                // echo $parkingTime_2."<br>";
-                // echo "Paga ".$parkingPrice_2;
-                // echo "<br>";
-                $valueToPay = $parkingPrice_2;
-            //                                      120                                 180 
-            } elseif ($permanenceInMinutes >= $parkingTime_3 && $permanenceInMinutes < $parkingTime_4) {
-                // echo $parkingTime_3."<br>";
-                // echo "Paga ".$parkingPrice_3;
-                // echo "<br>";
-                $valueToPay = $parkingPrice_3;
-            //                                     240                                  300
-            } elseif ($permanenceInMinutes >= $parkingTime_4 && $permanenceInMinutes < $excedente) {
-                // echo $parkingTime_4."<br>";
-                // echo "Paga ".$parkingPrice_4;
-                // echo "<br>";
-                $valueToPay = $parkingPrice_4;
-            //                                     240                                  300
-            } elseif ($permanenceInMinutes >= $excedente && $permanenceInMinutes < $dailyPeriod) {
-                // echo $parkingTime_4." e ".$addPeriod."<br>";
-                // echo "Paga ".$parkingPrice_4 + $addValue;
-                // echo "<br>";
-                $valueToPay = $parkingPrice_4 + $addValue;
-                
-            } elseif ($permanenceInMinutes >= $dailyPeriod) {
-                // echo "Cobrar diária ".$daily."<br>";
-                $valueToPay = $daily;
-            }
-
-            $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
-                                            WHERE id=:idParkedVehicle");
-            $updateLenghtAndValue->bindValue(":idParkedVehicle", $idParkedVehicle);
-            $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
-            $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
-            $updateLenghtAndValue->execute();
-
-            //GET IDCLIENT BY LICENSEPLATE (está pegando o id do propritário do veículo)
-            $getIdClient=$pdo->prepare("SELECT idClient FROM clientVehicle WHERE licensePlate=:licensePlate");
-            $getIdClient->bindValue(":licensePlate", $licensePlate);
-            $getIdClient->execute();
-
-            while ($line=$getIdClient->fetch(PDO::FETCH_ASSOC)) {
-                $idClient = $line['idClient'];
-            }
-
-            $getcreditsBalance=$pdo->prepare("SELECT creditValue FROM credits WHERE idClient=:idClient");
-            $getcreditsBalance->bindValue(":idClient", $idClient);
-            $getcreditsBalance->execute();
-
-            while ($line=$getcreditsBalance->fetch(PDO::FETCH_ASSOC)) {
-                $creditValue = $line['creditValue'];
-            }
-
-            // Debit value paid from credits
-            $newCreditValue = $creditValue - $valueToPay;
-
-            $debitValueFromCredits=$pdo->prepare("UPDATE credits SET creditValue=:creditValue WHERE idClient=:idClient");
-            $debitValueFromCredits->bindValue(":creditValue", $newCreditValue);
-            $debitValueFromCredits->bindValue(":idClient", $idClient);
-            $debitValueFromCredits->execute();
+        if ($permanenceInMinutes <= $tolerancePeriod) {
+        //                                                                              60
+        } elseif ($permanenceInMinutes > $tolerancePeriod && $permanenceInMinutes < $parkingTime_2) { 
+            $valueToPay = $parkingPrice_1;
+        //                                        60                                    120
+        } elseif ($permanenceInMinutes >= $parkingTime_2 && $permanenceInMinutes < $parkingTime_3) {
+           $valueToPay = $parkingPrice_2;
+        //                                      120                                 180 
+        } elseif ($permanenceInMinutes >= $parkingTime_3 && $permanenceInMinutes < $parkingTime_4) {
+            $valueToPay = $parkingPrice_3;
+        //                                     240                                  300
+        } elseif ($permanenceInMinutes >= $parkingTime_4 && $permanenceInMinutes < $excedente) {
+            $valueToPay = $parkingPrice_4;
+        //                                     240                                  300
+        } elseif ($permanenceInMinutes >= $excedente && $permanenceInMinutes < $dailyPeriod) {
+            $valueToPay = $parkingPrice_4 + $addValue;
             
-
-            $return = array(
-                'entraceInMinutes' => $dayAndTimeEntryInMinutes,
-                'departureDayAndTimeMinutes' => $departureDayAndTimeMinutes,
-                'permanenceInMinutes' => $permanenceInMinutes, // Tempo de permanencia em minutos
-                'permanenceFormated' => $return_time, // Tempo de permanencia formatado (00:00:00)
-                'valueToPay' => $valueToPay, // Valor a ser pago
-                'licensePlate' => $licensePlate,
-                'idParking' => $idParking,
-                'entraceDateAndTimeFormated' => $entrance, // Horário de entrada 00:00:00
-                'departureDateAndTimeFormated' => $departureDayAndTime // Horário de saída 00:00:00
-            );
-
-            echo json_encode($return);
+        } elseif ($permanenceInMinutes >= $dailyPeriod) {
+            $valueToPay = $daily;
         }
+
+        $updateLenghtAndValue=$pdo->prepare("UPDATE parkedVehicles SET lenghtOfStay=:lenghtOfStay, valuePaid=:valueToPay
+                                        WHERE id=:idParkedVehicle");
+        $updateLenghtAndValue->bindValue(":idParkedVehicle", $idParkedVehicle);
+        $updateLenghtAndValue->bindValue(":lenghtOfStay", $return_time);
+        $updateLenghtAndValue->bindValue(":valueToPay", $valueToPay);
+        $updateLenghtAndValue->execute();
+
+        //GET IDCLIENT BY LICENSEPLATE (está pegando o id do propritário do veículo)
+        $getIdClient=$pdo->prepare("SELECT idClient FROM clientVehicle WHERE licensePlate=:licensePlate");
+        $getIdClient->bindValue(":licensePlate", $licensePlate);
+        $getIdClient->execute();
+
+        while ($line=$getIdClient->fetch(PDO::FETCH_ASSOC)) {
+            $idClient = $line['idClient'];
+        }
+
+        $getcreditsBalance=$pdo->prepare("SELECT creditValue FROM credits WHERE idClient=:idClient");
+        $getcreditsBalance->bindValue(":idClient", $idClient);
+        $getcreditsBalance->execute();
+
+        while ($line=$getcreditsBalance->fetch(PDO::FETCH_ASSOC)) {
+            $creditValue = $line['creditValue'];
+        }
+
+        // Debit value paid from credits
+        $newCreditValue = $creditValue - $valueToPay;
+
+        $debitValueFromCredits=$pdo->prepare("UPDATE credits SET creditValue=:creditValue WHERE idClient=:idClient");
+        $debitValueFromCredits->bindValue(":creditValue", $newCreditValue);
+        $debitValueFromCredits->bindValue(":idClient", $idClient);
+        $debitValueFromCredits->execute();
+
+        // UPDATE AMOUNTPAID ON TICKET TABLE
+        $updateValueToPayTicket=$pdo->prepare("UPDATE ticket SET amountPaid=:valueToPay WHERE licensePlate=:licensePlate
+                                            ORDER BY id_ticket DESC LIMIT 1");
+        $updateValueToPayTicket->bindValue(":licensePlate", $licensePlate);
+        $updateValueToPayTicket->bindValue(":valueToPay", $valueToPay);
+        $updateValueToPayTicket->execute();
+        
+
+        $return = array(
+            'entraceInMinutes' => $dayAndTimeEntryInMinutes,
+            'departureDayAndTimeMinutes' => $departureDayAndTimeMinutes,
+            'permanenceInMinutes' => $permanenceInMinutes, // Tempo de permanencia em minutos
+            'permanenceFormated' => $return_time, // Tempo de permanencia formatado (00:00:00)
+            'valueToPay' => $valueToPay, // Valor a ser pago
+            'licensePlate' => $licensePlate,
+            'idParking' => $idParking,
+            'entraceDateAndTimeFormated' => $entrance, // Horário de entrada 00:00:00
+            'departureDateAndTimeFormated' => $departureDayAndTime // Horário de saída 00:00:00
+        );
+
+        echo json_encode($return);
 
     } catch (Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -208,8 +166,10 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
 }
 
-$idParkedVehicle = 71;
-$licensePlate = 'IXW3620';
-$idParking = 15;
+// $idParkedVehicle = 10;
+// $licensePlate = 'IXW3620';
+// $idParking = 15;
 
-stayCount($idParkedVehicle, $licensePlate, $idParking);
+// stayCount($idParkedVehicle, $licensePlate, $idParking);
+
+?>
