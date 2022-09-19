@@ -252,7 +252,7 @@ switch ($option) {
                     $getInformations->execute();
 
                     while ($line=$getInformations->fetch(PDO::FETCH_ASSOC)) {
-                        // $parkingName = $line['parkingName'];
+                        $parkingName = $line['parkingName'];
                         $brand = $line['brand'];
                         $model = $line['model'];
                         $licensePlate = $line['licensePlate'];
@@ -412,10 +412,10 @@ switch ($option) {
         break;
 
     case 'stop counting time':
+
         $idParkedVehicle = $data->id;
         $licensePlate = $data->licensePlate;
         $idParking = $data->idParking;
-
 
         date_default_timezone_set('America/Sao_Paulo');
         $departureTime = date("Y-m-d H:i:s");
@@ -711,7 +711,7 @@ switch ($option) {
 
     case 'check status ticket':
 
-        $licensePlate = $_GET['licensePlate'];
+        $licensePlate = strtoupper($_GET['licensePlate']);
         // $dateEntry = $_GET['dateEntry'];
         // $timeEntry = $_GET['timeEntry'];
 
@@ -720,8 +720,11 @@ switch ($option) {
             $getTicketStatus->bindValue(":licensePlate", $licensePlate);
             $getTicketStatus->execute();
 
+            $return = null;
+
             while ($line=$getTicketStatus->fetch(PDO::FETCH_ASSOC)) {
 
+                $id_ticket = $line['id_ticket'];
                 $statusTicket = $line['statusTicket'];
                 $parkingName = $line['parkingName'];
                 $parkingAddress = $line['parkingAddress'];
@@ -745,6 +748,7 @@ switch ($option) {
                 $exitDate = $exitDateP[2].'/'.$exitDateP[1].'/'.$exitDateP[0];
 
                 $return = array(
+                    'id_ticket' => $id_ticket,
                     'statusTicket' => $statusTicket,
                     'parkingName' => $parkingName,
                     'parkingAddress' => $parkingAddress,
