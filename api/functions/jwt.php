@@ -16,7 +16,7 @@ function jwt($idClient, $type) {
          'id' => $idClient,
          'type' => $type,
          'iat' => time(),
-         'exp' => time() + (7 * 24 * 60 * 60)
+         'exp' => time() + (30 * 24 * 60 * 60)
       ];
 
       $payload = json_encode($payload);
