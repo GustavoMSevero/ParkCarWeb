@@ -62,7 +62,7 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
         }
 
 
-        // $dayAndTimeEntry = date("2021-08-30 07:00:00");
+        // $entrance = date("2022-09-10 10:00:00");
         $dayAndTimeEntry = $entrance;
         $dayAndTimeEntrey_DateTime = new DateTime($dayAndTimeEntry);
 
@@ -86,41 +86,23 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
         $excedente = $parkingTime_4 + $addPeriod;
 
         if ($permanenceInMinutes <= $tolerancePeriod) {
-            // echo "Dentro da tolerância. Isento de pagamento"."<br>";
-            // echo "<br>";
         //                                                                              60
         } elseif ($permanenceInMinutes > $tolerancePeriod && $permanenceInMinutes < $parkingTime_2) { 
-            // se o tempo de tolerância acabou, paga
-            // echo $parkingTime_1."<br>";
-            // echo "Paga ".$parkingPrice_1;
             $valueToPay = $parkingPrice_1;
         //                                        60                                    120
         } elseif ($permanenceInMinutes >= $parkingTime_2 && $permanenceInMinutes < $parkingTime_3) {
-            // echo $parkingTime_2."<br>";
-            // echo "Paga ".$parkingPrice_2;
-            // echo "<br>";
-            $valueToPay = $parkingPrice_2;
+           $valueToPay = $parkingPrice_2;
         //                                      120                                 180 
         } elseif ($permanenceInMinutes >= $parkingTime_3 && $permanenceInMinutes < $parkingTime_4) {
-            // echo $parkingTime_3."<br>";
-            // echo "Paga ".$parkingPrice_3;
-            // echo "<br>";
             $valueToPay = $parkingPrice_3;
         //                                     240                                  300
         } elseif ($permanenceInMinutes >= $parkingTime_4 && $permanenceInMinutes < $excedente) {
-            // echo $parkingTime_4."<br>";
-            // echo "Paga ".$parkingPrice_4;
-            // echo "<br>";
             $valueToPay = $parkingPrice_4;
         //                                     240                                  300
         } elseif ($permanenceInMinutes >= $excedente && $permanenceInMinutes < $dailyPeriod) {
-            // echo $parkingTime_4." e ".$addPeriod."<br>";
-            // echo "Paga ".$parkingPrice_4 + $addValue;
-            // echo "<br>";
             $valueToPay = $parkingPrice_4 + $addValue;
             
         } elseif ($permanenceInMinutes >= $dailyPeriod) {
-            // echo "Cobrar diária ".$daily."<br>";
             $valueToPay = $daily;
         }
 
@@ -155,6 +137,13 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
         $debitValueFromCredits->bindValue(":creditValue", $newCreditValue);
         $debitValueFromCredits->bindValue(":idClient", $idClient);
         $debitValueFromCredits->execute();
+
+        // UPDATE AMOUNTPAID ON TICKET TABLE
+        $updateValueToPayTicket=$pdo->prepare("UPDATE ticket SET amountPaid=:valueToPay WHERE licensePlate=:licensePlate
+                                            ORDER BY id_ticket DESC LIMIT 1");
+        $updateValueToPayTicket->bindValue(":licensePlate", $licensePlate);
+        $updateValueToPayTicket->bindValue(":valueToPay", $valueToPay);
+        $updateValueToPayTicket->execute();
         
 
         $return = array(
@@ -177,10 +166,10 @@ function stayCount($idParkedVehicle, $licensePlate, $idParking) {
 
 }
 
-$idParkedVehicle = 10;
-$licensePlate = 'IXW3620';
-$idParking = 15;
+// $idParkedVehicle = 10;
+// $licensePlate = 'IXW3620';
+// $idParking = 15;
 
-stayCount($idParkedVehicle, $licensePlate, $idParking);
+// stayCount($idParkedVehicle, $licensePlate, $idParking);
 
 ?>
