@@ -53,7 +53,7 @@ switch ($option) {
                 $mail = new PHPMailer();
                 $mail->CharSet = 'UTF-8';
                 $mail->isSMTP();
-                $mail->Host       = 'smtp.uni5.net';
+                $mail->Host       = 'smtp.parkcar.app.br';
                 // $mail->Host       = 'smtp.parkcar.app.br';
                 $mail->SMTPAuth   = true; 
                 $mail->Username   = 'contato@parkcar.app.br';
@@ -66,7 +66,8 @@ switch ($option) {
                 //Recipients
                 $site = 'ParkCar';
                 $mail->setFrom('contato@parkcar.app.br', $site);
-                $mail->addAddress($email, $parkingName);
+                // $mail->addAddress($email, $parkingName);
+                $mail->addAddress('testeiseuemail@gmail.com', 'Teste KingHost');
 
                 // Content
                 $mail->Subject = "RECUPERAÇÃO DE SENHA";
