@@ -44,6 +44,7 @@ function sendMessage($msg, $users) {
 
 
 function updateOneSignalId($userId, $userType, $oneSignalId) {
+    if(!$oneSignalId) return false;
     $pdo = conectar();
     $searchOneSingalId=$pdo->prepare("SELECT id FROM deviceIds 
                                     WHERE id=:oneSignalId AND userType=:userType");
