@@ -145,11 +145,6 @@ switch ($option) {
                 $msg = 'Email ou senha inválido';
                 $status = 0;
 
-                $svr = $_SERVER['REMOTE_ADDR'];
-                if ($svr == '127.0.0.1') {
-                    $msg = utf8_encode($msg);
-                }
-
                 $return = array(
                     'msg' => $msg,
                     'status' => $status
@@ -161,6 +156,14 @@ switch ($option) {
 
                     $idClient = $line['idClient'];
                     $name = $line['name'];
+
+                    $loadAvatarImage=$pdo->prepare('SELECT * FROM avatarPicture WHERE idClient=:idClient');
+                    $loadAvatarImage->bindValue('idClient', $idClient);
+                    $loadAvatarImage->execute();
+
+                    while ($linha=$loadAvatarImage->fetch(PDO::FETCH_ASSOC)) {
+                        $avatar = $linha['urlImage'];
+                    }
 
                     $jwt = jwt($idClient, 'client');
                     $token = $jwt['token'];
@@ -175,6 +178,7 @@ switch ($option) {
                         'status' => $status,
                         'id' => $idClient,
                         'name' => $name,
+                        'avatar' => $avatar,
                         'token' => $token,
                         'refreshToken' => $refreshToken
                     );
