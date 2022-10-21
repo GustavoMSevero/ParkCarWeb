@@ -133,8 +133,11 @@ switch ($option) {
         $oneSignalId = $data->onesignalId;
 
         try {
-            $searchClient=$pdo->prepare("SELECT idClient, name FROM client 
-                                    WHERE email=:email AND password=:password");
+            $searchClient=$pdo->prepare("SELECT c.idClient, c.name, ap.urlImage
+                                        FROM client c, avatarPicture ap
+                                        WHERE c.email=:email
+                                        AND c.password=:password
+                                        AND ap.idClient=c.idClient");
             $searchClient->bindValue(":email", $email);
             $searchClient->bindValue(":password", $password);
             $searchClient->execute();
@@ -156,14 +159,7 @@ switch ($option) {
 
                     $idClient = $line['idClient'];
                     $name = $line['name'];
-
-                    $loadAvatarImage=$pdo->prepare('SELECT * FROM avatarPicture WHERE idClient=:idClient');
-                    $loadAvatarImage->bindValue('idClient', $idClient);
-                    $loadAvatarImage->execute();
-
-                    while ($linha=$loadAvatarImage->fetch(PDO::FETCH_ASSOC)) {
-                        $avatar = $linha['urlImage'];
-                    }
+                    $avatar = $line['urlImage'];
 
                     $jwt = jwt($idClient, 'client');
                     $token = $jwt['token'];
