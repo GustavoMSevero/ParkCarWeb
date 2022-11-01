@@ -52,6 +52,14 @@ app.config(['$routeProvider', function($routeProvider){
         templateUrl: "views/account/parking/parkingSpaces.html",
     })
 
+    .when("/agreements", {
+        templateUrl: "views/account/parking/agreements.html",
+    })
+
+    .when("/editAgreement/:idAgreement", {
+        templateUrl: "views/account/parking/editAgreement.html",
+    })
+
     .when("/financialParking", {
         templateUrl: "views/account/parking/financialParking.html",
     })
