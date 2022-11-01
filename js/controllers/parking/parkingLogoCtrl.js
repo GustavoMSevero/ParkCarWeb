@@ -23,49 +23,47 @@ app.controller("parkingLogoCtrl", ['$scope', '$http', '$location', '$routeParams
     
 
 	if(location.hostname == 'localhost'){
-        var urlOptionUploadLogoParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/uploadLogoParking.php?option=';
+        var urlUploadLogoParking = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/uploadLogoParking.php?idParking=';
+        var urlGetLogoParking = 'http://localhost:8888/Projects/Web/ParkCarWeb/api/parking/getLogoParking.php';
 	} else {
-        var urlOptionUploadLogoParking = 'api/parking/parking.php?option=';
+        var urlUploadLogoParking = 'api/parking/uploadLogoParking.php?idParking=';
+        var urlGetLogoParking = 'api/parking/getLogoParking.php?idParking=';
 	}
 
 
 
     var formData = new FormData();
-	var idParking = $scope.id;
-    var option = 'upload logo';
+        var idParking = $scope.id;
 
-	$scope.uploadLogo = function(){
-	  $scope.input.click();
-	}
+        $scope.uploadLogo = function(){
+        $scope.input.click();
+        }
 
-	$scope.arquivo = '';
+        $scope.input = document.createElement("INPUT");
+        $scope.input.setAttribute("type", "file");
+        $scope.input.addEventListener('change', function(){
+        formData.append('file_jpg', $scope.input.files[0]);
+            $.ajax({
+            url: urlUploadLogoParking + idParking,
+            data: formData,
+            type: 'POST',
+            contentType: false,
+            processData: false
+            })
+            .then(function(response) {
+                // console.log(response);
+                getParkingLogo();
 
-	$scope.input = document.createElement("INPUT");
-	$scope.input.setAttribute("type", "file");
-	$scope.input.addEventListener('change', function(){
-	  formData.append('file_jpg', $scope.input.files[0]);
+            }, function(error) {
+                console.log(JSON.stringify(error));
+            });
+        
 
-	    $.ajax({
-	      url: urlOptionUploadLogoParking + option + '&idParking=' + idParking,
-	      data: formData,
-	      type: 'POST',
-	      contentType: false,
-	      processData: false
-	    })
-	      .then(function(response) {
-              console.log(response)
-            getParkingLogo();
+        });
 
-	  }, function(response) {
-	      console.log("Error "+JSON.stringify(response));
-	  });
-      
-
-    });
-
-    var getParkingLogo = function() {
-        var option = 'get parking logo';
-        $http.get(urlOptionUploadLogoParking + option + '&idParking=' + idParking).success(function(data) {
+    var getParkingLogo = function() {;
+        $http.get(urlGetLogoParking + idParking).success(function(data) {
+            // console.log(data)
             $scope.image = data.local;
         })
     }
