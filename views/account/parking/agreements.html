@@ -36,7 +36,7 @@
     </head>
 
     <body class="h-100">
-        <div class="container-fluid" ng-controller="parkingSpacesCtrl">
+        <div class="container-fluid" ng-controller="agreementsCtrl">
             <div class="row">
                 <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
                     <div class="main-navbar">
@@ -55,11 +55,6 @@
                     <div class="nav-wrapper">
                         <ul class="nav flex-column">
                             <li class="nav-item" ng-show="{{admin}}">
-                                <a class="nav-link " ng-href="#/searchInternship">
-                                    <span>Admin - Procurar Estágios</span>
-                                </a>
-                            </li>
-                            <li class="nav-item" ng-show="{{admin}}">
                                 <a class="nav-link " ng-href="#/changeEmail">
                                     <span>Admin - Alterar email</span>
                                 </a>
@@ -75,6 +70,7 @@
                                     <span>Adicionar Estacionamento</span>
                                 </a>
                             </li>
+                            
                             <li class="nav-item" ng-show="{{parking}}">
                                 <a class="nav-link " ng-href="#/updatePassword">
                                     <span>Altualizar Senha</span>
@@ -165,72 +161,52 @@
                             <div class="col-lg-12">
                                 <div class="card card-small mb-4">
                                     <div class="card-header border-bottom">
-                                        <h6 class="m-0">Vagas</h6>
+                                        <h6 class="m-0">Convênios</h6>
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-3">
                                             <div class="row">
                                                 <div class="col">
-                                                    <div class="form-row">
-                                                        <div class="form-group col-md-6">
-                                                            <div>
-                                                                CADASTRO DE VAGAS
+                                                    <form>
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-4">
+                                                                <label for="agreementTitle">Título do convênio</label>
+                                                                <input class="form-control" name="title" ng-model="agreement.title">
                                                             </div>
-                                                            <form>
-                                                                <div id="parkingFloor">
-                                                                    <input type="text" class="form-control" name="floor" ng-model="floor.parkingFloor" placeholder="descrição/tipo" id="">
-                                                                </div>
-                                                                <div id="floorQuantity">
-                                                                    <input type="number" class="form-control" name="floorQuantity" ng-model="floor.floorQuantity" id="">
-                                                                </div>
-                                                                
-                                                                <div id="btnRegisterParkingSpaces">
-                                                                    <button type="button" class="btn btn-success" ng-click="registerParkingSpaces(floor)">ADICIONAR</button>
-                                                                </div>
-                                                            </form>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="agreementType">Tipo</label>
+                                                                <input class="form-control" name="type" ng-model="agreement.type">
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="agreementValue">Valor</label>
+                                                                <input class="form-control" name="value" ng-model="agreement.value">
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <button type="button" class="btn btn-success" ng-click="registerAgreement(agreement)">CADASTRAR</button>
+                                                    </form>
+
+                                                    <div class="showAgreements">
+                                                        <table class="table table-striped">
+                                                            <tr>
+                                                                <td>Convênio</td>
+                                                                <td>Tipo</td>
+                                                                <td>Valor</td>
+                                                                <td>ação</td>
+                                                            </tr>
+                                                            <tr ng-repeat="ag in agreements">
+                                                                <td>{{ag.agreement}}</td>
+                                                                <td>{{ag.agreementType}}</td>
+                                                                <td>{{ag.agreementValue}}</td>
+                                                                <td><a class="link-value" href="#/editAgreement/{{ag.idagreement}}">editar</a></td>
+                                                            </tr>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-12">
-                                    <div class="card card-small mb-4">
-                                        <div class="card-header border-bottom">
-                                            Ocupação
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item p-3">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-12">
-                                                                <div class="showCustomers">
-                                                                    <!-- <table class="table table-striped">
-                                                                        <tr>
-                                                                            <td><b>Cliente</b></td>
-                                                                            <td><b>Placa</b></td>
-                                                                            <td><b>Contrato</b></td>
-                                                                            <td><b></b></td>
-                                                                        </tr>
-                                                                        <tr ng-repeat="pc in parkingCustomers">
-                                                                            <td>{{pc.firstname}} {{pc.secondname}}</td>
-                                                                            <td>{{pc.licensePlate}}</td>
-                                                                            <td>{{pc.contractType}}</td>
-                                                                            <td><a class="link-edit" href="#/editCustomer/{{pc.idParkingCustomer}}">edit</a></td>
-                                                                        </tr>
-                                                                    </table> -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
         
                         </div>

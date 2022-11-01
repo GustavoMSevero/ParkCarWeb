@@ -55,35 +55,27 @@
                     <div class="nav-wrapper">
                         <ul class="nav flex-column">
                             <li class="nav-item" ng-show="{{admin}}">
-                                <a class="nav-link " ng-href="#/financialAdmin">
-                                    <span>Financeiro</span>
+                                <a class="nav-link " ng-href="#/changeEmail">
+                                    <span>Admin - Alterar email</span>
                                 </a>
-                            </li>
-                            <li class="nav-item" ng-show="{{admin}}">
-								<a class="nav-link " ng-href="#/information">
-									<span>Informações</span>
+							</li>
+							<li class="nav-item" ng-show="{{admin}}">
+								<a class="nav-link " ng-href="#/changePassword">
+									<span>Admin - Alterar senha</span>
 								</a>
                             </li>
-                            <li class="nav-item" ng-show="{{admin}}">
-								<a class="nav-link " ng-href="#/historicAdmin">
-									<span>Histórico</span>
-								</a>
-                            </li>
+
                             <li class="nav-item" ng-show="{{parking}}">
                                 <a class="nav-link " ng-href="#/registerParking">
                                     <span>Adicionar Estacionamento</span>
                                 </a>
                             </li>
+                            
                             <li class="nav-item" ng-show="{{parking}}">
                                 <a class="nav-link " ng-href="#/updatePassword">
                                     <span>Altualizar Senha</span>
                                 </a>
                             </li>
-                            <li class="nav-item" ng-show="{{admin}}">
-                                <a class="nav-link " ng-href="#/registerUserAdmin">
-                                    <span>Cadastrar Usuário Admin</span>
-                                </a>
-							</li>
                             <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/customers">
                           			<span>Clientes</span>
@@ -92,6 +84,11 @@
                             <li class="nav-item" ng-show="{{parking}}">
                         		<a class="nav-link " ng-href="#/parkingSpaces">
                           			<span>Vagas</span>
+                        		</a>
+                            </li>
+                            <li class="nav-item" ng-show="{{parking}}">
+                        		<a class="nav-link " ng-href="#/agreements">
+                          			<span>Convênios</span>
                         		</a>
                             </li>
                             <li class="nav-item" ng-show="{{parking}}">
