@@ -21,8 +21,8 @@ app.controller("updatePasswordCtrl", ['$scope', '$http', '$location', function (
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/editParking.php';
-        var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/editParking.php?option=';
+		var urlPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/parking/editParking.php';
+        var urlOptionPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/parking/editParking.php?option=';
 	} else {
 		var urlPrefixAdmin = 'api/parking/editParking.php';
         var urlOptionPrefixAdmin = 'api/parking/editParking.php?option=';

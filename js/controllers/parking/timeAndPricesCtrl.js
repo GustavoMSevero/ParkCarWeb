@@ -24,9 +24,9 @@ app.controller("timeAndPricesCtrl", ['$scope', '$http', '$location', '$routePara
 
 
 	if(location.hostname == 'localhost'){
-		var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';
-		var urlPrefixParkingTimeAndPrices = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php';
-		var urlOptionPrefixParkingTimeAndPrices = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingTimeAndPrices.php?option=';
+		var urlOptionPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/admin/adminParking.php?option=';
+		var urlPrefixParkingTimeAndPrices = 'http://localhost:8888/web/ParkCarWeb/api/parking/parkingTimeAndPrices.php';
+		var urlOptionPrefixParkingTimeAndPrices = 'http://localhost:8888/web/ParkCarWeb/api/parking/parkingTimeAndPrices.php?option=';
 	} else {
 		var urlOptionPrefixAdmin = 'api/admin/adminParking.php?option=';
         var urlPrefixParkingTimeAndPrices = 'api/parking/parkingTimeAndPrices.php';

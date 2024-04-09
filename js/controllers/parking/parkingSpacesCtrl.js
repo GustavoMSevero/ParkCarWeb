@@ -23,8 +23,8 @@ app.controller("parkingSpacesCtrl", ['$scope', '$http', '$location', '$routePara
     
 
 	if(location.hostname == 'localhost'){
-        var urlContract = 'http://localhost:8892/Projects/web/ParkCarWeb/api/parking/contract.php';
-        var urlOptionContract = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/contract.php?option=';
+        var urlContract = 'http://localhost:8888/web/ParkCarWeb/api/parking/contract.php';
+        var urlOptionContract = 'http://localhost:8888/web/ParkCarWeb/api/parking/contract.php?option=';
 	} else {
         var urlContract = 'api/parking/contract.php';
         var urlOptionContract = 'api/parking/contract.php?option=';
