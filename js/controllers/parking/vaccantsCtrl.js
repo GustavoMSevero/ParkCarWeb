@@ -17,7 +17,7 @@ app.controller("vaccantsCtrl", ['$scope', '$http', '$location', '$routeParams', 
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/admin.php';
+		var urlPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/admin/admin.php';
 	} else {
 		var urlPrefixAdmin = 'api/admin/admin.php';
 	}

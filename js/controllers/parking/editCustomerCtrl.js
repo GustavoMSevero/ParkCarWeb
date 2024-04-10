@@ -23,9 +23,9 @@ app.controller("editCustomerCtrl", ['$scope', '$http', '$location', '$routeParam
     
 
 	if(location.hostname == 'localhost'){
-        var urlOptionContract = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/contract.php?option=';
-        var urlCustomer = 'http://localhost:8892/Projects/web/ParkCarWeb/api/parking/customer.php';
-        var urlOptionCustomer = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/customer.php?option=';
+        var urlOptionContract = 'http://localhost:8888/web/ParkCarWeb/api/parking/contract.php?option=';
+        var urlCustomer = 'http://localhost:8888/web/ParkCarWeb/api/parking/customer.php';
+        var urlOptionCustomer = 'http://localhost:8888/web/ParkCarWeb/api/parking/customer.php?option=';
 	} else {
         var urlOptionContract = 'api/parking/contract.php?option=';
         var urlCustomer = 'api/parking/customer.php';

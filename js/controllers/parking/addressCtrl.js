@@ -21,8 +21,8 @@ app.controller("addressCtrl", ['$scope', '$http', '$location', '$routeParams', f
     }
     
 	if(location.hostname == 'localhost'){
-		var urlPrefixParkingAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/adminParking.php';
-		var urlOptionPrefixParkingAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/adminParking.php?option=';
+		var urlPrefixParkingAdmin = 'http://localhost:8888/web/ParkCarWeb/api/adminParking.php';
+		var urlOptionPrefixParkingAdmin = 'http://localhost:8888/web/ParkCarWeb/api/adminParking.php?option=';
 	} else {
 		var urlPrefixParkingAdmin = 'api/admin/adminParking.php';
 	}

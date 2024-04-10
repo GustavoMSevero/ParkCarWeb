@@ -23,8 +23,8 @@ app.controller("bookingCtrl", ['$scope', '$http', '$location', '$routeParams', f
     
 
 	if(location.hostname == 'localhost'){
-        var urlParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingBooking.php';
-        var urlOptionParking = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/parkingBooking.php?option=';
+        var urlParking = 'http://localhost:8888/web/ParkCarWeb/api/parking/parkingBooking.php';
+        var urlOptionParking = 'http://localhost:8888/web/ParkCarWeb/api/parking/parkingBooking.php?option=';
 	} else {
         var urlParking = 'api/parking/parkingBooking.php';
         var urlOptionParking = 'api/parking/parkingBooking.php?option=';

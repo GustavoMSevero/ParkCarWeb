@@ -17,8 +17,8 @@ app.controller("financialParkingCtrl", ['$scope', '$http', '$location', function
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/financialParking.php';
-		var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/parking/financialParking.php?option=';
+		var urlPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/parking/financialParking.php';
+		var urlOptionPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/parking/financialParking.php?option=';
 	} else {
 		var urlPrefixAdmin = 'api/parking/financialParking.php';
         var urlOptionPrefixAdmin = 'api/parking/financialParking.php?option=';

@@ -17,8 +17,8 @@ app.controller("editAgreementCtrl", ['$scope', '$http', '$location', '$routePara
     }
 
     if(location.hostname == 'localhost'){
-		var urlPrefixAgreement = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/agreement/agreement.php';
-		var urlOptionPrefixAgreement = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/agreement/agreement.php?option=';
+		var urlPrefixAgreement = 'http://localhost:8888/web/ParkCarWeb/api/agreement/agreement.php';
+		var urlOptionPrefixAgreement = 'http://localhost:8888/web/ParkCarWeb/api/agreement/agreement.php?option=';
 	} else {
 		var urlPrefixAgreement = 'api/agreements/agreement.php';
         var urlOptionPrefixAgreement = 'api/agreements/agreement.php?option=';

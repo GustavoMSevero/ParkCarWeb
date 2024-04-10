@@ -18,8 +18,8 @@ app.controller("editOwnerNameCtrl", ['$scope', '$http', '$location', function ($
     
 
 	if(location.hostname == 'localhost'){
-		var urlPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/adminParking.php';
-        var urlOptionPrefixAdmin = 'http://localhost:8892/Projects/Web/ParkCarWeb/api/admin/adminParking.php?option=';
+		var urlPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/admin/adminParking.php';
+        var urlOptionPrefixAdmin = 'http://localhost:8888/web/ParkCarWeb/api/admin/adminParking.php?option=';
 	} else {
 		var urlPrefixAdmin = 'api/admin/adminParking.php';
         var urlOptionPrefixAdmin = 'api/admin/adminParking.php?option=';
